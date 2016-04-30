@@ -1,0 +1,50 @@
+priority -49
+
+snippet s "String" b
+"${1:string}": "${2:value}"${0}
+endsnippet
+
+snippet n "number" b
+"${1:number}": ${2:0}${0}
+endsnippet
+
+snippet a "Array" b
+[
+	${VISUAL}$0
+],
+endsnippet
+snippet o "Object" b
+{
+	${VISUAL}$0
+},
+endsnippet
+
+snippet p "Property" b
+"${1:property}": {
+	${VISUAL}$0
+},
+endsnippet
+
+snippet r "Required" b
+"required": [ ${VISUAL}$0 ]
+endsnippet
+
+snippet schema "Schema skeleton"
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "${1:title}",
+    "description": "${2:description}",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier for a product",
+            "type": "integer"
+        },
+        "name": {
+            "description": "Name of the product",
+            "type": "string"
+        }
+    },
+    "required": ["id", "name"]
+}
+endsnippet

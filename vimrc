@@ -1,77 +1,92 @@
+"let g:use_python2 = 1
 " Vundle Plugins {{{
 set nocompatible " required for vundle
 filetype off " required for vundle
 set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim' " let Vundle manage Vundle, required
+Plugin 'kchmck/vim-coffee-script'
 
-"Plugin 'valloric/YouCompleteMe' " requires python2
-Plugin 'vim-scripts/OmniCppComplete'
-"Plugin 'scrooloose/syntastic'
+Plugin 'gmarik/Vundle.vim' " let Vundle manage Vundle, required
+"Plugin 'vim-scripts/OmniCppComplete'
+Plugin 'scrooloose/syntastic'
+Plugin 'Valloric/YouCompleteMe'
 "Plugin 'justmao945/vim-clang'
 "Plugin 'Shougo/neocomplcache'
 "Plugin 'spolu/dwm.vim'
 "Plugin 'jeaye/color_coded'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'nvie/vim-flake8'
+"Plugin 'python-rope/rope'
+"Plugin 'python-rope/ropevim'
+"Plugin 'python-rope/ropemode'
+"Plugin 'klen/python-mode'
 
-Plugin 'vim-scripts/luarefvim' " LUA reference
+" Python
+"Plugin 'davidhalter/jedi-vim' " Python auto-completion
+Plugin 'nvie/vim-flake8'      " Python pep8 checker
+Plugin 'hynek/vim-python-pep8-indent' " auto indent
 
 "Plugin 'ervandew/supertab'
-Plugin 'SirVer/ultisnips' " Snippets engine
+Plugin 'SirVer/ultisnips'   " Snippets engine
 Plugin 'honza/vim-snippets' " Snippets
 
-Plugin 'vim-scripts/buftabs'
+" Buffers
+"Plugin 'bling/vim-bufferline'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'jlanzarotta/bufexplorer'
 Plugin 'bling/vim-airline'
 
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'sjl/gundo.vim'
-Plugin 'vim-scripts/a.vim'
+Plugin 'sjl/gundo.vim'      " Super Undo
+Plugin 'vim-scripts/a.vim'  " Toggle c/h files
 "Plugin 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
 
-Plugin 'scrooloose/nerdtree'
+" Code navigation
+Plugin 'scrooloose/nerdtree'      " NERDTree
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
 
-Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'scrooloose/nerdcommenter'
 
 Plugin 'vim-scripts/guicolorscheme.vim'
-Plugin 'jamessan/vim-gnupg'
+"Plugin 'jamessan/vim-gnupg'
 Plugin 'tpope/vim-surround'
 Plugin 'vimoutliner/vimoutliner'
 Plugin 'vimwiki/vimwiki'
 Plugin 'mattn/calendar-vim'
 
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
+" GIT
+Plugin 'airblade/vim-gitgutter' " git highlighter
+Plugin 'tpope/vim-fugitive'     " Git wrapper
 Plugin 'http://repo.or.cz/vcscommand.git'
 
+" Styling
+Plugin 'ap/vim-css-color' " Highlight css colors
+Plugin 'kien/rainbow_parentheses.vim' " Highligh parenthesis
+
+Plugin 'plasticboy/vim-markdown'
+
 " {{{ Check
-"Bundle 'tpope/vim-repeat'
-"Bundle 'tpope/vim-speeddating'
-"Bundle 'godlygeek/tabular'
-"Bundle 'matchit.zip'
-"Bundle 'paster.vim'
-"Bundle 'fs111/pydoc.vim'
-"Bundle 'Tagbar'
-"Bundle 'ciaranm/securemodelines'
-"Bundle 'AutoComplPop'
-"Bundle 'drmingdrmer/xptemplate'
-"Bundle 'file:///$HOME/development/xptemplate-snippets'
-"Bundle 'nblock/vim-dokuwiki'
-"Bundle 'SudoEdit.vim'
-"Bundle 'altercation/vim-colors-solarized'
+"Plugin 'tpope/vim-repeat'
+"Plugin 'tpope/vim-speeddating'
+"Plugin 'godlygeek/tabular'
+"Plugin 'matchit.zip'
+"Plugin 'paster.vim'
+"Plugin 'ciaranm/securemodelines'
+"Plugin 'AutoComplPop'
+"Plugin 'drmingdrmer/xptemplate'
+"Plugin 'file:///$HOME/development/xptemplate-snippets'
+"Plugin 'nblock/vim-dokuwiki'
+"Plugin 'altercation/vim-colors-solarized'
 "}}}
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 "}}}
+
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+"set display=lastline    " Show as much as possible of a wrapped last line, not just "@".
 
 " Init {{{
 syntax on		  " enable syntax highlighting
@@ -82,19 +97,54 @@ filetype plugin indent on " required by vundle
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 "}}}
 
+
+"python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+
+" Turn on bracketing mode
+" Causes a delay with Control-Space
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+	set pastetoggle=<Esc>[201~
+	set paste
+	return ""
+endfunction
+"
+
+" Remove trailing white spaces from python files
+autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
+"tabstop=4 " 4-space indents.
+"shiftwidth=4 " This allows you to use the < and > keys from VIM's visual (marking) mode to block indent/unindent regions
+"smarttab 	sta 	Use the "shiftwidth" setting for inserting <TAB>s instead of the "tabstop" setting, when at the beginning of a line. This may be redundant for most people, but some poeple like to keep their tabstop=8 for compatability when loading files, but setting shiftwidth=4 for nicer coding style.
+"expandtab 	et 	Insert spaces instead of <TAB> character when the <TAB> key is pressed. This is also the prefered method of Python coding, since Python is especially sensitive to problems with indenting which can occur when people load files in different editors with different tab settings, and also cutting and pasting between applications (ie email/news for example) can result in problems. It is safer and more portable to use spaces for indenting.
+"softtabstop=4 	sts 	People like using real tab character instead of spaces because it makes it easier when pressing BACKSPACE or DELETE, since if the indent is using spaces it will take 4 keystrokes to delete the indent. Using this setting, however, makes VIM see multiple space characters as tabstops, and so <BS> does the right thing and will delete four spaces (assuming 4 is your setting).
+autocmd BufRead *.py set tabstop=4 shiftwidth=4 smarttab expandtab softtabstop=4
+
+
 " Source a local configuration file if available {{{
 " DANGEROUS
-if (getcwd() != $HOME)
-	if filereadable("./.vimrc")
-		source ./.vimrc
-	endif
-endif
+"if (getcwd() != $HOME)
+	"if filereadable("./.vimrc")
+		"source ./.vimrc
+	"endif
+"endif
 "}}}
 
 " Settings {{{
 " Colorscheme {{{
 function! SetColorscheme()
-	set background=light
+	set background=dark
 	if &diff
 		"calmar256-dark
 		"pablo,murphy,slate,desert
@@ -120,9 +170,32 @@ function! SetupDiffMappings()
 		nnoremap <C-Down> ]c
 		nnoremap <C-Left> do
 		nnoremap <C-Right> dp
+	"else
 	endif
 	call SetColorscheme()
 endfunction
+nnoremap <M-Up> :cp<CR>
+nnoremap <M-Down> :cn<CR>
+nnoremap <M-Right> :MBEbn<CR>
+nnoremap <M-Left> :MBEbp<CR>
+
+"let c='a'
+"while c <= 'z'
+	"exec "set <A-".c.">=\e".c
+	""exec "imap \e".c." <A-".c.">"
+	"let c = nr2char(1+char2nr(c))
+"endw
+"set ttimeout ttimeoutlen=50
+"set <m-a>=a
+"set <m-b>=b
+"map <M-h> <Left>
+"map <M-n> <Down>
+"map <M-e> <Up>
+"map <M-i> <Right>
+"imap <M-h> <Left>
+"imap <M-n> <Down>
+"imap <M-e> <Up>
+"imap <M-i> <Right>
 
 call SetupDiffMappings()
 " Entering diff mode from within vim - diffsplit, etc.
@@ -156,11 +229,15 @@ set nojoinspaces	" do not insert two spaces in join
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set cmdheight=2 
-set gdefault		" in replace s/// g is always on, another g to turn off
+"set gdefault		" in replace s/// g is always on, another g to turn off
 set incsearch		" enable incremental search
 set hlsearch		" highlight search patterns
 "set nohlsearch		" disable highlight search
 set ignorecase		" ignore case
+
+set autoindent
+set smartindent
+
 set smartcase		" ignore case when the pattern contains lowercase letters only
 "set cursorline         " draw horizontal line on cursor's position 
 "set showtabline=2	" always show tab page labels
@@ -184,7 +261,8 @@ set shiftwidth=8
 set autowrite 			" Automatically write changes with tagging to a new file
 set splitright			" Put vertical splits to the right of the current window
 set vb t_vb=			" disable visual bell
-"set mouse=a			" enable mouse
+set mouse=a			" enable mouse
+set clipboard=autoselect,unnamedplus	" use X clipboard as default
 set formatoptions=tcrq "Show menu with possible completions
 set wildmode=longest,list,full	" Set completion modes
 set wildmenu
@@ -205,6 +283,8 @@ let g:vimwiki_folding = 'list'
 " Ycm + UltiSnips {{{
 " http://www.0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
 " make YCM compatible with UltiSnips (using supertab)
+
+let g:ycm_server_python_interpreter='/usr/bin/python'
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
@@ -217,9 +297,13 @@ let g:UltiSnipsListSnippets = '<s-tab>' " <c-tab> is used by some other plugin
 "let g:UltiSnipsEditSplit="Vertical"
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
-let g:ycm_key_invoke_completion = '<leader><space>'
+"let g:ycm_key_invoke_completion = '<leader><space>'
+let g:ycm_key_invoke_completion = '<C-n>'
 
 "}}}
+" Syntastic
+let g:syntastic_check_on_wq = 0
+
 " Vim Jedi {{{
 let g:jedi#completions_command = "<C-N>"
 " }}}
@@ -252,7 +336,7 @@ let g:rbpt_colorpairs = [
 " }}}
 " CtrlP {{{
 "let g:ctrlp_map = '<C-_>' " map CtrlP to Ctrl-/
-let g:ctrlp_map = '<Leader><C-p>' " map CtrlP to <Leader>Ctrl-/
+let g:ctrlp_map = '<Leader><C-p>'
 "let g:ctrlp_extensions = ['tag', 'buffertag', 'dir', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
 "let g:loaded_ctrlp = 1
 "}}}
@@ -260,11 +344,6 @@ let g:ctrlp_map = '<Leader><C-p>' " map CtrlP to <Leader>Ctrl-/
 " FIXME: TOTO PREROBIT
 noremap <Leader>d :bd<CR>
 "noremap <Leader>n :bn<CR>
-noremap <M-Up> :cp<CR>
-noremap <M-Down> :cn<CR>
-" Minibuffer Explorer Settings
-noremap <M-Right> :MBEbn<CR>
-noremap <M-Left> :MBEbp<CR>
 " }}}
 " Easymotion {{{
 let g:EasyMotion_leader_key = 's'
@@ -275,6 +354,11 @@ omap z		<Plug>(easymotion-s2)
 nmap s/		<Plug>(easymotion-sn)
 xmap s/		<Plug>(easymotion-sn)
 omap z/	 	<Plug>(easymotion-sn)
+map s<Left>	<Plug>(easymotion-b)
+map s<Right>	<Plug>(easymotion-w)
+map sw		<Plug>(easymotion-bd-w)
+map s<Up>	<Plug>(easymotion-k)
+map s<Down>	<Plug>(easymotion-j)
 " }}}
 " Cscope {{{
 " Open cscope output in quickfix window (copen)
@@ -350,8 +434,8 @@ let mapleader = ","
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 "nnoremap <leader><space> :nohl<CR>
 
-" Search and replace word under cursor using F4
-nnoremap <F4> :%s/<c-r><c-w>/<c-r><c-w>/c<c-f>$F/i
+" Search and replace word under cursor
+nnoremap <F2> :%s/<c-r><c-w>/<c-r><c-w>/c<c-f>$F/i
 " if set gdefault is not set append g   ^
 
 noremap <F1> <ESC> " Turn off F1 help
@@ -363,45 +447,28 @@ nmap <leader>vs :so ~/.vimrc<CR>
 " join line downwards
 "nnoremap gJ ddpkJ
 
+" Alternative
+" <C-space> worked for me in Macvim but not <C-@> or <Nul>, and vice-versa for command-line vim.
+" I ended up mapping <C-space> to <Nul> and mapping with <Nul> for a more general mapping. 
+"
 " fix Ctrl-space in GUI {{{
 if has('gui_running')
 	imap <C-Space> <Esc>
 	smap <C-Space> <Esc>
 	cmap <C-Space> <Esc>
-else
+"else
 	imap <C-@> <Esc>
 	smap <C-@> <Esc>
 	cmap <C-@> <Esc>
+	"map <C-@> <Esc>
 endif
-"}}}
-
-" Colemak mapping - switch up/down {{{
-"noremap h k
-"noremap k j
-"noremap j h
-"noremap gh gk
-"noremap gk gj
-"noremap gj gh
-"noremap <C-W><C-h> <C-W><C-k>
-"noremap <C-W><C-k> <C-W><C-j>
-"noremap <C-W><C-j> <C-W><C-h>
-"noremap <C-W>h <C-W>k
-"noremap <C-W>k <C-W>j
-"noremap <C-W>j <C-W>h
 "}}}
 
 " don't jump over text-wrapped lines
 "noremap j gj
 "noremap k gk
-map <Down> gj
-map <Up> gk
-
-"Yank/Paste to the OS clipboard with <Leader>y and <Leader>p {{{
-map <silent> <Leader>y :yank +<CR>
-map <silent> <Leader>d :delete +<CR>
-map <silent> <Leader>p :put +<CR>
-map <silent> <Leader>P :put! +<CR>
-"}}}
+noremap <Down> gj
+noremap <Up> gk
 
 nnoremap <F5> :GundoToggle<CR>
 cmap w!! w !sudo tee % >/dev/null
@@ -409,19 +476,28 @@ nnoremap <leader>m :make<CR>
 nmap <Leader>nu :setlocal number! number?<CR>
 nmap <Leader>nr :setlocal relativenumber! relativenumber?<CR>
 nmap <Leader>li :setlocal list! list?<CR>
-"nmap <Leader>pa :setlocal paste!<CR>paste?<CR>
+nmap <Leader>pa :setlocal paste! paste?<CR>
+nmap <Leader>p :put<CR>
 set pastetoggle=<F11>
 nmap <Leader>ne :NERDTreeToggle<CR>
 nmap <silent> <leader>tl :TlistToggle<CR>
 nmap <silent> <leader>ta :TagbarToggle<CR> 
 
+nmap <Leader>r :!ipython -i %:p<CR>
+
+"map <C-Up> <C-W><Up>
+"map <C-Down> <C-W><Down>
+"map <C-Left> <C-W><Left>
+"map <C-Right> <C-W><Right>
+
+nnoremap <Leader>q :wq<CR>
 "Save file
-nnoremap <Leader>w<cr> :w<CR> " NOTE: is it necessary?
+nnoremap <Leader>s :w<CR> " NOTE: is it necessary?
 
 " TODO
 " noautocmd - do not trigger any autocmd while loading files - much quicker
 " /j - do not jump to first occurence
-nnoremap <Leader>TODO :noautocmd vimgrep /TODO\|FIXME\|XXX/j **/*<CR>:cw<CR>
+nnoremap <Leader>todo :noautocmd vimgrep /TODO\|FIXME\|XXX/j **/*<CR>:cw<CR>
 "}}}
 
 " {{{ Tags

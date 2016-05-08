@@ -303,6 +303,7 @@ let g:ycm_key_invoke_completion = '<C-n>'
 "}}}
 " Syntastic
 let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { "mode": "passive" }
 
 " Vim Jedi {{{
 let g:jedi#completions_command = "<C-N>"

@@ -470,20 +470,33 @@ endif
 noremap <Down> gj
 noremap <Up> gk
 
+"nmap <Leader>pa :setlocal paste! paste?<CR>
+set pastetoggle=<F11>
+
 nnoremap <F5> :GundoToggle<CR>
 cmap w!! w !sudo tee % >/dev/null
 nnoremap <leader>m :make<CR>
-nmap <Leader>nu :setlocal number! number?<CR>
-nmap <Leader>nr :setlocal relativenumber! relativenumber?<CR>
-nmap <Leader>li :setlocal list! list?<CR>
-nmap <Leader>pa :setlocal paste! paste?<CR>
-nmap <Leader>p :put<CR>
-set pastetoggle=<F11>
-nmap <Leader>ne :NERDTreeToggle<CR>
-nmap <silent> <leader>tl :TlistToggle<CR>
-nmap <silent> <leader>ta :TagbarToggle<CR> 
+nnoremap <Leader>nu :setlocal number! number?<CR>
+nnoremap <Leader>nr :setlocal relativenumber! relativenumber?<CR>
+nnoremap <Leader>li :setlocal list! list?<CR>
+nnoremap <Leader>p :put<CR>
+nnoremap <Leader>ne :NERDTreeToggle<CR>
+nnoremap <silent> <leader>tl :TlistToggle<CR>
+nnoremap <silent> <leader>ta :TagbarToggle<CR>
 
-nmap <Leader>r :!ipython -i %:p<CR>
+nnoremap K K<CR>
+
+"FIXME: WIP
+nnoremap <leader><Space> :YcmCompleter GoTo<CR>'
+nnoremap <leader>e :YcmCompleter GoToReferences<CR>
+nnoremap <leader>f :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>d :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>i :YcmCompleter GoToInclude<CR>
+
+" Silent wont display Press Enter to continue command
+command! -nargs=+ Silent execute 'silent <args>' | redraw!
+nmap <Leader>r :!clear; python %:p<CR>
+nmap <Leader>R :Silent !ipython -i %:p<CR>
 
 "map <C-Up> <C-W><Up>
 "map <C-Down> <C-W><Down>

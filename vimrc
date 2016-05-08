@@ -278,7 +278,7 @@ let c_space_errors = 1 " Highlight space error in C/C++
 " Plugin settings {{{
 " Vimwiki {{{
 let g:vimwiki_list = [{'path': '/home/data/vimwiki/'}]
-let g:vimwiki_folding = 'list'
+let g:vimwiki_folding = 'expr'
 "}}}
 " Ycm + UltiSnips {{{
 " http://www.0x3f.org/blog/make-youcompleteme-ultisnips-compatible/

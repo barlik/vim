@@ -21,7 +21,7 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'klen/python-mode'
 
 " Python
-"Plugin 'davidhalter/jedi-vim' " Python auto-completion
+Plugin 'davidhalter/jedi-vim' " Python auto-completion
 Plugin 'nvie/vim-flake8'      " Python pep8 checker
 Plugin 'hynek/vim-python-pep8-indent' " auto indent
 
@@ -468,8 +468,12 @@ endif
 " don't jump over text-wrapped lines
 "noremap j gj
 "noremap k gk
-noremap <Down> gj
-noremap <Up> gk
+"noremap <Down> gj
+"noremap <Up> gk
+" his makes gj/gk move by virtual lines when used without a count, and by physical
+" lines when used with a count. This is perfect in tandem with relative numbers.
+noremap <silent> <expr> <Down> (v:count == 0 ? 'gj' : 'j')
+noremap <silent> <expr> <Up> (v:count == 0 ? 'gk' : 'k')
 
 "nmap <Leader>pa :setlocal paste! paste?<CR>
 set pastetoggle=<F11>
@@ -488,11 +492,11 @@ nnoremap <silent> <leader>ta :TagbarToggle<CR>
 nnoremap K K<CR>
 
 "FIXME: WIP
-nnoremap <leader><Space> :YcmCompleter GoTo<CR>'
-nnoremap <leader>e :YcmCompleter GoToReferences<CR>
-nnoremap <leader>f :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>d :YcmCompleter GoToDeclaration<CR>
-nnoremap <leader>i :YcmCompleter GoToInclude<CR>
+"nnoremap <leader><Space> :YcmCompleter GoTo<CR>'
+"nnoremap <leader>e :YcmCompleter GoToReferences<CR>
+"nnoremap <leader>f :YcmCompleter GoToDefinition<CR>
+"nnoremap <leader>d :YcmCompleter GoToDeclaration<CR>
+"nnoremap <leader>i :YcmCompleter GoToInclude<CR>
 
 " Silent wont display Press Enter to continue command
 command! -nargs=+ Silent execute 'silent <args>' | redraw!

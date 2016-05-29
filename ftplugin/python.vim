@@ -1,7 +1,7 @@
 if exists('g:use_python2')
-		let s:python_until_eof = "python << EOF"
+	let s:python_until_eof = "python << EOF"
 else
-		let s:python_until_eof = "python3 << EOF"
+	let s:python_until_eof = "python3 << EOF"
 endif
 "FIXME
 "if exists('g:use_python2') && !has('python')

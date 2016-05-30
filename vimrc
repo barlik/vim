@@ -1,11 +1,15 @@
+"TODO:
+"map :Explore
+":Sex is shortcut for split explore
+"map argwrap
+"nnoremap <silent> <leader>a :ArgWrap<CR>
+"
 "let g:use_python2 = 1
 " Vundle Plugins {{{
 set nocompatible " required for vundle
 filetype off " required for vundle
 set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
-
-Plugin 'kchmck/vim-coffee-script'
 
 Plugin 'gmarik/Vundle.vim' " let Vundle manage Vundle, required
 "Plugin 'vim-scripts/OmniCppComplete'
@@ -20,10 +24,16 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'python-rope/ropemode'
 "Plugin 'klen/python-mode'
 
+Plugin 'FooSoft/vim-argwrap'
+
 " Python
 Plugin 'davidhalter/jedi-vim' " Python auto-completion
 Plugin 'nvie/vim-flake8'      " Python pep8 checker
 Plugin 'hynek/vim-python-pep8-indent' " auto indent
+
+"Plugin 'amigrave/vim-pudb'
+
+Plugin 'godlygeek/csapprox' " Colorscheme fixer
 
 "Plugin 'ervandew/supertab'
 Plugin 'SirVer/ultisnips'   " Snippets engine
@@ -47,9 +57,10 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
 
-Plugin 'scrooloose/nerdcommenter'
+" Comments
+"Plugin 'scrooloose/nerdcommenter'
+Plugin 'tomtom/tcomment_vim'
 
-Plugin 'vim-scripts/guicolorscheme.vim'
 "Plugin 'jamessan/vim-gnupg'
 Plugin 'tpope/vim-surround'
 Plugin 'vimoutliner/vimoutliner'
@@ -59,7 +70,6 @@ Plugin 'mattn/calendar-vim'
 " GIT
 Plugin 'airblade/vim-gitgutter' " git highlighter
 Plugin 'tpope/vim-fugitive'     " Git wrapper
-Plugin 'http://repo.or.cz/vcscommand.git'
 
 " Styling
 Plugin 'ap/vim-css-color' " Highlight css colors
@@ -68,9 +78,8 @@ Plugin 'kien/rainbow_parentheses.vim' " Highligh parenthesis
 Plugin 'plasticboy/vim-markdown'
 
 " {{{ Check
-"Plugin 'tpope/vim-repeat'
-"Plugin 'tpope/vim-speeddating'
-"Plugin 'godlygeek/tabular'
+Plugin 'tpope/vim-repeat'
+"Plugin 'tpope/vim-commentary'
 "Plugin 'matchit.zip'
 "Plugin 'paster.vim'
 "Plugin 'ciaranm/securemodelines'
@@ -85,6 +94,14 @@ Plugin 'plasticboy/vim-markdown'
 call vundle#end()            " required
 "}}}
 
+
+
+"TODO: FINISH THIS OFF
+"let g:tcommentMapLeader1 = '<c-a>'
+"let g:tcommentMapLeader2 = '<Leader>a'
+let g:tcommentOptions = {'whitespace': 'no'}
+
+
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 "set display=lastline    " Show as much as possible of a wrapped last line, not just "@".
 
@@ -97,6 +114,7 @@ filetype plugin indent on " required by vundle
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 "}}}
 
+"au FileType python nnoremap <buffer> <F9> :wa<CR>:!clear; nosetests %<CR>
 
 "python with virtualenv support
 py << EOF
@@ -130,6 +148,8 @@ autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 "expandtab 	et 	Insert spaces instead of <TAB> character when the <TAB> key is pressed. This is also the prefered method of Python coding, since Python is especially sensitive to problems with indenting which can occur when people load files in different editors with different tab settings, and also cutting and pasting between applications (ie email/news for example) can result in problems. It is safer and more portable to use spaces for indenting.
 "softtabstop=4 	sts 	People like using real tab character instead of spaces because it makes it easier when pressing BACKSPACE or DELETE, since if the indent is using spaces it will take 4 keystrokes to delete the indent. Using this setting, however, makes VIM see multiple space characters as tabstops, and so <BS> does the right thing and will delete four spaces (assuming 4 is your setting).
 autocmd BufRead *.py set tabstop=4 shiftwidth=4 smarttab expandtab softtabstop=4
+" set colorcolumn+1
+" set textwidth=79
 
 
 " Source a local configuration file if available {{{
@@ -446,23 +466,23 @@ nnoremap Y y$ " Y yank to end of line
 nmap <leader>vs :so ~/.vimrc<CR>
 
 " join line downwards
-"nnoremap gJ ddpkJ
+nnoremap gK :m+1<bar>-1<bar>j<CR>
 
 " Alternative
 " <C-space> worked for me in Macvim but not <C-@> or <Nul>, and vice-versa for command-line vim.
 " I ended up mapping <C-space> to <Nul> and mapping with <Nul> for a more general mapping. 
 "
 " fix Ctrl-space in GUI {{{
-if has('gui_running')
-	imap <C-Space> <Esc>
-	smap <C-Space> <Esc>
-	cmap <C-Space> <Esc>
-"else
-	imap <C-@> <Esc>
-	smap <C-@> <Esc>
-	cmap <C-@> <Esc>
-	"map <C-@> <Esc>
-endif
+"if has('gui_running')
+"	imap <C-Space> <Esc>
+"	smap <C-Space> <Esc>
+"	cmap <C-Space> <Esc>
+""else
+"	imap <C-@> <Esc>
+"	smap <C-@> <Esc>
+"	cmap <C-@> <Esc>
+"	"map <C-@> <Esc>
+"endif
 "}}}
 
 " don't jump over text-wrapped lines
@@ -478,7 +498,7 @@ noremap <silent> <expr> <Up> (v:count == 0 ? 'gk' : 'k')
 "nmap <Leader>pa :setlocal paste! paste?<CR>
 set pastetoggle=<F11>
 
-nnoremap <F5> :GundoToggle<CR>
+nnoremap <leader>gu :GundoToggle<CR>
 cmap w!! w !sudo tee % >/dev/null
 nnoremap <leader>m :make<CR>
 nnoremap <Leader>nu :setlocal number! number?<CR>
@@ -489,7 +509,13 @@ nnoremap <Leader>ne :NERDTreeToggle<CR>
 nnoremap <silent> <leader>tl :TlistToggle<CR>
 nnoremap <silent> <leader>ta :TagbarToggle<CR>
 
+
+" Cleanup trailing whitespace in entire file
+cmap w!! w !sudo tee % >/dev/null
+"nnoremap <leader>w :silent! %s/\s\+$//<cr>:let @/=''<CR>:w<CR>
+
 nnoremap K K<CR>
+
 
 "FIXME: WIP
 "nnoremap <leader><Space> :YcmCompleter GoTo<CR>'
@@ -497,6 +523,17 @@ nnoremap K K<CR>
 "nnoremap <leader>f :YcmCompleter GoToDefinition<CR>
 "nnoremap <leader>d :YcmCompleter GoToDeclaration<CR>
 "nnoremap <leader>i :YcmCompleter GoToInclude<CR>
+
+
+nnoremap <silent> <C-Right>   :wincmd l<CR>
+nnoremap <silent> <C-Left>    :wincmd h<CR>
+nnoremap <silent> <C-Up>      :wincmd k<CR>
+nnoremap <silent> <C-Down>    :wincmd j<CR>
+"nnoremap <silent> <S-Right> :wincmd L<CR>
+"nnoremap <silent> <S-Left>  :wincmd H<CR>
+"nnoremap <silent> <S-Up>    :wincmd K<CR>
+"nnoremap <silent> <S-Down>  :wincmd J<CR>
+
 
 " Silent wont display Press Enter to continue command
 command! -nargs=+ Silent execute 'silent <args>' | redraw!
@@ -508,7 +545,7 @@ nmap <Leader>R :Silent !ipython -i %:p<CR>
 "map <C-Left> <C-W><Left>
 "map <C-Right> <C-W><Right>
 
-nnoremap <Leader>q :wq<CR>
+nnoremap <Leader>q :qall<CR>
 "Save file
 nnoremap <Leader>s :w<CR> " NOTE: is it necessary?
 
@@ -547,3 +584,63 @@ cnoremap $d <CR>:d<CR>``
 "highlight clear SignColumn
 "}}}
 " vim:foldmethod=marker
+"
+"
+
+" Execute a selection of code (very cool!)
+" Use VISUAL to select a range and then hit ctrl-h to execute it.
+python << EOL
+import vim
+def EvaluateCurrentRange():
+    eval(compile('\n'.join(vim.current.range),'','exec'),globals())
+EOL
+" FIXME: change mapping
+"map <C-h> :py EvaluateCurrentRange()
+
+" Use F7/Shift-F7 to add/remove a breakpoint (pdb.set_trace)
+" Totally cool.
+python << EOF
+def SetBreakpoint():
+    import re
+    nLine = int( vim.eval( 'line(".")'))
+
+    strLine = vim.current.line
+    strWhite = re.search( '^(\s*)', strLine).group(1)
+
+    vim.current.buffer.append(
+       "%(space)sipdb.set_trace() %(mark)s Breakpoint %(mark)s" %
+         {'space':strWhite, 'mark': '#' * 30}, nLine - 1)
+
+    for strLine in vim.current.buffer:
+        if strLine == "import ipdb":
+            break
+    else:
+        vim.current.buffer.append( 'import ipdb', 0)
+        vim.command( 'normal j1')
+
+vim.command( 'map <f8> :py SetBreakpoint()<cr>')
+
+def RemoveBreakpoints():
+    import re
+
+    nCurrentLine = int( vim.eval( 'line(".")'))
+
+    nLines = []
+    nLine = 1
+    for strLine in vim.current.buffer:
+        if strLine == "import ipdb" or strLine.lstrip()[:15] == "ipdb.set_trace()":
+            nLines.append( nLine)
+        nLine += 1
+
+    nLines.reverse()
+
+    for nLine in nLines:
+        vim.command( "normal %dG" % nLine)
+        vim.command( "normal dd")
+        if nLine < nCurrentLine:
+            nCurrentLine -= 1
+
+    vim.command( "normal %dG" % nCurrentLine)
+
+vim.command( "map <s-f8> :py RemoveBreakpoints()<cr>")
+EOF

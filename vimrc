@@ -24,7 +24,8 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'python-rope/ropemode'
 "Plugin 'klen/python-mode'
 
-Plugin 'joonty/vdebug'
+"Plugin 'joonty/vdebug'
+Plugin 'wincent/terminus'
 
 Plugin 'FooSoft/vim-argwrap'
 
@@ -132,16 +133,16 @@ EOF
 
 " Turn on bracketing mode
 " Causes a delay with Control-Space
-let &t_SI .= "\<Esc>[?2004h"
-let &t_EI .= "\<Esc>[?2004l"
-
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-
-function! XTermPasteBegin()
-	set pastetoggle=<Esc>[201~
-	set paste
-	return ""
-endfunction
+"let &t_SI .= "\<Esc>[?2004h"
+"let &t_EI .= "\<Esc>[?2004l"
+"
+"inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+"
+"function! XTermPasteBegin()
+"	set pastetoggle=<Esc>[201~
+"	set paste
+"	return ""
+"endfunction
 "
 
 " Remove trailing white spaces from python files

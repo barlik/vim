@@ -24,6 +24,8 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'python-rope/ropemode'
 "Plugin 'klen/python-mode'
 
+Plugin 'joonty/vdebug'
+
 Plugin 'FooSoft/vim-argwrap'
 
 " Python
@@ -33,7 +35,7 @@ Plugin 'hynek/vim-python-pep8-indent' " auto indent
 
 "Plugin 'amigrave/vim-pudb'
 
-Plugin 'godlygeek/csapprox' " Colorscheme fixer
+"Plugin 'godlygeek/csapprox' " Colorscheme fixer
 
 "Plugin 'ervandew/supertab'
 Plugin 'SirVer/ultisnips'   " Snippets engine
@@ -95,7 +97,6 @@ call vundle#end()            " required
 "}}}
 
 
-
 "TODO: FINISH THIS OFF
 "let g:tcommentMapLeader1 = '<c-a>'
 "let g:tcommentMapLeader2 = '<Leader>a'
@@ -115,6 +116,9 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 "}}}
 
 "au FileType python nnoremap <buffer> <F9> :wa<CR>:!clear; nosetests %<CR>
+"au FileType python nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
+"noremap <F5> :w !python %<CR>
+"inoremap <F5> <ESC>:w !python %<CR>
 
 "python with virtualenv support
 py << EOF
@@ -161,25 +165,22 @@ autocmd BufRead *.py set tabstop=4 shiftwidth=4 smarttab expandtab softtabstop=4
 "endif
 "}}}
 
+"setlocal spell spelllang=en_us
+
 " Settings {{{
 " Colorscheme {{{
 function! SetColorscheme()
 	set background=dark
+	"colorscheme jellybeans,distinguished, molokai
+	colorscheme seti
 	if &diff
 		"calmar256-dark
 		"pablo,murphy,slate,desert
-		colorscheme seti
+		colorscheme jellybeans
 	else
 		"colorscheme desert
-		colorscheme seti
-		hi Search ctermbg=8
-		hi IncSearch ctermbg=8
-		hi Visual ctermfg=11
+		"colorscheme seti
 	endif
-	"hi DiffChange ctermbg=17
-	hi DiffChange ctermbg=235
-	hi DiffText ctermbg=88
-	"highligh DiffChange ctermbg=4
 endfunction
 call SetColorscheme()
 "}}}
@@ -583,9 +584,6 @@ cnoremap $d <CR>:d<CR>``
 
 "highlight clear SignColumn
 "}}}
-" vim:foldmethod=marker
-"
-"
 
 " Execute a selection of code (very cool!)
 " Use VISUAL to select a range and then hit ctrl-h to execute it.
@@ -596,6 +594,7 @@ def EvaluateCurrentRange():
 EOL
 " FIXME: change mapping
 "map <C-h> :py EvaluateCurrentRange()
+map <F5> :py EvaluateCurrentRange()
 
 " Use F7/Shift-F7 to add/remove a breakpoint (pdb.set_trace)
 " Totally cool.
@@ -644,3 +643,7 @@ def RemoveBreakpoints():
 
 vim.command( "map <s-f8> :py RemoveBreakpoints()<cr>")
 EOF
+"
+" vim:foldmethod=marker
+"
+"

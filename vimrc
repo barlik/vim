@@ -97,6 +97,9 @@ Plugin 'tpope/vim-repeat'
 call vundle#end()            " required
 "}}}
 
+" visual shifting (builtin-repeat)
+":vnoremap < <gv
+":vnoremap > >gv
 
 "TODO: FINISH THIS OFF
 "let g:tcommentMapLeader1 = '<c-a>'
@@ -297,6 +300,7 @@ set wildignore=.svn,CVS,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*
 " set listchars=tab:>-,eol:$,precedes:>,trail:_ ¦│
 set listchars=tab:\│\ ,trail:_
 let c_space_errors = 1 " Highlight space error in C/C++
+"TODO: use :match instead?
 "}}}
 
 " Plugin settings {{{
@@ -327,7 +331,11 @@ let g:ycm_key_invoke_completion = '<C-n>'
 "}}}
 " Syntastic
 let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = { "mode": "passive" }
+"let g:syntastic_mode_map = { "mode": "passive" }
+let g:syntastic_error_symbol = "\u2717"
+let g:syntastic_warning_symbol = "\u26A0"
+let g:syntastic_enable_highlighting = 0
+"highligh Error ctermbg=bg
 
 " Vim Jedi {{{
 let g:jedi#completions_command = "<C-N>"
@@ -396,7 +404,7 @@ let g:miniBufExplAutoStart = 0
 let g:miniBufExplBRSplit = 1
 " }}}
 " TagList {{{
-nnoremap <silent> <F3> :TlistToggle<CR>
+nnoremap <silent> <F3> :TagbarToggle<CR>
 " F3: Switch on/off TagList
 highlight MyTagListTagName gui=bold guifg=Black guibg=Orange
 " TagListTagName - Used for tag names
@@ -607,6 +615,9 @@ EOL
 " FIXME: change mapping
 "map <C-h> :py EvaluateCurrentRange()
 map <F5> :py EvaluateCurrentRange()
+
+" match git conflicts
+"match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
 " Use F7/Shift-F7 to add/remove a breakpoint (pdb.set_trace)
 " Totally cool.

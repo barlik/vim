@@ -260,7 +260,7 @@ set smartindent
 set smartcase		" ignore case when the pattern contains lowercase letters only
 "set cursorline         " draw horizontal line on cursor's position 
 "set showtabline=2	" always show tab page labels
-"FIXMEset showmatch
+set showmatch
 
 set dictionary+='/usr/share/dict/words'
 "set spell
@@ -281,7 +281,9 @@ set autowrite 			" Automatically write changes with tagging to a new file
 set splitright			" Put vertical splits to the right of the current window
 set vb t_vb=			" disable visual bell
 set mouse=a			" enable mouse
-set clipboard=autoselect,unnamedplus	" use X clipboard as default
+" autoselect - use primary buffer for middle-mouse pasting
+" unnamedplus - clipboard for yanking
+set clipboard=autoselect,unnamedplus
 set formatoptions=tcrq "Show menu with possible completions
 set wildmode=longest,list,full	" Set completion modes
 set wildmenu

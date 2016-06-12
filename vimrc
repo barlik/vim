@@ -192,6 +192,12 @@ function! SetupDiffMappings()
 	call SetColorscheme()
 endfunction
 
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
 "let c='a'
 "while c <= 'z'
 	"exec "set <A-".c.">=\e".c

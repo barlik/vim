@@ -180,8 +180,11 @@ function! SetupDiffMappings()
 	if &diff
 		nnoremap <M-Up> [c
 		nnoremap <M-Down> ]c
-		nnoremap <M-Left> do
-		nnoremap <M-Right> dp
+		"nnoremap <M-Left> do
+		"nnoremap <M-Right> dp
+		nnoremap <buffer> <silent> <M-Left> :diffget 1<Bar>diffupdate<CR>'
+		nnoremap <buffer> <silent> <M-Right> :diffget 2<Bar>diffupdate<CR>'
+		"nnoremap <leader>du :diffupdate<CR>
 		set wrap
 	else
 		nnoremap <M-Up> :cp<CR>

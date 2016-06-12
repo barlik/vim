@@ -198,12 +198,6 @@ function! SetupDiffMappings()
 	call SetColorscheme()
 endfunction
 
-"split navigations
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
 "let c='a'
 "while c <= 'z'
 	"exec "set <A-".c.">=\e".c
@@ -226,6 +220,12 @@ call SetupDiffMappings()
 " Entering diff mode from within vim - diffsplit, etc.
 autocmd FilterWritePost * call SetupDiffMappings()
 "}}}
+""split navigations
+nnoremap <C-Down> <C-W><C-J>
+nnoremap <C-Up> <C-W><C-K>
+nnoremap <C-Left> <C-W><C-L>
+nnoremap <C-Right> <C-W><C-H>
+
 " gui Setting {{{
 " Options for gvim
 if has('gui_running')

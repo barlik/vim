@@ -178,18 +178,19 @@ call SetColorscheme()
 " Diff Handling {{{
 function! SetupDiffMappings()
 	if &diff
-		nnoremap <C-Up> [c
-		nnoremap <C-Down> ]c
-		nnoremap <C-Left> do
-		nnoremap <C-Right> dp
-	"else
+		nnoremap <M-Up> [c
+		nnoremap <M-Down> ]c
+		nnoremap <M-Left> do
+		nnoremap <M-Right> dp
+		set wrap
+	else
+		nnoremap <M-Up> :cp<CR>
+		nnoremap <M-Down> :cn<CR>
+		nnoremap <M-Right> :MBEbn<CR>
+		nnoremap <M-Left> :MBEbp<CR>
 	endif
 	call SetColorscheme()
 endfunction
-nnoremap <M-Up> :cp<CR>
-nnoremap <M-Down> :cn<CR>
-nnoremap <M-Right> :MBEbn<CR>
-nnoremap <M-Left> :MBEbp<CR>
 
 "let c='a'
 "while c <= 'z'

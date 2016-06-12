@@ -560,7 +560,9 @@ nnoremap <Leader>s :w<CR> " NOTE: is it necessary?
 " TODO
 " noautocmd - do not trigger any autocmd while loading files - much quicker
 " /j - do not jump to first occurence
-nnoremap <Leader>todo :noautocmd vimgrep /TODO\|FIXME\|XXX/j **/*<CR>:cw<CR>
+nnoremap <Leader>todo :noautocmd vimgrep /TODO\<bar>FIXME\<bar>XXX/j **/*<CR>:cw<CR>
+" find all occurences of last find pattern
+nnoremap <Leader>grep :noautocmd vimgrep //j **/*<CR>:cw<CR>
 "}}}
 
 " {{{ Tags

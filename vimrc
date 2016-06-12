@@ -24,6 +24,8 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'python-rope/ropemode'
 "Plugin 'klen/python-mode'
 
+Plugin 'vimux'
+
 "Plugin 'joonty/vdebug'
 Plugin 'wincent/terminus'
 
@@ -166,7 +168,8 @@ autocmd BufRead *.py set tabstop=4 shiftwidth=4 smarttab expandtab softtabstop=4
 function! SetColorscheme()
 	set background=dark
 	"colorscheme jellybeans,distinguished, molokai
-	colorscheme seti
+	colorscheme jellybeans
+	"colorscheme seti
 	if &diff
 		"calmar256-dark
 		"pablo,murphy,slate,desert
@@ -186,7 +189,7 @@ function! SetupDiffMappings()
 		"nnoremap <M-Left> do
 		"nnoremap <M-Right> dp
 		nnoremap <buffer> <silent> <M-Left> :diffget 1<Bar>diffupdate<CR>'
-		nnoremap <buffer> <silent> <M-Right> :diffget 2<Bar>diffupdate<CR>'
+		nnoremap <buffer> <silent> <M-Right> :diffput 1<Bar>diffupdate<CR>'
 		"nnoremap <leader>du :diffupdate<CR>
 		set wrap
 	else

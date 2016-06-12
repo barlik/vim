@@ -473,6 +473,13 @@ nnoremap gK :m+1<bar>-1<bar>j<CR>
 " <C-space> worked for me in Macvim but not <C-@> or <Nul>, and vice-versa for command-line vim.
 " I ended up mapping <C-space> to <Nul> and mapping with <Nul> for a more general mapping. 
 "
+nnoremap <leader>gb :Gblame<CR>
+nnoremap <leader>gc :Gcommit -v<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>ge :Gedit<CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gw :Gwrite<CR>
+
 " fix Ctrl-space in GUI {{{
 "if has('gui_running')
 "	imap <C-Space> <Esc>

@@ -80,6 +80,7 @@ Plugin 'tpope/vim-fugitive'     " Git wrapper
 Plugin 'ap/vim-css-color' " Highlight css colors
 Plugin 'kien/rainbow_parentheses.vim' " Highligh parenthesis
 
+Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 
 " {{{ Check
@@ -670,6 +671,10 @@ def RemoveBreakpoints():
 vim.command( "map <s-f8> :py RemoveBreakpoints()<cr>")
 EOF
 "
+"Tabular
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+
 " vim:foldmethod=marker
 "
 "

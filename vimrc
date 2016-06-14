@@ -194,8 +194,8 @@ function! SetupDiffMappings()
 		"nnoremap <leader>du :diffupdate<CR>
 		set wrap
 	else
-		nnoremap <M-Up> :cp<CR>
-		nnoremap <M-Down> :cn<CR>
+		nnoremap <M-Up> :cprevious<CR>
+		nnoremap <M-Down> :cnext<CR>
 		nnoremap <M-Right> :MBEbn<CR>
 		nnoremap <M-Left> :MBEbp<CR>
 	endif

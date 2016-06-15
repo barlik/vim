@@ -124,6 +124,8 @@ filetype plugin indent on " required by vundle
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 "}}}
 
+"au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
 "au FileType python nnoremap <buffer> <F9> :wa<CR>:!clear; nosetests %<CR>
 "au FileType python nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
 "noremap <F5> :w !python %<CR>
@@ -150,7 +152,7 @@ autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 "smarttab 	sta 	Use the "shiftwidth" setting for inserting <TAB>s instead of the "tabstop" setting, when at the beginning of a line. This may be redundant for most people, but some poeple like to keep their tabstop=8 for compatability when loading files, but setting shiftwidth=4 for nicer coding style.
 "expandtab 	et 	Insert spaces instead of <TAB> character when the <TAB> key is pressed. This is also the prefered method of Python coding, since Python is especially sensitive to problems with indenting which can occur when people load files in different editors with different tab settings, and also cutting and pasting between applications (ie email/news for example) can result in problems. It is safer and more portable to use spaces for indenting.
 "softtabstop=4 	sts 	People like using real tab character instead of spaces because it makes it easier when pressing BACKSPACE or DELETE, since if the indent is using spaces it will take 4 keystrokes to delete the indent. Using this setting, however, makes VIM see multiple space characters as tabstops, and so <BS> does the right thing and will delete four spaces (assuming 4 is your setting).
-autocmd BufRead *.py set tabstop=4 shiftwidth=4 smarttab expandtab softtabstop=4
+autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 smarttab expandtab textwidth=79
 " set colorcolumn+1
 " set textwidth=79
 
@@ -194,7 +196,6 @@ function! SetupDiffMappings()
 		nnoremap <buffer> <silent> <M-Left> :diffget 1<Bar>diffupdate<CR>'
 		nnoremap <buffer> <silent> <M-Right> :diffput 1<Bar>diffupdate<CR>'
 		"nnoremap <leader>du :diffupdate<CR>
-		set wrap
 	else
 		nnoremap <M-Up> :cprevious<CR>
 		nnoremap <M-Down> :cnext<CR>

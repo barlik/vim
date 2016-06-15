@@ -62,6 +62,8 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'
 
+Plugin 'tpope/vim-unimpaired'
+
 " Comments
 "Plugin 'scrooloose/nerdcommenter'
 Plugin 'tomtom/tcomment_vim'
@@ -169,8 +171,8 @@ autocmd BufRead *.py set tabstop=4 shiftwidth=4 smarttab expandtab softtabstop=4
 function! SetColorscheme()
 	set background=dark
 	"colorscheme jellybeans,distinguished, molokai
-	colorscheme jellybeans
-	"colorscheme seti
+	"colorscheme jellybeans
+	colorscheme seti
 	if &diff
 		"calmar256-dark
 		"pablo,murphy,slate,desert

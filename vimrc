@@ -109,8 +109,27 @@ call vundle#end()            " required
 "TODO: FINISH THIS OFF
 "let g:tcommentMapLeader1 = '<c-a>'
 "let g:tcommentMapLeader2 = '<Leader>a'
-let g:tcommentOptions = {'whitespace': 'no'}
+"let g:tcommentOptions = {'whitespace': 'no'}
 
+" silent will not complaint about untitlet buffers
+" :au FocusLost * silent! wa
+"
+"
+" {{{
+" Reindent after save
+" function! Hook()
+" 	let p = getpos(".")
+" 	normal! gg=G
+" 	call setpos(".",p)
+" endfunction
+"
+" :autocmd BufLeave,FocusLost * :call Hook()
+
+" }}}
+" Auto close fugitive buffers
+autocmd BufReadPost fugitive://* set bufhidden=delete
+" Strip spaces
+" autocmd BufWritePre *.py :%s/\s\+$//e
 
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 "set display=lastline    " Show as much as possible of a wrapped last line, not just "@".

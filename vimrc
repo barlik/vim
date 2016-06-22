@@ -26,6 +26,8 @@ Plugin 'Valloric/YouCompleteMe'
 
 Plugin 'vimux'
 
+Plugin 'tpope/vim-cucumber'
+
 "Plugin 'joonty/vdebug'
 Plugin 'wincent/terminus'
 
@@ -35,6 +37,7 @@ Plugin 'FooSoft/vim-argwrap'
 Plugin 'davidhalter/jedi-vim' " Python auto-completion
 Plugin 'nvie/vim-flake8'      " Python pep8 checker
 Plugin 'hynek/vim-python-pep8-indent' " auto indent
+"Plugin 'tmhedberg/SimpylFold' " improved Python folding
 
 "Plugin 'amigrave/vim-pudb'
 
@@ -105,6 +108,8 @@ call vundle#end()            " required
 " visual shifting (builtin-repeat)
 ":vnoremap < <gv
 ":vnoremap > >gv
+
+noremap! <C-?> <C-w>
 
 "TODO: FINISH THIS OFF
 "let g:tcommentMapLeader1 = '<c-a>'

@@ -1,0 +1,42 @@
+snippet feat
+Feature: ${1}
+endsnippet
+
+snippet sc
+Scenario: ${1}
+endsnippet
+
+snippet so
+ScenarioOutline: ${1}
+endsnippet
+
+snippet ex
+Examples:
+  |${1}|
+endsnippet
+
+snippet I_am_on_the_page "I am on the page"
+${1:Given} I am on "${2:page_name}"
+endsnippet
+
+snippet I_press_button "I press button"
+${1:When} I press "${2:button}"
+endsnippet
+
+snippet I_fill_in_field_with_value "I fill in field with value"
+${1:When} I fill in "${2:field}" with "${3:value}"
+endsnippet
+
+snippet fillf
+${1:When} I fill in "${2:value}" for "${3:field}"
+endsnippet
+
+snippet I_set_fixture_path_{path}_to_{json}
+${1:When} I set fixture path "${2:path}" to "${3:json}"
+endsnippet
+
+snippet I_set_fixture_path_{path}_from_file_{file}
+${1:When} I set fixture path "${2:path}" to "${3:file}"
+endsnippet
+
+# vim:ft=snippets:

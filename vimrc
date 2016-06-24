@@ -196,9 +196,9 @@ autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 smartta
 " Colorscheme {{{
 function! SetColorscheme()
 	set background=dark
-	"colorscheme jellybeans,distinguished, molokai
+	"colorscheme seti,jellybeans,distinguished, molokai
 	"colorscheme jellybeans
-	colorscheme seti
+	colorscheme seti | hi Visual term=reverse ctermbg=grey ctermfg=bg
 	if &diff
 		"calmar256-dark
 		"pablo,murphy,slate,desert

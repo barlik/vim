@@ -1,0 +1,19 @@
+priority -49
+
+snippet interactive "embed interactive python"
+import code; code.interact(local=locals()) # XXX: BREAKPOINT
+endsnippet
+
+snippet ipython "ipython embed"
+import IPython; IPython.embed() # XXX: BREAKPOINT
+endsnippet
+
+snippet pdb "pdb breakpoint"
+import pdb; pdb.set_trace() # XXX: BREAKPOINT
+endsnippet
+
+snippet ipdb "ipdb breakpoint"
+import ipdb; ipdb.set_trace() # XXX: BREAKPOINT
+endsnippet
+
+# vim:ft=snippets:

@@ -643,7 +643,7 @@ import vim
 def EvaluateCurrentRange():
     eval(compile('\n'.join(vim.current.range),'','exec'),globals())
 EOL
-" FIXME: change mapping
+" FIXME: change mapping (<leader>ev?>
 "map <C-h> :py EvaluateCurrentRange()
 map <F5> :py EvaluateCurrentRange()
 
@@ -662,7 +662,7 @@ def SetBreakpoint():
 
     vim.current.buffer.append(
        "%(space)sipdb.set_trace() %(mark)s Breakpoint %(mark)s" %
-         {'space':strWhite, 'mark': '#' * 30}, nLine - 1)
+         {'space':strWhite, 'mark': '#' * 20}, nLine - 1)
 
     for strLine in vim.current.buffer:
         if strLine == "import ipdb":

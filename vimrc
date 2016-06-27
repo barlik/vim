@@ -214,7 +214,7 @@ function! SetColorscheme()
 	set background=dark
 	"colorscheme seti,jellybeans,distinguished, molokai
 	"colorscheme jellybeans
-	colorscheme seti | hi Visual term=reverse ctermbg=grey ctermfg=bg
+	colorscheme seti | hi Visual cterm=reverse ctermbg=bg ctermfg=fg
 	if &diff
 		"calmar256-dark
 		"pablo,murphy,slate,desert
@@ -233,8 +233,8 @@ function! SetupDiffMappings()
 		nnoremap <M-Down> ]c
 		"nnoremap <M-Left> do
 		"nnoremap <M-Right> dp
-		nnoremap <buffer> <silent> <M-Left> :diffget 1<Bar>diffupdate<CR>'
-		nnoremap <buffer> <silent> <M-Right> :diffput 1<Bar>diffupdate<CR>'
+		nnoremap <buffer> <silent> <M-Left> :diffget 1<Bar>diffupdate<CR>
+		nnoremap <buffer> <silent> <M-Right> :diffput 1<Bar>diffupdate<CR>
 		"nnoremap <leader>du :diffupdate<CR>
 	else
 		nnoremap <M-Up> :cprevious<CR>
@@ -612,7 +612,8 @@ nmap <Leader>R :Silent !ipython -i %:p<CR>
 "map <C-Right> <C-W><Right>
 
 nnoremap <Leader>q :qall<CR>
-nnoremap <Leader>s :w<CR> "Save file
+"Save file
+nnoremap <Leader>s :w<CR>
 
 " TODO
 " noautocmd - do not trigger any autocmd while loading files - much quicker

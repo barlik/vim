@@ -64,7 +64,7 @@ Plugin 'scrooloose/nerdtree'      " NERDTree
 " Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 
 Plugin 'Lokaltog/vim-easymotion'
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'rking/ag.vim'
 
 Plugin 'tpope/vim-unimpaired'

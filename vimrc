@@ -107,6 +107,18 @@ Plugin 'tpope/vim-repeat'
 call vundle#end()            " required
 "}}}
 
+" Open NERDTree on vim startup without a file
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" change directory to currently opened file
+nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
+
+" PYTHON DEBUGGING
+nnoremap <silent> ,pb :call system("xsend 'break " . expand("%:p") . ":" . line("."))<CR>
+nnoremap <silent> ,pc :call system("xsend 'continue'")<CR>
+nnoremap <silent> ,ps :call system("xsend 'step'")<CR>
+
 " visual shifting (builtin-repeat)
 ":vnoremap < <gv
 ":vnoremap > >gv
@@ -170,6 +182,8 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 "	return ""
 "endfunction
 "
+au FileType python map <silent> <leader>b oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
+au FileType python map <silent> <leader>B Oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
 
 " Remove trailing white spaces from python files
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
@@ -598,8 +612,7 @@ nmap <Leader>R :Silent !ipython -i %:p<CR>
 "map <C-Right> <C-W><Right>
 
 nnoremap <Leader>q :qall<CR>
-"Save file
-nnoremap <Leader>s :w<CR> " NOTE: is it necessary?
+nnoremap <Leader>s :w<CR> "Save file
 
 " TODO
 " noautocmd - do not trigger any autocmd while loading files - much quicker

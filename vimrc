@@ -61,6 +61,8 @@ Plugin 'vim-scripts/a.vim'  " Toggle c/h files
 
 " Code navigation
 Plugin 'scrooloose/nerdtree'      " NERDTree
+" Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
+
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'kien/ctrlp.vim'
 Plugin 'rking/ag.vim'

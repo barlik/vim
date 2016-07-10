@@ -1,11 +1,4 @@
-"TODO:
-"map :Explore
-":Sex is shortcut for split explore
-"map argwrap
-"nnoremap <silent> <leader>a :ArgWrap<CR>
-"
-"let g:use_python2 = 1
-" Vundle Plugins {{{
+" PLUGINS {{{
 set nocompatible " required for vundle
 filetype off " required for vundle
 set runtimepath+=~/.vim/bundle/Vundle.vim
@@ -24,7 +17,7 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'python-rope/ropemode'
 "Plugin 'klen/python-mode'
 
-Plugin 'vimux'
+" Plugin 'vimux' " tmux integration
 
 Plugin 'tpope/vim-cucumber'
 
@@ -41,7 +34,13 @@ Plugin 'hynek/vim-python-pep8-indent' " auto indent
 
 "Plugin 'amigrave/vim-pudb'
 
+" Colors
 "Plugin 'godlygeek/csapprox' " Colorscheme fixer
+Plugin 'morhetz/gruvbox'
+" Plugin 'Yggdroot/indentLine'
+
+" Start screen
+Plugin 'mhinz/vim-startify'
 
 "Plugin 'ervandew/supertab'
 Plugin 'SirVer/ultisnips'   " Snippets engine
@@ -61,7 +60,7 @@ Plugin 'vim-scripts/a.vim'  " Toggle c/h files
 
 " Code navigation
 Plugin 'scrooloose/nerdtree'      " NERDTree
-" Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
+Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -107,17 +106,20 @@ Plugin 'tpope/vim-repeat'
 call vundle#end()            " required
 "}}}
 
+"TODO:
+"map :Explore
+":Sex is shortcut for split explore
+"map argwrap
+"nnoremap <silent> <leader>a :ArgWrap<CR>
+"
+"let g:use_python2 = 1
+
 " Open NERDTree on vim startup without a file
 " autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " change directory to currently opened file
 nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
-
-" PYTHON DEBUGGING
-nnoremap <silent> ,pb :call system("xsend 'break " . expand("%:p") . ":" . line("."))<CR>
-nnoremap <silent> ,pc :call system("xsend 'continue'")<CR>
-nnoremap <silent> ,ps :call system("xsend 'step'")<CR>
 
 " visual shifting (builtin-repeat)
 ":vnoremap < <gv
@@ -130,8 +132,8 @@ noremap! <C-?> <C-w>
 "let g:tcommentMapLeader2 = '<Leader>a'
 "let g:tcommentOptions = {'whitespace': 'no'}
 
-" silent will not complaint about untitlet buffers
-" :au FocusLost * silent! wa
+" silent will not complaint about untitled buffers
+" :au FocusLost * nested silent! update # (or wall)
 "
 "
 " {{{
@@ -211,7 +213,6 @@ autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 smartta
 " Settings {{{
 " Colorscheme {{{
 function! SetColorscheme()
-	set background=dark
 	"colorscheme seti,jellybeans,distinguished, molokai
 	"colorscheme jellybeans
 	colorscheme seti | hi Visual cterm=reverse ctermbg=bg ctermfg=fg
@@ -244,24 +245,6 @@ function! SetupDiffMappings()
 	endif
 	call SetColorscheme()
 endfunction
-
-"let c='a'
-"while c <= 'z'
-	"exec "set <A-".c.">=\e".c
-	""exec "imap \e".c." <A-".c.">"
-	"let c = nr2char(1+char2nr(c))
-"endw
-"set ttimeout ttimeoutlen=50
-"set <m-a>=a
-"set <m-b>=b
-"map <M-h> <Left>
-"map <M-n> <Down>
-"map <M-e> <Up>
-"map <M-i> <Right>
-"imap <M-h> <Left>
-"imap <M-n> <Down>
-"imap <M-e> <Up>
-"imap <M-i> <Right>
 
 call SetupDiffMappings()
 " Entering diff mode from within vim - diffsplit, etc.
@@ -539,16 +522,16 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gw :Gwrite<CR>
 
 " fix Ctrl-space in GUI {{{
-"if has('gui_running')
-"	imap <C-Space> <Esc>
-"	smap <C-Space> <Esc>
-"	cmap <C-Space> <Esc>
-""else
-"	imap <C-@> <Esc>
-"	smap <C-@> <Esc>
-"	cmap <C-@> <Esc>
-"	"map <C-@> <Esc>
-"endif
+" if has('gui_running')
+" 	imap <C-Space> <Esc>
+" 	smap <C-Space> <Esc>
+" 	cmap <C-Space> <Esc>
+" "else
+" 	imap <C-@> <Esc>
+" 	smap <C-@> <Esc>
+" 	cmap <C-@> <Esc>
+" 	"map <C-@> <Esc>
+" endif
 "}}}
 
 " don't jump over text-wrapped lines
@@ -572,6 +555,7 @@ nnoremap <Leader>nr :setlocal relativenumber! relativenumber?<CR>
 nnoremap <Leader>li :setlocal list! list?<CR>
 nnoremap <Leader>p :put<CR>
 nnoremap <Leader>ne :NERDTreeToggle<CR>
+nnoremap <Leader>nf :NERDTreeFind<CR>
 nnoremap <silent> <leader>tl :TlistToggle<CR>
 nnoremap <silent> <leader>ta :TagbarToggle<CR>
 
@@ -600,16 +584,10 @@ nnoremap <silent> <C-Down>    :wincmd j<CR>
 "nnoremap <silent> <S-Up>    :wincmd K<CR>
 "nnoremap <silent> <S-Down>  :wincmd J<CR>
 
-
-" Silent wont display Press Enter to continue command
+" Silent won't display Press Enter to continue command
 command! -nargs=+ Silent execute 'silent <args>' | redraw!
 nmap <Leader>r :!clear; python %:p<CR>
 nmap <Leader>R :Silent !ipython -i %:p<CR>
-
-"map <C-Up> <C-W><Up>
-"map <C-Down> <C-W><Down>
-"map <C-Left> <C-W><Left>
-"map <C-Right> <C-W><Right>
 
 nnoremap <Leader>q :qall<CR>
 "Save file
@@ -717,6 +695,12 @@ EOF
 "Tabular
 nmap <Leader>a= :Tabularize /=<CR>
 vmap <Leader>a= :Tabularize /=<CR>
+
+" PYTHON DEBUGGING
+nnoremap <silent> <Leader>pb :call system("xsend 'break " . expand("%:p") . ":" . line("."))<CR>
+nnoremap <silent> <Leader>pc :call system("xsend 'continue'")<CR>
+nnoremap <silent> <Leader>ps :call system("xsend 'step'")<CR>
+noremap <silent> <Leader>pp :yank<CR>:call system("xsend 'paste -q'")<CR>
 
 " vim:foldmethod=marker
 "

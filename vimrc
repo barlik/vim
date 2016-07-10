@@ -186,6 +186,8 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 "
 au FileType python map <silent> <leader>b oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
 au FileType python map <silent> <leader>B Oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
+"au FileType python map <silent> <leader>pb exe "!echo " . expand("%:p"). ":" . line(".")
+"nmap <C-LeftMouse> <LeftMouse>,d
 
 " Remove trailing white spaces from python files
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``

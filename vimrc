@@ -608,8 +608,9 @@ nnoremap <Leader>grep :noautocmd vimgrep //j **/*<CR>:cw<CR>
 "- "tags" search for a tags file named 'tags' 
 "- ";" recurse up the file tree if you do not find it
 "- "../../../../" stop looking after 4 levels
+"- "$HOME" stop looking after entering HOME
 
-set tags=./tags;../../../../
+set tags=./tags;$HOME
 "
 " configure tags - add additional tags here or comment out not-used ones
 "set tags+=~/.vim/tags/libc

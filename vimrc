@@ -12,17 +12,16 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'Shougo/neocomplcache'
 "Plugin 'spolu/dwm.vim'
 "Plugin 'jeaye/color_coded'
-"Plugin 'python-rope/rope'
-"Plugin 'python-rope/ropevim'
-"Plugin 'python-rope/ropemode'
-"Plugin 'klen/python-mode'
+Plugin 'jmcantrell/vim-virtualenv'
+" Plugin 'python-rope/ropevim'
+" Plugin 'klen/python-mode'
 
 " Plugin 'vimux' " tmux integration
 
 Plugin 'tpope/vim-cucumber'
 
 "Plugin 'joonty/vdebug'
-Plugin 'wincent/terminus'
+" Plugin 'wincent/terminus'
 
 Plugin 'FooSoft/vim-argwrap'
 
@@ -30,9 +29,12 @@ Plugin 'FooSoft/vim-argwrap'
 Plugin 'davidhalter/jedi-vim' " Python auto-completion
 Plugin 'nvie/vim-flake8'      " Python pep8 checker
 Plugin 'hynek/vim-python-pep8-indent' " auto indent
-"Plugin 'tmhedberg/SimpylFold' " improved Python folding
+Plugin 'tmhedberg/SimpylFold' " improved Python folding
 
 "Plugin 'amigrave/vim-pudb'
+
+" Directory diff
+Plugin 'will133/vim-dirdiff'
 
 " Colors
 "Plugin 'godlygeek/csapprox' " Colorscheme fixer
@@ -89,10 +91,14 @@ Plugin 'kien/rainbow_parentheses.vim' " Highligh parenthesis
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 
+" HTML
+Plugin 'mattn/emmet-vim' " fancy automatic tags
+
+Plugin 'kshenoy/vim-signature' " showing marks
+
 " {{{ Check
 Plugin 'tpope/vim-repeat'
 "Plugin 'tpope/vim-commentary'
-"Plugin 'matchit.zip'
 "Plugin 'paster.vim'
 "Plugin 'ciaranm/securemodelines'
 "Plugin 'AutoComplPop'
@@ -102,9 +108,16 @@ Plugin 'tpope/vim-repeat'
 "Plugin 'altercation/vim-colors-solarized'
 "}}}
 
+" Vim integrated plugins
+packadd! matchit
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 "}}}
+
+"Emmet plugin
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
 
 "TODO:
 "map :Explore
@@ -171,19 +184,24 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 "noremap <F5> :w !python %<CR>
 "inoremap <F5> <ESC>:w !python %<CR>
 
-" Turn on bracketing mode
+" Bracketed mode {{{
 " Causes a delay with Control-Space
-"let &t_SI .= "\<Esc>[?2004h"
-"let &t_EI .= "\<Esc>[?2004l"
-"
-"inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-"
-"function! XTermPasteBegin()
-"	set pastetoggle=<Esc>[201~
-"	set paste
-"	return ""
-"endfunction
-"
+" Enable bracketed paste mode on entering Vim.
+let &t_SI .= "\<Esc>[?2004h"
+" Disable bracketed paste mode on leaving Vim.
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+cnoremap <Esc>[200~ <nop>
+cnoremap <Esc>[201~ <nop>
+
+function! XTermPasteBegin()
+	set pastetoggle=<Esc>[201~
+	set paste
+	return ""
+endfunction
+" }}}
+
 au FileType python map <silent> <leader>b oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
 au FileType python map <silent> <leader>B Oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
 "au FileType python map <silent> <leader>pb exe "!echo " . expand("%:p"). ":" . line(".")
@@ -196,7 +214,8 @@ autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 "smarttab 	sta 	Use the "shiftwidth" setting for inserting <TAB>s instead of the "tabstop" setting, when at the beginning of a line. This may be redundant for most people, but some poeple like to keep their tabstop=8 for compatability when loading files, but setting shiftwidth=4 for nicer coding style.
 "expandtab 	et 	Insert spaces instead of <TAB> character when the <TAB> key is pressed. This is also the prefered method of Python coding, since Python is especially sensitive to problems with indenting which can occur when people load files in different editors with different tab settings, and also cutting and pasting between applications (ie email/news for example) can result in problems. It is safer and more portable to use spaces for indenting.
 "softtabstop=4 	sts 	People like using real tab character instead of spaces because it makes it easier when pressing BACKSPACE or DELETE, since if the indent is using spaces it will take 4 keystrokes to delete the indent. Using this setting, however, makes VIM see multiple space characters as tabstops, and so <BS> does the right thing and will delete four spaces (assuming 4 is your setting).
-autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 smarttab expandtab textwidth=79
+" Python
+autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 smarttab expandtab foldlevel=1
 " set colorcolumn+1
 " set textwidth=79
 
@@ -316,6 +335,7 @@ set shiftwidth=8
 "set cinoptions=:0,u0,U1,t0,M1 " pozriet v manualy set noexpandtab
 "set hidden " keep buffers when you leave them - unnecessary with autowrite on
 set autowrite 			" Automatically write changes with tagging to a new file
+"set splitbelow
 set splitright			" Put vertical splits to the right of the current window
 set vb t_vb=			" disable visual bell
 set mouse=a			" enable mouse
@@ -334,6 +354,11 @@ set listchars=tab:\│\ ,trail:_
 let c_space_errors = 1 " Highlight space error in C/C++
 "TODO: use :match instead?
 "}}}
+
+" SimpylFold
+let g:SimpylFold_docstring_preview = 1
+"let g:SimpylFold_fold_docstring = 0
+"let g:SimpylFold_fold_import = 0
 
 " Plugin settings {{{
 " Vimwiki {{{
@@ -359,6 +384,10 @@ let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 "let g:ycm_key_invoke_completion = '<leader><space>'
 let g:ycm_key_invoke_completion = '<C-n>'
+
+" FIXME: TEST THIS
+" let g:ycm_autoclose_preview_window_after_completion=1
+"map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 "}}}
 " Syntastic

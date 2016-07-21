@@ -14,6 +14,7 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'jeaye/color_coded'
 Plugin 'jmcantrell/vim-virtualenv'
 " Plugin 'python-rope/ropevim'
+Plugin 'python-rope/ropevim'
 " Plugin 'klen/python-mode'
 
 " Plugin 'vimux' " tmux integration
@@ -21,7 +22,7 @@ Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'tpope/vim-cucumber'
 
 "Plugin 'joonty/vdebug'
-" Plugin 'wincent/terminus'
+"Plugin 'wincent/terminus'
 
 Plugin 'FooSoft/vim-argwrap'
 
@@ -94,7 +95,11 @@ Plugin 'plasticboy/vim-markdown'
 " HTML
 Plugin 'mattn/emmet-vim' " fancy automatic tags
 
+" Marks
 Plugin 'kshenoy/vim-signature' " showing marks
+
+"YAML
+Plugin 'avakhov/vim-yaml'
 
 " {{{ Check
 Plugin 'tpope/vim-repeat'
@@ -229,8 +234,6 @@ autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwid
 "endif
 "}}}
 
-"setlocal spell spelllang=en_us
-
 " Settings {{{
 " Colorscheme {{{
 function! SetColorscheme()
@@ -245,9 +248,14 @@ function! SetColorscheme()
 		"colorscheme desert
 		"colorscheme seti
 	endif
+	hi SpellBad cterm=underline ctermbg=bg
 endfunction
 call SetColorscheme()
 "}}}
+
+setlocal spelllang=en_us
+" setlocal spell
+
 " Diff Handling {{{
 function! SetupDiffMappings()
 	if &diff

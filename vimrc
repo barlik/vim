@@ -22,7 +22,7 @@ Plugin 'python-rope/ropevim'
 Plugin 'tpope/vim-cucumber'
 
 "Plugin 'joonty/vdebug'
-"Plugin 'wincent/terminus'
+Plugin 'wincent/terminus'
 
 Plugin 'FooSoft/vim-argwrap'
 
@@ -331,7 +331,7 @@ set dictionary+='/usr/share/dict/words'
 "set spell
 
 "set history=100         " keep X lines of command line history
-set scrolloff=3          " keep X previous lines during scrolling
+set scrolloff=5          " keep X previous lines during scrolling
 "set textwidth=78
 "set textwidth=0
 set tabstop=8

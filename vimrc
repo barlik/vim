@@ -1,3 +1,5 @@
+" TODO: FIX THIS MESS
+"
 " PLUGINS {{{
 set nocompatible " required for vundle
 filetype off " required for vundle
@@ -14,7 +16,6 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'jeaye/color_coded'
 Plugin 'jmcantrell/vim-virtualenv'
 " Plugin 'python-rope/ropevim'
-Plugin 'python-rope/ropevim'
 " Plugin 'klen/python-mode'
 
 " Plugin 'vimux' " tmux integration
@@ -30,7 +31,7 @@ Plugin 'FooSoft/vim-argwrap'
 Plugin 'davidhalter/jedi-vim' " Python auto-completion
 Plugin 'nvie/vim-flake8'      " Python pep8 checker
 Plugin 'hynek/vim-python-pep8-indent' " auto indent
-Plugin 'tmhedberg/SimpylFold' " improved Python folding
+" Plugin 'tmhedberg/SimpylFold' " improved Python folding
 
 "Plugin 'amigrave/vim-pudb'
 
@@ -57,6 +58,8 @@ Plugin 'bling/vim-airline'
 
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'ludovicchabant/vim-gutentags'
+
 Plugin 'sjl/gundo.vim'      " Super Undo
 Plugin 'vim-scripts/a.vim'  " Toggle c/h files
 "Plugin 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
@@ -93,7 +96,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 
 " HTML
-Plugin 'mattn/emmet-vim' " fancy automatic tags
+Plugin 'mattn/emmet-vim' " fancy automatic HTML tags
 
 " Marks
 Plugin 'kshenoy/vim-signature' " showing marks
@@ -120,9 +123,35 @@ packadd! matchit
 call vundle#end()            " required
 "}}}
 
-"Emmet plugin
-let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
+" {{{ EXPERIMENTAL
+" Highlight all instances of word under cursor, when idle.
+" Useful when studying strange source code.
+" Type z/ to toggle highlighting on/off.
+nnoremap z/ :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
+function! AutoHighlightToggle()
+  let @/ = ''
+  if exists('#auto_highlight')
+    au! auto_highlight
+    augroup! auto_highlight
+    setl updatetime=4000
+    echo 'Highlight current word: off'
+    return 0
+  else
+    augroup auto_highlight
+      au!
+      au CursorHold * let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'
+    augroup end
+    setl updatetime=500
+    echo 'Highlight current word: ON'
+    return 1
+  endif
+endfunction
+" }}}
+"Plugins configuration {{{
+"}}}
+
+let mapleader = ","
+"let mapleader = "\<space>"
 
 "TODO:
 "map :Explore
@@ -136,26 +165,11 @@ autocmd FileType html,css EmmetInstall
 " autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-" change directory to currently opened file
-nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
-
-" visual shifting (builtin-repeat)
-":vnoremap < <gv
-":vnoremap > >gv
-
-noremap! <C-?> <C-w>
-
-"TODO: FINISH THIS OFF
-"let g:tcommentMapLeader1 = '<c-a>'
-"let g:tcommentMapLeader2 = '<Leader>a'
-"let g:tcommentOptions = {'whitespace': 'no'}
-
 " silent will not complaint about untitled buffers
 " :au FocusLost * nested silent! update # (or wall)
 "
-"
-" {{{
-" Reindent after save
+" Autocommands {{{
+" {{{ Reindent after save
 " function! Hook()
 " 	let p = getpos(".")
 " 	normal! gg=G
@@ -167,10 +181,11 @@ noremap! <C-?> <C-w>
 " }}}
 " Auto close fugitive buffers
 autocmd BufReadPost fugitive://* set bufhidden=delete
+" }}}
+"
 " Strip spaces
 " autocmd BufWritePre *.py :%s/\s\+$//e
 
-let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 "set display=lastline    " Show as much as possible of a wrapped last line, not just "@".
 
 " Init {{{
@@ -183,11 +198,6 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 "}}}
 
 "au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
-"au FileType python nnoremap <buffer> <F9> :wa<CR>:!clear; nosetests %<CR>
-"au FileType python nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
-"noremap <F5> :w !python %<CR>
-"inoremap <F5> <ESC>:w !python %<CR>
 
 " Bracketed mode {{{
 " Causes a delay with Control-Space
@@ -207,24 +217,6 @@ function! XTermPasteBegin()
 endfunction
 " }}}
 
-au FileType python map <silent> <leader>b oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
-au FileType python map <silent> <leader>B Oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
-"au FileType python map <silent> <leader>pb exe "!echo " . expand("%:p"). ":" . line(".")
-"nmap <C-LeftMouse> <LeftMouse>,d
-
-" Remove trailing white spaces from python files
-autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
-"tabstop=4 " 4-space indents.
-"shiftwidth=4 " This allows you to use the < and > keys from VIM's visual (marking) mode to block indent/unindent regions
-"smarttab 	sta 	Use the "shiftwidth" setting for inserting <TAB>s instead of the "tabstop" setting, when at the beginning of a line. This may be redundant for most people, but some poeple like to keep their tabstop=8 for compatability when loading files, but setting shiftwidth=4 for nicer coding style.
-"expandtab 	et 	Insert spaces instead of <TAB> character when the <TAB> key is pressed. This is also the prefered method of Python coding, since Python is especially sensitive to problems with indenting which can occur when people load files in different editors with different tab settings, and also cutting and pasting between applications (ie email/news for example) can result in problems. It is safer and more portable to use spaces for indenting.
-"softtabstop=4 	sts 	People like using real tab character instead of spaces because it makes it easier when pressing BACKSPACE or DELETE, since if the indent is using spaces it will take 4 keystrokes to delete the indent. Using this setting, however, makes VIM see multiple space characters as tabstops, and so <BS> does the right thing and will delete four spaces (assuming 4 is your setting).
-" Python
-autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 smarttab expandtab foldlevel=1
-" set colorcolumn+1
-" set textwidth=79
-
-
 " Source a local configuration file if available {{{
 " DANGEROUS
 "if (getcwd() != $HOME)
@@ -237,16 +229,13 @@ autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwid
 " Settings {{{
 " Colorscheme {{{
 function! SetColorscheme()
-	"colorscheme seti,jellybeans,distinguished, molokai
-	"colorscheme jellybeans
+	"colorscheme seti,jellybeans,distinguished, molokai, jellybeans
 	colorscheme seti | hi Visual cterm=reverse ctermbg=bg ctermfg=fg
 	if &diff
-		"calmar256-dark
-		"pablo,murphy,slate,desert
+		"calmar256-dark, pablo,murphy,slate,desert
 		colorscheme jellybeans
 	else
-		"colorscheme desert
-		"colorscheme seti
+		"colorscheme desert, seti
 	endif
 	hi SpellBad cterm=underline ctermbg=bg
 endfunction
@@ -279,7 +268,8 @@ call SetupDiffMappings()
 " Entering diff mode from within vim - diffsplit, etc.
 autocmd FilterWritePost * call SetupDiffMappings()
 "}}}
-""split navigations
+
+" Split navigations
 nnoremap <C-Down> <C-W><C-J>
 nnoremap <C-Up> <C-W><C-K>
 nnoremap <C-Left> <C-W><C-L>
@@ -354,7 +344,7 @@ set formatoptions=tcrq "Show menu with possible completions
 set wildmode=longest,list,full	" Set completion modes
 set wildmenu
 "Ignore these files when completing names and in Explorer
-set wildignore=.svn,CVS,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif
+set wildignore+=.svn,CVS,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,*.xpm,*.gif
 
 " different set list characters
 " set listchars=tab:>-,eol:$,precedes:>,trail:_ ¦│
@@ -363,12 +353,12 @@ let c_space_errors = 1 " Highlight space error in C/C++
 "TODO: use :match instead?
 "}}}
 
-" SimpylFold
+" Plugin settings {{{
+" SimpylFold {{{
 let g:SimpylFold_docstring_preview = 1
 "let g:SimpylFold_fold_docstring = 0
 "let g:SimpylFold_fold_import = 0
-
-" Plugin settings {{{
+"}}}
 " Vimwiki {{{
 let g:vimwiki_list = [{'path': '/home/data/vimwiki/'}]
 let g:vimwiki_folding = 'expr'
@@ -398,14 +388,14 @@ let g:ycm_key_invoke_completion = '<C-n>'
 "map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 "}}}
-" Syntastic
+" Syntastic {{{
 let g:syntastic_check_on_wq = 0
 "let g:syntastic_mode_map = { "mode": "passive" }
 let g:syntastic_error_symbol = "\u2717"
 let g:syntastic_warning_symbol = "\u26A0"
 let g:syntastic_enable_highlighting = 0
 "highligh Error ctermbg=bg
-
+"}}}
 " Vim Jedi {{{
 let g:jedi#completions_command = "<C-N>"
 " }}}
@@ -525,12 +515,38 @@ map <C-F12> :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q -I _GL
 nmap <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 imap <F12> <C-o>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 " }}}
+"Emmet {{{
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+"}}}
+"Tabular {{{
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+"}}}
+"NERDTree {{{
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+"
 
 " }}}
+"TComment
+"TODO: FINISH THIS OFF
+"let g:tcommentMapLeader1 = '<c-a>'
+"let g:tcommentMapLeader2 = '<Leader>a'
+"let g:tcommentOptions = {'whitespace': 'no'}
+
+"}}}
 
 " Key Remapping {{{
-let mapleader = ","
-"let mapleader = "\<space>"
+
+" change directory to currently opened file
+nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
+
+" visual shifting (builtin-repeat)
+":vnoremap < <gv
+":vnoremap > >gv
+
+" Ctrl-Backspace deletes previous word
+noremap! <C-?> <C-w>
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
@@ -670,6 +686,24 @@ cnoremap $d <CR>:d<CR>``
 "highlight clear SignColumn
 "}}}
 
+" PYTHON {{{
+au FileType python map <silent> <leader>b oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
+au FileType python map <silent> <leader>B Oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
+"au FileType python nnoremap <buffer> <F9> :wa<CR>:!clear; nosetests %<CR>
+"au FileType python nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
+"noremap <F5> :w !python %<CR>
+"inoremap <F5> <ESC>:w !python %<CR>
+
+"au FileType python map <silent> <leader>pb exe "!echo " . expand("%:p"). ":" . line(".")
+"nmap <C-LeftMouse> <LeftMouse>,d
+
+" Remove trailing white spaces from python files
+"autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
+
+autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 smarttab expandtab 
+" set colorcolumn=+1
+" set textwidth=79
+
 " Execute a selection of code (very cool!)
 " Use VISUAL to select a range and then hit ctrl-h to execute it.
 python << EOL
@@ -732,16 +766,30 @@ def RemoveBreakpoints():
 vim.command( "map <s-f8> :py RemoveBreakpoints()<cr>")
 EOF
 "
-"Tabular
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
-
-" PYTHON DEBUGGING
+"}}}
+" PYTHON DEBUGGING {{{
 nnoremap <silent> <Leader>pb :call system("xsend 'break " . expand("%:p") . ":" . line("."))<CR>
 nnoremap <silent> <Leader>pc :call system("xsend 'continue'")<CR>
 nnoremap <silent> <Leader>ps :call system("xsend 'step'")<CR>
 noremap <silent> <Leader>pp :yank<CR>:call system("xsend 'paste -q'")<CR>
+"}}}
+
+" set path+=**
+" and then find file
+
+" Sort selection
+xnoremap <F8> !sort<CR>
+
+" Keyboard shortcuts
+" recursive non-recursive mode
+" map  | noremap  | normal, visual, select, operator-pending
+" cmap | cnoremap | command-line
+" imap | inoremap | insert
+" nmap | nnoremap | normal
+" omap | onoremap | operator-pending
+" smap | snoremap | select
+" vmap | vnoremap | visual, select
+" xmap | xnoremap | visual
+
 
 " vim:foldmethod=marker
-"
-"

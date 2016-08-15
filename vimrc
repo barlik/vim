@@ -104,6 +104,9 @@ Plugin 'kshenoy/vim-signature' " showing marks
 "YAML
 Plugin 'avakhov/vim-yaml'
 
+" Grammar
+Plugin 'LanguageTool'
+
 " {{{ Check
 Plugin 'tpope/vim-repeat'
 "Plugin 'tpope/vim-commentary'

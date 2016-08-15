@@ -1,5 +1,3 @@
-" TODO: FIX THIS MESS
-"
 " PLUGINS {{{
 set nocompatible " required for vundle
 filetype off " required for vundle
@@ -7,14 +5,13 @@ set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim' " let Vundle manage Vundle, required
-"Plugin 'vim-scripts/OmniCppComplete'
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
+"Plugin 'vim-scripts/OmniCppComplete'
 "Plugin 'justmao945/vim-clang'
 "Plugin 'Shougo/neocomplcache'
 "Plugin 'spolu/dwm.vim'
 "Plugin 'jeaye/color_coded'
-Plugin 'jmcantrell/vim-virtualenv'
 " Plugin 'python-rope/ropevim'
 " Plugin 'klen/python-mode'
 
@@ -28,6 +25,7 @@ Plugin 'wincent/terminus'
 Plugin 'FooSoft/vim-argwrap'
 
 " Python
+Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'davidhalter/jedi-vim' " Python auto-completion
 Plugin 'nvie/vim-flake8'      " Python pep8 checker
 Plugin 'hynek/vim-python-pep8-indent' " auto indent
@@ -39,8 +37,8 @@ Plugin 'hynek/vim-python-pep8-indent' " auto indent
 Plugin 'will133/vim-dirdiff'
 
 " Colors
-"Plugin 'godlygeek/csapprox' " Colorscheme fixer
 Plugin 'morhetz/gruvbox'
+"Plugin 'godlygeek/csapprox' " Colorscheme fixer
 " Plugin 'Yggdroot/indentLine'
 
 " Start screen
@@ -65,7 +63,7 @@ Plugin 'vim-scripts/a.vim'  " Toggle c/h files
 "Plugin 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
 
 " Code navigation
-Plugin 'scrooloose/nerdtree'      " NERDTree
+Plugin 'scrooloose/nerdtree' " NERDTree
 Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 
 Plugin 'Lokaltog/vim-easymotion'
@@ -119,13 +117,14 @@ Plugin 'tpope/vim-repeat'
 "Plugin 'altercation/vim-colors-solarized'
 "}}}
 
-" Vim integrated plugins
+" Vim integrated plugins {{{
 packadd! matchit
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
 "}}}
 
+" All of your Plugins must be added before the following line
+call vundle#end() " required
+"}}}
 " {{{ EXPERIMENTAL
 " Highlight all instances of word under cursor, when idle.
 " Useful when studying strange source code.
@@ -152,16 +151,10 @@ endfunction
 " }}}
 "Plugins configuration {{{
 "}}}
-
 let mapleader = ","
 "let mapleader = "\<space>"
-
-"TODO:
+"TODO{{{
 "map :Explore
-":Sex is shortcut for split explore
-"map argwrap
-"nnoremap <silent> <leader>a :ArgWrap<CR>
-"
 "let g:use_python2 = 1
 
 " Open NERDTree on vim startup without a file
@@ -170,7 +163,7 @@ let mapleader = ","
 
 " silent will not complaint about untitled buffers
 " :au FocusLost * nested silent! update # (or wall)
-"
+"}}}
 " Autocommands {{{
 " {{{ Reindent after save
 " function! Hook()
@@ -185,12 +178,6 @@ let mapleader = ","
 " Auto close fugitive buffers
 autocmd BufReadPost fugitive://* set bufhidden=delete
 " }}}
-"
-" Strip spaces
-" autocmd BufWritePre *.py :%s/\s\+$//e
-
-"set display=lastline    " Show as much as possible of a wrapped last line, not just "@".
-
 " Init {{{
 syntax on		  " enable syntax highlighting
 filetype plugin indent on " required by vundle
@@ -199,9 +186,6 @@ filetype plugin indent on " required by vundle
 " automaticaly open last position in file
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 "}}}
-
-"au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
 " Bracketed mode {{{
 " Causes a delay with Control-Space
 " Enable bracketed paste mode on entering Vim.
@@ -219,7 +203,6 @@ function! XTermPasteBegin()
 	return ""
 endfunction
 " }}}
-
 " Source a local configuration file if available {{{
 " DANGEROUS
 "if (getcwd() != $HOME)
@@ -228,7 +211,6 @@ endfunction
 	"endif
 "endif
 "}}}
-
 " Settings {{{
 " Colorscheme {{{
 function! SetColorscheme()
@@ -271,12 +253,6 @@ call SetupDiffMappings()
 " Entering diff mode from within vim - diffsplit, etc.
 autocmd FilterWritePost * call SetupDiffMappings()
 "}}}
-
-" Split navigations
-nnoremap <C-Down> <C-W><C-J>
-nnoremap <C-Up> <C-W><C-K>
-nnoremap <C-Left> <C-W><C-L>
-nnoremap <C-Right> <C-W><C-H>
 
 " gui Setting {{{
 " Options for gvim
@@ -332,10 +308,15 @@ set tabstop=8
 set shiftwidth=8
 "set expandtab
 
+"set display=lastline    " Show as much as possible of a wrapped last line, not just "@".
+
 "set cinoptions=:0,+.5s,(.5s,u0,U1,t0,M1 " pozriet v manualy set noexpandtab
 "set cinoptions=:0,u0,U1,t0,M1 " pozriet v manualy set noexpandtab
 "set hidden " keep buffers when you leave them - unnecessary with autowrite on
 set autowrite 			" Automatically write changes with tagging to a new file
+
+" set autosave " NOT IMPLEMENTED YET
+" autocmd TextChanged,TextChangedI <buffer> silent write " should work with vim7
 "set splitbelow
 set splitright			" Put vertical splits to the right of the current window
 set vb t_vb=			" disable visual bell
@@ -355,7 +336,6 @@ set listchars=tab:\│\ ,trail:_
 let c_space_errors = 1 " Highlight space error in C/C++
 "TODO: use :match instead?
 "}}}
-
 " Plugin settings {{{
 " SimpylFold {{{
 let g:SimpylFold_docstring_preview = 1
@@ -434,10 +414,11 @@ let g:rbpt_colorpairs = [
 let g:ctrlp_map = '<Leader><C-p>'
 "let g:ctrlp_extensions = ['tag', 'buffertag', 'dir', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
 "let g:loaded_ctrlp = 1
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 "}}}
 " {{{ Buffers
 " FIXME: TOTO PREROBIT
-noremap <Leader>d :bd<CR>
+" noremap <Leader>d :bd<CR>
 "noremap <Leader>n :bn<CR>
 " }}}
 " Easymotion {{{
@@ -523,14 +504,19 @@ let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
 "}}}
 "Tabular {{{
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
+" nmap <Leader>a= :Tabularize /=<CR>
+" vmap <Leader>a= :Tabularize /=<CR>
 "}}}
 "NERDTree {{{
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 "
-
 " }}}
+" Language Tool {{{
+let g:languagetool_jar='/home/data/software/LanguageTool-3.4/languagetool-commandline.jar'
+let g:languagetool_lang='en-GB'
+"}}}
+
+nnoremap <leader>ag :Ag 
 "TComment
 "TODO: FINISH THIS OFF
 "let g:tcommentMapLeader1 = '<c-a>'
@@ -538,8 +524,33 @@ let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 "let g:tcommentOptions = {'whitespace': 'no'}
 
 "}}}
-
 " Key Remapping {{{
+" Keyboard shortcuts
+" recursive non-recursive mode
+" map  | noremap  | normal, visual, select, operator-pending
+" cmap | cnoremap | command-line
+" imap | inoremap | insert
+" nmap | nnoremap | normal
+" omap | onoremap | operator-pending
+" smap | snoremap | select
+" vmap | vnoremap | visual, select
+" xmap | xnoremap | visual
+
+"map argwrap
+nnoremap <silent> <leader>aw :ArgWrap<CR>
+"
+" Split navigations
+nnoremap <C-Down> :wincmd <Down>
+nnoremap <C-Up> :wincmd <Up>
+nnoremap <C-Left> :wincmd <Left>
+nnoremap <C-Right> :wincmd <Right>
+
+" set path+=**
+" and then find file
+
+" Sort selection
+xnoremap <F8> !sort<CR>
+
 
 " change directory to currently opened file
 nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
@@ -644,8 +655,9 @@ nnoremap <silent> <C-Down>    :wincmd j<CR>
 
 " Silent won't display Press Enter to continue command
 command! -nargs=+ Silent execute 'silent <args>' | redraw!
-nmap <Leader>r :!clear; python %:p<CR>
-nmap <Leader>R :Silent !ipython -i %:p<CR>
+" nmap <Leader>r :!clear; python %:p<CR>
+" nmap <Leader>R :Silent !ipython -i %:p<CR>
+" au FileType python nnoremap <buffer> <F9> :wa<CR>:!clear; nosetests %<CR>
 
 nnoremap <Leader>q :qall<CR>
 "Save file
@@ -658,7 +670,6 @@ nnoremap <Leader>todo :noautocmd vimgrep /TODO\<bar>FIXME\<bar>XXX/j **/*<CR>:cw
 " find all occurences of last find pattern
 nnoremap <Leader>grep :noautocmd vimgrep //j **/*<CR>:cw<CR>
 "}}}
-
 " {{{ Tags
 "- "./" starting in the directory where the current file is. 
 "- "tags" search for a tags file named 'tags' 
@@ -677,7 +688,6 @@ set tags=./tags;$HOME
 "set tags+=~/.vim/tags/sdl
 "set tags+=~/.vim/tags/cpp
 " }}}
-
 "{{{ Experimental
 " allows incsearch highgighting for range commands
 cnoremap $t <CR>:t''<CR>
@@ -688,8 +698,14 @@ cnoremap $d <CR>:d<CR>``
 
 "highlight clear SignColumn
 "}}}
-
 " PYTHON {{{
+"au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" shortcut for FIXME: autopep8 --in-place --aggressive --aggressive
+"
+" Strip spaces
+" autocmd BufWritePre *.py :%s/\s\+$//e
+
 au FileType python map <silent> <leader>b oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
 au FileType python map <silent> <leader>B Oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
 "au FileType python nnoremap <buffer> <F9> :wa<CR>:!clear; nosetests %<CR>
@@ -771,10 +787,10 @@ EOF
 "
 "}}}
 " PYTHON DEBUGGING {{{
-nnoremap <silent> <Leader>pb :call system("xsend 'break " . expand("%:p") . ":" . line("."))<CR>
-nnoremap <silent> <Leader>pc :call system("xsend 'continue'")<CR>
-nnoremap <silent> <Leader>ps :call system("xsend 'step'")<CR>
-noremap <silent> <Leader>pp :yank<CR>:call system("xsend 'paste -q'")<CR>
+" nnoremap <silent> <Leader>pb :call system("xsend 'break " . expand("%:p") . ":" . line("."))<CR>
+" nnoremap <silent> <Leader>pc :call system("xsend 'continue'")<CR>
+" nnoremap <silent> <Leader>ps :call system("xsend 'step'")<CR>
+" noremap <silent> <Leader>pp :yank<CR>:call system("xsend 'paste -q'")<CR>
 "}}}
 
 " set path+=**

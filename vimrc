@@ -15,12 +15,16 @@ Plugin 'Valloric/YouCompleteMe'
 " Plugin 'python-rope/ropevim'
 " Plugin 'klen/python-mode'
 
+" Interactive
+" Plugin 'metakirby5/codi.vim'
+
 " Plugin 'vimux' " tmux integration
 
 Plugin 'tpope/vim-cucumber'
 
 "Plugin 'joonty/vdebug'
-Plugin 'wincent/terminus'
+"Plugin 'wincent/terminus'
+Plugin 'ConradIrwin/vim-bracketed-paste'
 
 Plugin 'FooSoft/vim-argwrap'
 
@@ -253,7 +257,6 @@ call SetupDiffMappings()
 " Entering diff mode from within vim - diffsplit, etc.
 autocmd FilterWritePost * call SetupDiffMappings()
 "}}}
-
 " gui Setting {{{
 " Options for gvim
 if has('gui_running')
@@ -286,12 +289,12 @@ set cmdheight=2
 set incsearch		" enable incremental search
 set hlsearch		" highlight search patterns
 "set nohlsearch		" disable highlight search
+set smartcase		" ignore case when the pattern contains lowercase letters only
 set ignorecase		" ignore case
 
 set autoindent
 set smartindent
 
-set smartcase		" ignore case when the pattern contains lowercase letters only
 "set cursorline         " draw horizontal line on cursor's position 
 "set showtabline=2	" always show tab page labels
 set showmatch
@@ -369,6 +372,8 @@ let g:ycm_key_invoke_completion = '<C-n>'
 " FIXME: TEST THIS
 " let g:ycm_autoclose_preview_window_after_completion=1
 "map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nmap <C-LeftMouse> <LeftMouse>:YcmCompleter GoToDefinitionElseDeclaration<CR>
+nmap <C-RightMouse> <C-o>
 
 "}}}
 " Syntastic {{{
@@ -377,6 +382,10 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_error_symbol = "\u2717"
 let g:syntastic_warning_symbol = "\u26A0"
 let g:syntastic_enable_highlighting = 0
+
+let g:syntastic_python_checkers= ["python", "flake8" ]
+let g:syntastic_python_pylint_args=""
+
 "highligh Error ctermbg=bg
 "}}}
 " Vim Jedi {{{
@@ -567,7 +576,8 @@ nnoremap <silent> <C-l> :nohl<CR><C-l>
 "nnoremap <leader><space> :nohl<CR>
 
 " Search and replace word under cursor
-nnoremap <F2> :%s/<c-r><c-w>/<c-r><c-w>/c<c-f>$F/i
+nnoremap <leader>cc :%s/<C-r><C-w>/<C-r><C-w>/c<C-f>$F/i
+vnoremap <Leader>cc y:%s/<C-r>"/<C-r>"
 " if set gdefault is not set append g   ^
 
 noremap <F1> <ESC> " Turn off F1 help
@@ -719,7 +729,7 @@ au FileType python map <silent> <leader>B Oimport ipdb; ipdb.set_trace() #XXX: B
 " Remove trailing white spaces from python files
 "autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 
-autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 smarttab expandtab 
+autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 smarttab expandtab
 " set colorcolumn=+1
 " set textwidth=79
 

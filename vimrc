@@ -197,23 +197,6 @@ filetype plugin indent on " required by vundle
 " automaticaly open last position in file
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 "}}}
-" Bracketed mode {{{
-" Causes a delay with Control-Space
-" Enable bracketed paste mode on entering Vim.
-let &t_SI .= "\<Esc>[?2004h"
-" Disable bracketed paste mode on leaving Vim.
-let &t_EI .= "\<Esc>[?2004l"
-
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-cnoremap <Esc>[200~ <nop>
-cnoremap <Esc>[201~ <nop>
-
-function! XTermPasteBegin()
-	set pastetoggle=<Esc>[201~
-	set paste
-	return ""
-endfunction
-" }}}
 " Source a local configuration file if available {{{
 " DANGEROUS
 "if (getcwd() != $HOME)

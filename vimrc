@@ -7,6 +7,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
+" vim-autocomplpop
 "Plugin 'vim-scripts/OmniCppComplete'
 "Plugin 'justmao945/vim-clang'
 "Plugin 'Shougo/neocomplcache'
@@ -156,6 +157,8 @@ endfunction
 "Plugins configuration {{{
 "}}}
 let mapleader = ","
+let maplocalleader = ","
+nnoremap <leader>, :normal ,<CR>:<CR>
 "let mapleader = "\<space>"
 "TODO{{{
 "map :Explore

@@ -21,7 +21,9 @@ Plugin 'Valloric/YouCompleteMe'
 
 " Plugin 'vimux' " tmux integration
 
-Plugin 'tpope/vim-cucumber'
+" Plugin 'tpope/vim-cucumber'
+
+Plugin 'christoomey/vim-sort-motion'
 
 "Plugin 'joonty/vdebug'
 "Plugin 'wincent/terminus'
@@ -74,6 +76,8 @@ Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'rking/ag.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 Plugin 'tpope/vim-unimpaired'
 
@@ -298,6 +302,8 @@ set ignorecase		" ignore case
 set autoindent
 set smartindent
 
+"set breakindent        " keep wrapped lines indented
+
 "set cursorline         " draw horizontal line on cursor's position 
 "set showtabline=2	" always show tab page labels
 set showmatch
@@ -320,6 +326,8 @@ set shiftwidth=8
 "set cinoptions=:0,u0,U1,t0,M1 " pozriet v manualy set noexpandtab
 "set hidden " keep buffers when you leave them - unnecessary with autowrite on
 set autowrite 			" Automatically write changes with tagging to a new file
+
+"set autochdir                   " Automatically change working directory
 
 " set autosave " NOT IMPLEMENTED YET
 " autocmd TextChanged,TextChangedI <buffer> silent write " should work with vim7
@@ -527,7 +535,11 @@ let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 let g:languagetool_jar='/home/data/software/LanguageTool-3.4/languagetool-commandline.jar'
 let g:languagetool_lang='en-GB'
 "}}}
-
+" MiniBufExplorer {{{
+noremap <Leader>mbe :MBEOpen<CR>
+noremap <Leader>mbc :MBEClose<CR>
+noremap <Leader>mbt :MBEToggle<CR>
+" }}}
 nnoremap <leader>ag :Ag 
 "TComment
 "TODO: FINISH THIS OFF
@@ -565,7 +577,7 @@ xnoremap <F8> !sort<CR>
 
 
 " change directory to currently opened file
-nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
+nnoremap ,cd :lcd %:p:h<CR>:pwd<CR>
 
 " visual shifting (builtin-repeat)
 ":vnoremap < <gv
@@ -586,6 +598,7 @@ vnoremap <Leader>cc y:%s/<C-r>"/<C-r>"
 noremap <F1> <ESC> " Turn off F1 help
 nnoremap Q <nop> " Turn off Ex mode
 nnoremap Y y$ " Y yank to end of line
+vnoremap . :norm.<CR>
 
 nmap <leader>vs :so ~/.vimrc<CR>
 
@@ -631,7 +644,7 @@ set pastetoggle=<F11>
 
 nnoremap <leader>gu :GundoToggle<CR>
 cmap w!! w !sudo tee % >/dev/null
-nnoremap <leader>m :make<CR>
+nnoremap <leader>ma :make<CR>
 nnoremap <Leader>nu :setlocal number! number?<CR>
 nnoremap <Leader>nr :setlocal relativenumber! relativenumber?<CR>
 nnoremap <Leader>li :setlocal list! list?<CR>
@@ -722,7 +735,7 @@ cnoremap $d <CR>:d<CR>``
 au FileType python map <silent> <leader>b oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
 au FileType python map <silent> <leader>B Oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
 "au FileType python nnoremap <buffer> <F9> :wa<CR>:!clear; nosetests %<CR>
-"au FileType python nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
+au FileType python nnoremap <buffer> <Leader>r :exec '!python' shellescape(@%, 1)<cr>
 "noremap <F5> :w !python %<CR>
 "inoremap <F5> <ESC>:w !python %<CR>
 
@@ -806,22 +819,57 @@ EOF
 " noremap <silent> <Leader>pp :yank<CR>:call system("xsend 'paste -q'")<CR>
 "}}}
 
-" set path+=**
-" and then find file
+" Toggle NERDTree
+"nmap <silent> <leader>k :NERDTreeToggle<cr>
+" expand to the path of the file in the current buffer
+"nmap <silent> <leader>y :NERDTreeFind<cr>
 
-" Sort selection
-xnoremap <F8> !sort<CR>
+" " map fuzzyfinder (CtrlP) plugin
+" " nmap <silent> <leader>t :CtrlP<cr>
+" nmap <silent> <leader>r :CtrlPBuffer<cr>
+" let g:ctrlp_map='<leader>t'
+" let g:ctrlp_dotfiles=1
+" let g:ctrlp_working_path_mode = 'ra'
+"
+" " CtrlP ignore patterns
+" let g:ctrlp_custom_ignore = {
+"             \ 'dir': '\.git$\|node_modules$\|\.hg$\|\.svn$',
+"             \ 'file': '\.exe$\|\.so$'
+"             \ }
+"
+" " search the nearest ancestor that contains .git, .hg, .svn
+" let g:ctrlp_working_path_mode = 2
 
-" Keyboard shortcuts
-" recursive non-recursive mode
-" map  | noremap  | normal, visual, select, operator-pending
-" cmap | cnoremap | command-line
-" imap | inoremap | insert
-" nmap | nnoremap | normal
-" omap | onoremap | operator-pending
-" smap | snoremap | select
-" vmap | vnoremap | visual, select
-" xmap | xnoremap | visual
+"inoremap <C-Space> <C-x><C-o>
+"inoremap <C-@> <C-Space>
 
+" MozRepl {{{
+autocmd BufWriteCmd *.html,*.css,*.gtpl,*.md :call Refresh_firefox()
+function! Refresh_firefox()
+  " silent !xdotool search --classname Navigator key F5
+  if &modified
+    write
+    silent !echo  'vimYo = content.window.pageYOffset;
+          \ vimXo = content.window.pageXOffset;
+          \ BrowserReload();
+          \ content.window.scrollTo(vimXo,vimYo);
+          \ repl.quit();'  |
+          \ ncat -4 -w 1 localhost 4242 2>&1 > /dev/null
+  endif
+endfunction
 
+command! -nargs=1 Repl silent !echo
+      \ "repl.home();
+      \ content.location.href = '<args>';
+      \ repl.enter(content);
+      \ repl.quit();" |
+      \ ncat -4 localhost 4242 2>&1 > /dev/null
+
+nmap <leader>mh :Repl http://
+" mnemonic is MozRepl Http
+nmap <silent> <leader>mo :Silent Repl file:///%:p<CR>
+" mnemonic is MozRepl Local
+nmap <silent> <leader>md :Repl http://localhost/
+" mnemonic is MozRepl Development
+" }}}
 " vim:foldmethod=marker

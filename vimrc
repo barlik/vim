@@ -1,10 +1,10 @@
 " PLUGINS {{{
 set nocompatible " required for vundle
 filetype off " required for vundle
-set runtimepath+=~/.vim/bundle/Vundle.vim
+set runtimepath+=~/.vim/bundle/Vundle
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim' " let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle' " let Vundle manage Vundle, required
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
 " vim-autocomplpop
@@ -16,7 +16,7 @@ Plugin 'Valloric/YouCompleteMe'
 " Plugin 'python-rope/ropevim'
 " Plugin 'klen/python-mode'
 
-" Interactive
+" Interactive scripting
 " Plugin 'metakirby5/codi.vim'
 
 " Plugin 'vimux' " tmux integration
@@ -59,13 +59,17 @@ Plugin 'honza/vim-snippets' " Snippets
 "Plugin 'bling/vim-bufferline'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'jlanzarotta/bufexplorer'
-Plugin 'bling/vim-airline'
+
+" Status bar
+" Plugin 'bling/vim-airline'
+" Plugin 'itchyny/lightline.vim'
 
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'ludovicchabant/vim-gutentags'
 
-Plugin 'sjl/gundo.vim'      " Super Undo
+" Plugin 'sjl/gundo.vim'      " Super Undo
+Plugin 'mbbill/undotree'    " alternative Undotree
 Plugin 'vim-scripts/a.vim'  " Toggle c/h files
 "Plugin 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
 
@@ -231,14 +235,14 @@ function! SetupDiffMappings()
 		nnoremap <M-Down> ]c
 		"nnoremap <M-Left> do
 		"nnoremap <M-Right> dp
-		nnoremap <buffer> <silent> <M-Left> :diffget 1<Bar>diffupdate<CR>
-		nnoremap <buffer> <silent> <M-Right> :diffput 1<Bar>diffupdate<CR>
+		nnoremap <buffer> <silent> <M-Left> :diffget<Bar>diffupdate<CR>
+		nnoremap <buffer> <silent> <M-Right> :diffput<Bar>diffupdate<CR>
 		"nnoremap <leader>du :diffupdate<CR>
 	else
 		nnoremap <M-Up> :cprevious<CR>
 		nnoremap <M-Down> :cnext<CR>
-		nnoremap <M-Right> :MBEbn<CR>
-		nnoremap <M-Left> :MBEbp<CR>
+		nnoremap <M-Right> :MBEbn<CR> " alternativelly :bn<CR>
+		nnoremap <M-Left> :MBEbp<CR> " alternativelly :bp<CR>
 	endif
 	call SetColorscheme()
 endfunction
@@ -302,6 +306,12 @@ set tabstop=8
 "set softtabstop=4
 set shiftwidth=8
 "set expandtab
+
+" Save when losing focus
+" au FocusLost * :silent! wall
+
+" Rearrange windows on resize
+au vimResized * :wincmd =
 
 "set display=lastline    " Show as much as possible of a wrapped last line, not just "@".
 
@@ -426,7 +436,8 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 " }}}
 " Easymotion {{{
 let g:EasyMotion_leader_key = 's'
-let g:EasyMotion_keys = 'arsdheiqwfpgjluy;zxcvbkmtno'
+" let g:EasyMotion_keys = 'arsdheiqwfpgjluy;zxcvbkmtno'
+let g:EasyMotion_keys = 'arstneiodhqwfpgjluy;zxcvbkm'
 nmap s<Space>   <Plug>(easymotion-s2)
 xmap s<Space>   <Plug>(easymotion-s2)
 omap z		<Plug>(easymotion-s2)
@@ -546,12 +557,6 @@ nnoremap <leader>ag :Ag
 "map argwrap
 nnoremap <silent> <leader>aw :ArgWrap<CR>
 "
-" Split navigations
-nnoremap <C-Down> :wincmd <Down>
-nnoremap <C-Up> :wincmd <Up>
-nnoremap <C-Left> :wincmd <Left>
-nnoremap <C-Right> :wincmd <Right>
-
 " set path+=**
 " and then find file
 
@@ -582,6 +587,11 @@ noremap <F1> <ESC> " Turn off F1 help
 nnoremap Q <nop> " Turn off Ex mode
 nnoremap Y y$ " Y yank to end of line
 vnoremap . :norm.<CR>
+" nnoremap <BS> <C-^>
+
+" Save Ctrl-U and Ctrl-W actions into undo buffer
+inoremap <c-u> <c-g>u<c-u>
+inoremap <c-w> <c-g>u<c-w>
 
 nmap <leader>vs :so ~/.vimrc<CR>
 
@@ -653,6 +663,7 @@ nnoremap K K<CR>
 "nnoremap <leader>i :YcmCompleter GoToInclude<CR>
 
 
+" Split navigations
 nnoremap <silent> <C-Right>   :wincmd l<CR>
 nnoremap <silent> <C-Left>    :wincmd h<CR>
 nnoremap <silent> <C-Up>      :wincmd k<CR>
@@ -698,7 +709,8 @@ set tags=./tags;$HOME
 "set tags+=~/.vim/tags/cpp
 " }}}
 "{{{ Experimental
-" allows incsearch highgighting for range commands
+" allows incsearch highlighting for range commands
+" See: https://www.reddit.com/r/vim/comments/1yfzg2/does_anyone_actually_use_easymotion/
 cnoremap $t <CR>:t''<CR>
 cnoremap $T <CR>:T''<CR>
 cnoremap $m <CR>:m''<CR>
@@ -795,17 +807,19 @@ vim.command( "map <s-f8> :py RemoveBreakpoints()<cr>")
 EOF
 "
 "}}}
+" augroup vimrc_autocmds
+"     autocmd!
+"     " highlight characters past column 120
+"     autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Black
+"     autocmd FileType python match Excess /\%120v.*/
+"     autocmd FileType python set nowrap
+"     augroup END
 " PYTHON DEBUGGING {{{
 " nnoremap <silent> <Leader>pb :call system("xsend 'break " . expand("%:p") . ":" . line("."))<CR>
 " nnoremap <silent> <Leader>pc :call system("xsend 'continue'")<CR>
 " nnoremap <silent> <Leader>ps :call system("xsend 'step'")<CR>
 " noremap <silent> <Leader>pp :yank<CR>:call system("xsend 'paste -q'")<CR>
 "}}}
-
-" Toggle NERDTree
-"nmap <silent> <leader>k :NERDTreeToggle<cr>
-" expand to the path of the file in the current buffer
-"nmap <silent> <leader>y :NERDTreeFind<cr>
 
 " " map fuzzyfinder (CtrlP) plugin
 " " nmap <silent> <leader>t :CtrlP<cr>

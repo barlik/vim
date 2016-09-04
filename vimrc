@@ -5,6 +5,9 @@ set runtimepath+=~/.vim/bundle/Vundle
 call vundle#begin()
 
 Plugin 'gmarik/Vundle' " let Vundle manage Vundle, required
+
+Plugin 'tpope/vim-unimpaired'
+
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
 " vim-autocomplpop
@@ -19,7 +22,13 @@ Plugin 'Valloric/YouCompleteMe'
 " Interactive scripting
 " Plugin 'metakirby5/codi.vim'
 
-" Plugin 'vimux' " tmux integration
+" UNSORTED
+" Plugin 'jiangmiao/auto-pairs'
+Plugin 'tpope/vim-dispatch'
+Plugin 'michaeljsmith/vim-indent-object'
+
+Plugin 'vimux' " tmux integration
+Plugin 'julienr/vimux-pyutils'
 
 " Plugin 'tpope/vim-cucumber'
 
@@ -37,6 +46,7 @@ Plugin 'davidhalter/jedi-vim' " Python auto-completion
 Plugin 'nvie/vim-flake8'      " Python pep8 checker
 Plugin 'hynek/vim-python-pep8-indent' " auto indent
 " Plugin 'tmhedberg/SimpylFold' " improved Python folding
+Plugin 'Glench/Vim-Jinja2-Syntax' " Jinja2 syntax
 
 "Plugin 'amigrave/vim-pudb'
 

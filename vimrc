@@ -93,8 +93,6 @@ Plugin 'rking/ag.vim'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 
-Plugin 'tpope/vim-unimpaired'
-
 " Comments
 "Plugin 'scrooloose/nerdcommenter'
 Plugin 'tomtom/tcomment_vim'
@@ -582,7 +580,7 @@ nnoremap ,cd :lcd %:p:h<CR>:pwd<CR>
 ":vnoremap > >gv
 
 " Ctrl-Backspace deletes previous word
-noremap! <C-?> <C-w>
+" noremap! <C-h> <C-w>
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>

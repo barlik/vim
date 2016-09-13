@@ -28,7 +28,7 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'michaeljsmith/vim-indent-object'
 
 Plugin 'vimux' " tmux integration
-Plugin 'julienr/vimux-pyutils'
+" Plugin 'julienr/vimux-pyutils'
 
 " Plugin 'tpope/vim-cucumber'
 
@@ -45,7 +45,9 @@ Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'davidhalter/jedi-vim' " Python auto-completion
 Plugin 'nvie/vim-flake8'      " Python pep8 checker
 Plugin 'hynek/vim-python-pep8-indent' " auto indent
+Plugin 'alfredodeza/coveragepy.vim'
 " Plugin 'tmhedberg/SimpylFold' " improved Python folding
+
 Plugin 'Glench/Vim-Jinja2-Syntax' " Jinja2 syntax
 
 "Plugin 'amigrave/vim-pudb'
@@ -174,9 +176,15 @@ endfunction
 "}}}
 let mapleader = ","
 let maplocalleader = ","
+
+let g:ropevim_autoimport_modules = ["os", "shutil"]
+
 nnoremap <leader>, :normal ,<CR>:<CR>
 "let mapleader = "\<space>"
 "TODO{{{
+" ,n in jedi and ,ne ,nf ,nr ,nf ??
+" consider changing ,n to sth else
+"
 "map :Explore
 "let g:use_python2 = 1
 
@@ -537,6 +545,9 @@ let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 let g:languagetool_jar='/home/data/software/LanguageTool-3.4/languagetool-commandline.jar'
 let g:languagetool_lang='en-GB'
 "}}}
+" Gutentags {{{
+" let g:gutentags_project_root=['.gutentags']
+" }}}
 " MiniBufExplorer {{{
 noremap <Leader>mbe :MBEOpen<CR>
 noremap <Leader>mbc :MBEClose<CR>

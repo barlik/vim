@@ -229,7 +229,10 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 " Colorscheme {{{
 function! SetColorscheme()
 	"colorscheme seti,jellybeans,distinguished, molokai, jellybeans
-	colorscheme seti | hi Visual cterm=reverse ctermbg=bg ctermfg=fg
+	colorscheme seti
+		hi Visual cterm=reverse ctermbg=bg ctermfg=fg
+		hi Search ctermbg=black ctermfg=red cterm=bold,italic
+		hi IncSearch ctermbg=black ctermfg=red cterm=bold,italic
 	if &diff
 		"calmar256-dark, pablo,murphy,slate,desert
 		colorscheme jellybeans

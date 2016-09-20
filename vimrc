@@ -598,6 +598,22 @@ noremap <Leader>mbe :MBEOpen<CR>
 noremap <Leader>mbc :MBEClose<CR>
 noremap <Leader>mbt :MBEToggle<CR>
 " }}}
+" {{{ Gitgutter
+" Ignore whitespace
+" let g:gitgutter_diff_args = '-w'
+" Remap keys
+nmap ]h <Plug>GitGutterNextHunk
+nmap [h <Plug>GitGutterPrevHunk
+
+nmap <Leader>ha <Plug>GitGutterStageHunk
+nmap <Leader>hr <Plug>GitGutterUndoHunk
+
+omap ih <Plug>GitGutterTextObjectInnerPending
+omap ah <Plug>GitGutterTextObjectOuterPending
+xmap ih <Plug>GitGutterTextObjectInnerVisual
+xmap ah <Plug>GitGutterTextObjectOuterVisual
+
+" }}}
 nnoremap <leader>ag :Ag <C-R><C-W>
 "TComment
 "TODO: FINISH THIS OFF

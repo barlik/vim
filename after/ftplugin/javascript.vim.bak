@@ -1,0 +1,4 @@
+" Syntastic like checking
+setlocal errorformat=%f:\ line\ %l\\,\ col\ %c\\,\ %m,%-G%.%#
+setlocal makeprg=jshint
+autocmd! BufWritePost <buffer> silent make! % | silent redraw! | cwindow | silent wincmd p

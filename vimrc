@@ -16,7 +16,7 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'Shougo/neocomplcache'
 "Plugin 'spolu/dwm.vim'
 "Plugin 'jeaye/color_coded'
-" Plugin 'python-rope/ropevim'
+Plugin 'python-rope/ropevim'
 " Plugin 'klen/python-mode'
 
 " Interactive scripting
@@ -46,6 +46,7 @@ Plugin 'davidhalter/jedi-vim' " Python auto-completion
 Plugin 'nvie/vim-flake8'      " Python pep8 checker
 Plugin 'hynek/vim-python-pep8-indent' " auto indent
 Plugin 'alfredodeza/coveragepy.vim'
+Plugin 'fisadev/vim-isort'
 " Plugin 'tmhedberg/SimpylFold' " improved Python folding
 
 Plugin 'Glench/Vim-Jinja2-Syntax' " Jinja2 syntax
@@ -178,6 +179,14 @@ let mapleader = ","
 let maplocalleader = ","
 
 let g:ropevim_autoimport_modules = ["os", "shutil"]
+let g:ropevim_guess_project = 1
+autocmd FileType python imap <buffer> <C-@> <C-R>=RopeCodeAssistInsertMode()<CR>
+
+let g:pyclewn_python='/tmp/x/bin/python3.4'
+
+" let g:vim_isort_map = '<C-i>'
+" " Or disable the mapping with this:
+" " let g:vim_isort_map = ''
 
 nnoremap <leader>, :normal ,<CR>:<CR>
 "let mapleader = "\<space>"
@@ -258,6 +267,7 @@ function! SetupDiffMappings()
 		nnoremap <buffer> <silent> <M-Right> :diffput<Bar>diffupdate<CR>
 		"nnoremap <leader>du :diffupdate<CR>
 	else
+		" TODO: <C-M-Up> ??
 		nnoremap <M-Up> :cprevious<CR>
 		nnoremap <M-Down> :cnext<CR>
 		nnoremap <M-Right> :MBEbn<CR> " alternativelly :bn<CR>

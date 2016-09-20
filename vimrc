@@ -86,7 +86,8 @@ Plugin 'mbbill/undotree'    " alternative Undotree
 Plugin 'vim-scripts/a.vim'  " Toggle c/h files
 "Plugin 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
 
-" Code navigation
+" Directory navigation
+Plugin 'tpope/vim-vinegar'   " improved netrw
 Plugin 'scrooloose/nerdtree' " NERDTree
 Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 

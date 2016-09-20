@@ -351,6 +351,12 @@ set autowrite 			" Automatically write changes with tagging to a new file
 
 "set autochdir                   " Automatically change working directory
 
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+	let &undodir = expand('$HOME/' . '.vimundo')
+	call system('mkdir ' . &undodir)
+	set undofile
+endif
 " set autosave " NOT IMPLEMENTED YET
 " autocmd TextChanged,TextChangedI <buffer> silent write " should work with vim7
 "set splitbelow

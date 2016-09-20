@@ -176,6 +176,13 @@ endfunction
 " }}}
 "Plugins configuration {{{
 "}}}
+
+" DANGEROUS
+" Source a local configuration file if available {{{
+set exrc " Load vimrc from current working directory
+set secure " Make above command more secure
+"}}}
+
 let mapleader = ","
 let maplocalleader = ","
 
@@ -226,14 +233,6 @@ filetype plugin indent on " required by vundle
 
 " automaticaly open last position in file
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-"}}}
-" Source a local configuration file if available {{{
-" DANGEROUS
-"if (getcwd() != $HOME)
-	"if filereadable("./.vimrc")
-		"source ./.vimrc
-	"endif
-"endif
 "}}}
 " Settings {{{
 " Colorscheme {{{

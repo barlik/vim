@@ -572,7 +572,7 @@ noremap <Leader>mbe :MBEOpen<CR>
 noremap <Leader>mbc :MBEClose<CR>
 noremap <Leader>mbt :MBEToggle<CR>
 " }}}
-nnoremap <leader>ag :Ag 
+nnoremap <leader>ag :Ag <C-R><C-W>
 "TComment
 "TODO: FINISH THIS OFF
 "let g:tcommentMapLeader1 = '<c-a>'

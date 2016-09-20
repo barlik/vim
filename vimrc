@@ -442,10 +442,14 @@ let g:syntastic_check_on_wq = 0
 "let g:syntastic_mode_map = { "mode": "passive" }
 let g:syntastic_error_symbol = "\u2717"
 let g:syntastic_warning_symbol = "\u26A0"
-let g:syntastic_enable_highlighting = 0
+" let g:syntastic_enable_highlighting = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_aggregate_errors = 1
 
-let g:syntastic_python_checkers= ["python", "flake8" ]
-let g:syntastic_python_pylint_args=""
+" pydocstyle
+let g:syntastic_python_checkers = [ "python", "flake8", "pylint" ]
+let g:syntastic_python_pylint_args ="-E"
+"let g:syntastic_python_flake8_args = \"--ignore=E501 --max-complexity 10\"
 
 "highligh Error ctermbg=bg
 "}}}

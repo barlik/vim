@@ -318,7 +318,9 @@ set ignorecase		" ignore case
 set autoindent
 set smartindent
 
-"set breakindent        " keep wrapped lines indented
+set linebreak           " wrap at WORD splits
+set breakindent         " keep wrapped lines indented
+set showbreak=…
 
 "set cursorline         " draw horizontal line on cursor's position 
 "set showtabline=2	" always show tab page labels
@@ -347,6 +349,7 @@ au vimResized * :wincmd =
 "set cinoptions=:0,+.5s,(.5s,u0,U1,t0,M1 " pozriet v manualy set noexpandtab
 "set cinoptions=:0,u0,U1,t0,M1 " pozriet v manualy set noexpandtab
 "set hidden " keep buffers when you leave them - unnecessary with autowrite on
+set autoread                    " Automatically reload externally changed file
 set autowrite 			" Automatically write changes with tagging to a new file
 
 "set autochdir                   " Automatically change working directory

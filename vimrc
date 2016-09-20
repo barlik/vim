@@ -26,9 +26,16 @@ Plugin 'python-rope/ropevim'
 " Plugin 'jiangmiao/auto-pairs'
 Plugin 'tpope/vim-dispatch'
 Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'ryanss/vim-hackernews'
 
 Plugin 'vimux' " tmux integration
 " Plugin 'julienr/vimux-pyutils'
+
+" Plugin 'AnsiEsc.vim' " ansi colors
+" Plugin 'DrawIt' " ascii drawing
+" Plugin 'csv.vim'
+" Plugin 'dbext.vim'
+" let g:dbext_default_usermaps = 0
 
 " Plugin 'tpope/vim-cucumber'
 
@@ -81,7 +88,7 @@ Plugin 'vim-scripts/taglist.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'ludovicchabant/vim-gutentags'
 
-" Plugin 'sjl/gundo.vim'      " Super Undo
+" Plugin 'sjl/gundo.vim'     " Super Undo
 Plugin 'mbbill/undotree'    " alternative Undotree
 Plugin 'vim-scripts/a.vim'  " Toggle c/h files
 "Plugin 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
@@ -90,6 +97,13 @@ Plugin 'vim-scripts/a.vim'  " Toggle c/h files
 Plugin 'tpope/vim-vinegar'   " improved netrw
 Plugin 'scrooloose/nerdtree' " NERDTree
 Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
+
+" Experimental
+" Plugin 'Shougo/vimproc.vim'
+" Plugin 'Shougo/vimshell.vim'
+" Plugin 'Shougo/unite.vim'
+" Plugin 'Shougo/vimfiler.vim'
+"
 
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -430,6 +444,13 @@ let g:ycm_confirm_extra_conf = 0
 "let g:ycm_key_invoke_completion = '<leader><space>'
 let g:ycm_key_invoke_completion = '<C-n>'
 
+let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
+let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
+let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
+let g:ycm_complete_in_comments = 1 " Completion in comments
+let g:ycm_complete_in_strings = 1 " Completion in string
+
+
 " FIXME: TEST THIS
 " let g:ycm_autoclose_preview_window_after_completion=1
 "map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -584,6 +605,8 @@ autocmd FileType html,css EmmetInstall
 "}}}
 "NERDTree {{{
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+let NERDTreeHijackNetrw=0 " do not hijack netrw
+" let g:netrw_preview = 1
 "
 " }}}
 " Language Tool {{{
@@ -689,6 +712,10 @@ nnoremap <leader>ge :Gedit<CR>
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>gw :Gwrite<CR>
 
+" C-c will trigger InsertLeave
+" TODO: Learn to use either C-c or C-[
+" imap <C-c> <Esc>
+
 " fix Ctrl-space in GUI {{{
 " if has('gui_running')
 " 	imap <C-Space> <Esc>
@@ -709,8 +736,9 @@ nnoremap <leader>gw :Gwrite<CR>
 "noremap <Up> gk
 " his makes gj/gk move by virtual lines when used without a count, and by physical
 " lines when used with a count. This is perfect in tandem with relative numbers.
-noremap <silent> <expr> <Down> (v:count == 0 ? 'gj' : 'j')
-noremap <silent> <expr> <Up> (v:count == 0 ? 'gk' : 'k')
+" FIXME: This breaks drawit plugin, do I need it?
+" noremap <silent> <expr> <Down> (v:count == 0 ? 'gj' : 'j')
+" noremap <silent> <expr> <Up> (v:count == 0 ? 'gk' : 'k')
 
 "nmap <Leader>pa :setlocal paste! paste?<CR>
 set pastetoggle=<F11>
@@ -799,6 +827,8 @@ cnoremap $d <CR>:d<CR>``
 
 "highlight clear SignColumn
 "}}}
+" autocmd BufNewFile *.c 0r ~/.vim/skel/c
+
 " PYTHON {{{
 "au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
@@ -813,6 +843,10 @@ au FileType python map <silent> <leader>B Oimport ipdb; ipdb.set_trace() #XXX: B
 au FileType python nnoremap <buffer> <Leader>r :exec '!python' shellescape(@%, 1)<cr>
 "noremap <F5> :w !python %<CR>
 "inoremap <F5> <ESC>:w !python %<CR>
+
+
+" nnoremap <silent> <F5> :!clear;python %<CR>
+
 
 "au FileType python map <silent> <leader>pb exe "!echo " . expand("%:p"). ":" . line(".")
 "nmap <C-LeftMouse> <LeftMouse>,d

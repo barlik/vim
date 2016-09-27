@@ -638,6 +638,7 @@ xmap ah <Plug>GitGutterTextObjectOuterVisual
 
 " }}}
 nnoremap <leader>ag :Ag <C-R><C-W>
+vnoremap <leader>ag y:Ag <C-R>"
 "TComment
 "TODO: FINISH THIS OFF
 "let g:tcommentMapLeader1 = '<c-a>'

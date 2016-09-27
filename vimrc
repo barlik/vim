@@ -210,7 +210,7 @@ let g:pyclewn_python='/tmp/x/bin/python3.4'
 " " Or disable the mapping with this:
 " " let g:vim_isort_map = ''
 
-nnoremap <leader>, :normal ,<CR>:<CR>
+nnoremap <Leader>, :normal ,<CR>:<CR>
 "let mapleader = "\<space>"
 "TODO{{{
 " ,n in jedi and ,ne ,nf ,nr ,nf ??
@@ -279,7 +279,7 @@ function! SetupDiffMappings()
 		"nnoremap <M-Right> dp
 		nnoremap <buffer> <silent> <M-Left> :diffget<Bar>diffupdate<CR>
 		nnoremap <buffer> <silent> <M-Right> :diffput<Bar>diffupdate<CR>
-		"nnoremap <leader>du :diffupdate<CR>
+		"nnoremap <Leader>du :diffupdate<CR>
 	else
 		" TODO: <C-M-Up> ??
 		nnoremap <M-Up> :cprevious<CR>
@@ -441,7 +441,7 @@ let g:UltiSnipsListSnippets = '<s-tab>' " <c-tab> is used by some other plugin
 "let g:UltiSnipsEditSplit="Vertical"
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
-"let g:ycm_key_invoke_completion = '<leader><space>'
+"let g:ycm_key_invoke_completion = '<Leader><space>'
 let g:ycm_key_invoke_completion = '<C-n>'
 
 let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
@@ -453,7 +453,7 @@ let g:ycm_complete_in_strings = 1 " Completion in string
 
 " FIXME: TEST THIS
 " let g:ycm_autoclose_preview_window_after_completion=1
-"map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"map <Leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nmap <C-LeftMouse> <LeftMouse>:YcmCompleter GoToDefinitionElseDeclaration<CR>
 nmap <C-RightMouse> <C-o>
 
@@ -637,8 +637,8 @@ xmap ih <Plug>GitGutterTextObjectInnerVisual
 xmap ah <Plug>GitGutterTextObjectOuterVisual
 
 " }}}
-nnoremap <leader>ag :Ag <C-R><C-W>
-vnoremap <leader>ag y:Ag <C-R>"
+nnoremap <Leader>ag :Ag <C-R><C-W>
+vnoremap <Leader>ag y:Ag <C-R>"
 "TComment
 "TODO: FINISH THIS OFF
 "let g:tcommentMapLeader1 = '<c-a>'
@@ -659,7 +659,7 @@ vnoremap <leader>ag y:Ag <C-R>"
 " xmap | xnoremap | visual
 
 "map argwrap
-nnoremap <silent> <leader>aw :ArgWrap<CR>
+nnoremap <silent> <Leader>aw :ArgWrap<CR>
 "
 " set path+=**
 " and then find file
@@ -680,10 +680,10 @@ nnoremap ,cd :lcd %:p:h<CR>:pwd<CR>
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
-"nnoremap <leader><space> :nohl<CR>
+"nnoremap <Leader><space> :nohl<CR>
 
 " Search and replace word under cursor
-nnoremap <leader>cc :%s/<C-r><C-w>/<C-r><C-w>/c<C-f>$F/i
+nnoremap <Leader>cc :%s/<C-r><C-w>/<C-r><C-w>/c<C-f>$F/i
 vnoremap <Leader>cc y:%s/<C-r>"/<C-r>"
 " if set gdefault is not set append g   ^
 
@@ -697,7 +697,7 @@ vnoremap . :norm.<CR>
 inoremap <c-u> <c-g>u<c-u>
 inoremap <c-w> <c-g>u<c-w>
 
-nmap <leader>vs :so ~/.vimrc<CR>
+nmap <Leader>vs :so ~/.vimrc<CR>
 
 " join line downwards
 nnoremap gK :m+1<bar>-1<bar>j<CR>
@@ -706,12 +706,12 @@ nnoremap gK :m+1<bar>-1<bar>j<CR>
 " <C-space> worked for me in Macvim but not <C-@> or <Nul>, and vice-versa for command-line vim.
 " I ended up mapping <C-space> to <Nul> and mapping with <Nul> for a more general mapping. 
 "
-nnoremap <leader>gb :Gblame<CR>
-nnoremap <leader>gc :Gcommit -v<CR>
-nnoremap <leader>gd :Gdiff<CR>
-nnoremap <leader>ge :Gedit<CR>
-nnoremap <leader>gs :Gstatus<CR>
-nnoremap <leader>gw :Gwrite<CR>
+nnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gc :Gcommit -v<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>ge :Gedit<CR>
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gw :Gwrite<CR>
 
 " C-c will trigger InsertLeave
 " TODO: Learn to use either C-c or C-[
@@ -744,32 +744,32 @@ nnoremap <leader>gw :Gwrite<CR>
 "nmap <Leader>pa :setlocal paste! paste?<CR>
 set pastetoggle=<F11>
 
-nnoremap <leader>gu :GundoToggle<CR>
+nnoremap <Leader>gu :GundoToggle<CR>
 cmap w!! w !sudo tee % >/dev/null
-nnoremap <leader>ma :make<CR>
+nnoremap <Leader>ma :make<CR>
 nnoremap <Leader>nu :setlocal number! number?<CR>
 nnoremap <Leader>nr :setlocal relativenumber! relativenumber?<CR>
 nnoremap <Leader>li :setlocal list! list?<CR>
 nnoremap <Leader>p :put<CR>
 nnoremap <Leader>ne :NERDTreeToggle<CR>
 nnoremap <Leader>nf :NERDTreeFind<CR>
-nnoremap <silent> <leader>tl :TlistToggle<CR>
-nnoremap <silent> <leader>ta :TagbarToggle<CR>
+nnoremap <silent> <Leader>tl :TlistToggle<CR>
+nnoremap <silent> <Leader>ta :TagbarToggle<CR>
 
 
 " Cleanup trailing whitespace in entire file
 cmap w!! w !sudo tee % >/dev/null
-"nnoremap <leader>w :silent! %s/\s\+$//<cr>:let @/=''<CR>:w<CR>
+"nnoremap <Leader>w :silent! %s/\s\+$//<cr>:let @/=''<CR>:w<CR>
 
 nnoremap K K<CR>
 
 
 "FIXME: WIP
-"nnoremap <leader><Space> :YcmCompleter GoTo<CR>'
-"nnoremap <leader>e :YcmCompleter GoToReferences<CR>
-"nnoremap <leader>f :YcmCompleter GoToDefinition<CR>
-"nnoremap <leader>d :YcmCompleter GoToDeclaration<CR>
-"nnoremap <leader>i :YcmCompleter GoToInclude<CR>
+"nnoremap <Leader><Space> :YcmCompleter GoTo<CR>'
+"nnoremap <Leader>e :YcmCompleter GoToReferences<CR>
+"nnoremap <Leader>f :YcmCompleter GoToDefinition<CR>
+"nnoremap <Leader>d :YcmCompleter GoToDeclaration<CR>
+"nnoremap <Leader>i :YcmCompleter GoToInclude<CR>
 
 
 " Split navigations
@@ -838,8 +838,8 @@ cnoremap $d <CR>:d<CR>``
 " Strip spaces
 " autocmd BufWritePre *.py :%s/\s\+$//e
 
-au FileType python map <silent> <leader>b oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
-au FileType python map <silent> <leader>B Oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
+au FileType python map <silent> <Leader>b oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
+au FileType python map <silent> <Leader>B Oimport ipdb; ipdb.set_trace() #XXX: BREAKPOINT<esc>
 "au FileType python nnoremap <buffer> <F9> :wa<CR>:!clear; nosetests %<CR>
 au FileType python nnoremap <buffer> <Leader>r :exec '!python' shellescape(@%, 1)<cr>
 "noremap <F5> :w !python %<CR>
@@ -849,7 +849,7 @@ au FileType python nnoremap <buffer> <Leader>r :exec '!python' shellescape(@%, 1
 " nnoremap <silent> <F5> :!clear;python %<CR>
 
 
-"au FileType python map <silent> <leader>pb exe "!echo " . expand("%:p"). ":" . line(".")
+"au FileType python map <silent> <Leader>pb exe "!echo " . expand("%:p"). ":" . line(".")
 "nmap <C-LeftMouse> <LeftMouse>,d
 
 " Remove trailing white spaces from python files
@@ -866,7 +866,7 @@ import vim
 def EvaluateCurrentRange():
     eval(compile('\n'.join(vim.current.range),'','exec'),globals())
 EOL
-" FIXME: change mapping (<leader>ev?>
+" FIXME: change mapping (<Leader>ev?>
 "map <C-h> :py EvaluateCurrentRange()
 map <F5> :py EvaluateCurrentRange()
 
@@ -937,9 +937,9 @@ EOF
 "}}}
 
 " " map fuzzyfinder (CtrlP) plugin
-" " nmap <silent> <leader>t :CtrlP<cr>
-" nmap <silent> <leader>r :CtrlPBuffer<cr>
-" let g:ctrlp_map='<leader>t'
+" " nmap <silent> <Leader>t :CtrlP<cr>
+" nmap <silent> <Leader>r :CtrlPBuffer<cr>
+" let g:ctrlp_map='<Leader>t'
 " let g:ctrlp_dotfiles=1
 " let g:ctrlp_working_path_mode = 'ra'
 "
@@ -977,11 +977,11 @@ command! -nargs=1 Repl silent !echo
       \ repl.quit();" |
       \ ncat -4 localhost 4242 2>&1 > /dev/null
 
-nmap <leader>mh :Repl http://
+nmap <Leader>mh :Repl http://
 " mnemonic is MozRepl Http
-nmap <silent> <leader>mo :Silent Repl file:///%:p<CR>
+nmap <silent> <Leader>mo :Silent Repl file:///%:p<CR>
 " mnemonic is MozRepl Local
-nmap <silent> <leader>md :Repl http://localhost/
+nmap <silent> <Leader>md :Repl http://localhost/
 " mnemonic is MozRepl Development
 " }}}
 " vim:foldmethod=marker

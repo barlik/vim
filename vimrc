@@ -1,3 +1,5 @@
+" IDEA:
+" python: nmap <M-Down> <M-Up> ]m [m or ]] [[
 " PLUGINS {{{
 set nocompatible " required for vundle
 filetype off " required for vundle
@@ -16,7 +18,7 @@ Plugin 'Valloric/YouCompleteMe'
 "Plugin 'Shougo/neocomplcache'
 "Plugin 'spolu/dwm.vim'
 "Plugin 'jeaye/color_coded'
-Plugin 'python-rope/ropevim'
+" Plugin 'python-rope/ropevim'
 " Plugin 'klen/python-mode'
 
 " Interactive scripting
@@ -28,16 +30,24 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'ryanss/vim-hackernews'
 
+Plugin 'Ron89/thesaurus_query.vim'
+Plugin 'krisajenkins/vim-pipe'
+Plugin 'KabbAmine/zeavim.vim'
+" Or simply: nnoremap gz :!zeal "<cword>"&<CR><CR>
+" Plugin 'ivanov/vim-ipython'
+Plugin 'wilywampa/vim-ipython'
+
 Plugin 'vimux' " tmux integration
 " Plugin 'julienr/vimux-pyutils'
 
 " Plugin 'AnsiEsc.vim' " ansi colors
 " Plugin 'DrawIt' " ascii drawing
-" Plugin 'csv.vim'
+Plugin 'csv.vim'
 " Plugin 'dbext.vim'
 " let g:dbext_default_usermaps = 0
 
 " Plugin 'tpope/vim-cucumber'
+" Plugin 'mcepl/vim-behave'
 
 Plugin 'christoomey/vim-sort-motion'
 
@@ -95,6 +105,9 @@ Plugin 'vim-scripts/a.vim'  " Toggle c/h files
 
 " Directory navigation
 Plugin 'tpope/vim-vinegar'   " improved netrw
+" nmap - -
+" nmap <BackSpace> <Plug>VinegarUp
+
 Plugin 'scrooloose/nerdtree' " NERDTree
 Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 
@@ -104,10 +117,26 @@ Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 " Plugin 'Shougo/unite.vim'
 " Plugin 'Shougo/vimfiler.vim'
 "
+Plugin 'rickhowe/diffchar.vim' " TEST THIS
+" Plugin 'ternjs/tern_for_vim' " JavaScript
+
+Plugin 'janko-m/vim-test'
+Plugin 'embear/vim-localvimrc'
+let g:localvimrc_persistence_file=$HOME . "/.vim/.lvimrc_cache"
+let g:localvimrc_persistent=1
+" autocmd BufNewFile,BufRead /tmp/* nmap ,q :smile<CR>
 
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'rking/ag.vim'
+""
+" You know that you do not need ag.vim to use ag with Vim. Setting:
+"
+" set grepprg=ag\ --vimgrep
+"
+" Will do (and then you should use :grep instead of :Ag).
+
+""
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 
@@ -127,6 +156,7 @@ Plugin 'tpope/vim-fugitive'     " Git wrapper
 
 " Styling
 Plugin 'ap/vim-css-color' " Highlight css colors
+" TODO: CSS is slow on json with foldings
 Plugin 'kien/rainbow_parentheses.vim' " Highligh parenthesis
 
 Plugin 'godlygeek/tabular'
@@ -190,21 +220,28 @@ endfunction
 " }}}
 "Plugins configuration {{{
 "}}}
-
 " DANGEROUS
 " Source a local configuration file if available {{{
-set exrc " Load vimrc from current working directory
-set secure " Make above command more secure
+" set exrc " Load vimrc from current working directory
+" set secure " Make above command more secure
 "}}}
+
+" let g:tq_enabled_backends=["mthesaur_txt"]
+" g:tq_enabled_backends=["woxikon_de","jeck_ru","thesaurus_com","openoffice_en","mthesaur_txt"]
 
 let mapleader = ","
 let maplocalleader = ","
 
-let g:ropevim_autoimport_modules = ["os", "shutil"]
-let g:ropevim_guess_project = 1
-autocmd FileType python imap <buffer> <C-@> <C-R>=RopeCodeAssistInsertMode()<CR>
+" let g:ropevim_autoimport_modules = ["os", "shutil"]
+" let g:ropevim_guess_project = 1
+" autocmd FileType python imap <buffer> <C-@> <C-R>=RopeCodeAssistInsertMode()<CR>
 
-let g:pyclewn_python='/tmp/x/bin/python3.4'
+" let g:pyclewn_python='/tmp/x/bin/pyhon3.4'
+
+set fillchars=fold:\ 
+
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview 
 
 " let g:vim_isort_map = '<C-i>'
 " " Or disable the mapping with this:
@@ -252,8 +289,10 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 " Colorscheme {{{
 function! SetColorscheme()
 	"colorscheme seti,jellybeans,distinguished, molokai, jellybeans
-	colorscheme seti
-		hi Visual cterm=reverse ctermbg=bg ctermfg=fg
+	colorscheme jellybeans
+		hi link pythonOperator Statement
+	" colorscheme seti
+	" 	hi Visual cterm=reverse ctermbg=bg ctermfg=fg
 		hi Search ctermbg=black ctermfg=red cterm=bold,italic
 		hi IncSearch ctermbg=black ctermfg=red cterm=bold,italic
 	if &diff
@@ -322,6 +361,7 @@ set nojoinspaces	" do not insert two spaces in join
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set cmdheight=2 
+set fillchars=fold:\    " do not fill folded text header
 "set gdefault		" in replace s/// g is always on, another g to turn off
 set incsearch		" enable incremental search
 set hlsearch		" highlight search patterns
@@ -334,13 +374,13 @@ set smartindent
 
 set linebreak           " wrap at WORD splits
 set breakindent         " keep wrapped lines indented
-set showbreak=…
+set showbreak=……
 
 "set cursorline         " draw horizontal line on cursor's position 
 "set showtabline=2	" always show tab page labels
 set showmatch
 
-set dictionary+='/usr/share/dict/words'
+set dictionary=/usr/share/dict/words
 "set spell
 
 "set history=100         " keep X lines of command line history
@@ -370,7 +410,7 @@ set autowrite 			" Automatically write changes with tagging to a new file
 
 " Keep undo history across sessions by storing it in a file
 if has('persistent_undo')
-	let &undodir = expand('$HOME/' . '.vimundo')
+	let &undodir = expand('$HOME/' . '.vim/undo')
 	call system('mkdir ' . &undodir)
 	set undofile
 endif
@@ -444,17 +484,22 @@ let g:ycm_confirm_extra_conf = 0
 "let g:ycm_key_invoke_completion = '<Leader><space>'
 let g:ycm_key_invoke_completion = '<C-n>'
 
-let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file
+" let g:ycm_collect_identifiers_from_tags_files = 1 " Let YCM read tags from Ctags file (ctags need to be called with --fields=+l)
 let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
 let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's keyword
 let g:ycm_complete_in_comments = 1 " Completion in comments
 let g:ycm_complete_in_strings = 1 " Completion in string
 
+let g:ycm_filetype_blacklist = {
+			\ 'python' : 1,
+			\}
+ 
 
 " FIXME: TEST THIS
 " let g:ycm_autoclose_preview_window_after_completion=1
 "map <Leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nmap <C-LeftMouse> <LeftMouse>:YcmCompleter GoToDefinitionElseDeclaration<CR>
+" nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nmap <C-RightMouse> <C-o>
 
 "}}}
@@ -476,6 +521,9 @@ let g:syntastic_python_pylint_args ="-E"
 "}}}
 " Vim Jedi {{{
 let g:jedi#completions_command = "<C-N>"
+let g:jedi#goto_assignments_command = "<leader>ga" " FIXME
+let g:jedi#usages_command = "<leader>gu" " FIXME
+
 " }}}
 " Rainbow Parentheses {{{
 " Always on
@@ -625,11 +673,10 @@ noremap <Leader>mbt :MBEToggle<CR>
 " Ignore whitespace
 " let g:gitgutter_diff_args = '-w'
 " Remap keys
-nmap ]h <Plug>GitGutterNextHunk
-nmap [h <Plug>GitGutterPrevHunk
+" nmap ]h <Plug>GitGutterNextHunk
+" nmap [h <Plug>GitGutterPrevHunk
 
 nmap <Leader>ha <Plug>GitGutterStageHunk
-nmap <Leader>hr <Plug>GitGutterUndoHunk
 
 omap ih <Plug>GitGutterTextObjectInnerPending
 omap ah <Plug>GitGutterTextObjectOuterPending
@@ -639,6 +686,17 @@ xmap ah <Plug>GitGutterTextObjectOuterVisual
 " }}}
 nnoremap <Leader>ag :Ag <C-R><C-W>
 vnoremap <Leader>ag y:Ag <C-R>"
+" Zeavim {{{
+" FIXME: z or k for this?
+nmap ,k <Plug>Zeavim
+vmap ,k <Plug>ZVVisSelection
+nmap gk <Plug>ZVMotion
+nmap ,K <Plug>ZVKeyDocset
+let g:zv_file_types = {
+			\ 'cpp': 'cpp',
+			\}
+
+" }}}
 "TComment
 "TODO: FINISH THIS OFF
 "let g:tcommentMapLeader1 = '<c-a>'
@@ -697,15 +755,11 @@ vnoremap . :norm.<CR>
 inoremap <c-u> <c-g>u<c-u>
 inoremap <c-w> <c-g>u<c-w>
 
-nmap <Leader>vs :so ~/.vimrc<CR>
+" nmap <leader>vs :so $MYVIMRC<CR>
 
 " join line downwards
 nnoremap gK :m+1<bar>-1<bar>j<CR>
 
-" Alternative
-" <C-space> worked for me in Macvim but not <C-@> or <Nul>, and vice-versa for command-line vim.
-" I ended up mapping <C-space> to <Nul> and mapping with <Nul> for a more general mapping. 
-"
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gc :Gcommit -v<CR>
 nnoremap <Leader>gd :Gdiff<CR>
@@ -715,7 +769,13 @@ nnoremap <Leader>gw :Gwrite<CR>
 
 " C-c will trigger InsertLeave
 " TODO: Learn to use either C-c or C-[
-" imap <C-c> <Esc>
+imap <C-c> <Esc>
+
+" Alternative
+" <C-space> worked for me in Macvim but not <C-@> or <Nul>, and vice-versa for command-line vim.
+" I ended up mapping <C-space> to <Nul> and mapping with <Nul> for a more general mapping. 
+"
+" inoremap <C-@> <C-x><C-o>
 
 " fix Ctrl-space in GUI {{{
 " if has('gui_running')
@@ -744,7 +804,8 @@ nnoremap <Leader>gw :Gwrite<CR>
 "nmap <Leader>pa :setlocal paste! paste?<CR>
 set pastetoggle=<F11>
 
-nnoremap <Leader>gu :GundoToggle<CR>
+" nnoremap <leader>gu :GundoToggle<CR>
+nnoremap <leader>gu :UndotreeToggle<CR>
 cmap w!! w !sudo tee % >/dev/null
 nnoremap <Leader>ma :make<CR>
 nnoremap <Leader>nu :setlocal number! number?<CR>
@@ -829,6 +890,7 @@ cnoremap $d <CR>:d<CR>``
 "highlight clear SignColumn
 "}}}
 " autocmd BufNewFile *.c 0r ~/.vim/skel/c
+
 
 " PYTHON {{{
 "au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
@@ -922,6 +984,9 @@ vim.command( "map <s-f8> :py RemoveBreakpoints()<cr>")
 EOF
 "
 "}}}
+" autocmd FileType python map <buffer> <M-d> :w<CR>:lcd %:h<CR>:!start python
+nmap ,br :silent exe "!term -e python -m pdb -c \"break " . expand('%:p') . ":" . line(".") . "\" -c continue " . expand("%:p") . ' &'<CR>
+" -m pdb "%" <CR>
 " augroup vimrc_autocmds
 "     autocmd!
 "     " highlight characters past column 120
@@ -930,11 +995,19 @@ EOF
 "     autocmd FileType python set nowrap
 "     augroup END
 " PYTHON DEBUGGING {{{
-" nnoremap <silent> <Leader>pb :call system("xsend 'break " . expand("%:p") . ":" . line("."))<CR>
+nnoremap <silent> <Leader>pb :call system("xsend 'break " . expand("%:p") . ":" . line(".") . "'")<CR>
 " nnoremap <silent> <Leader>pc :call system("xsend 'continue'")<CR>
 " nnoremap <silent> <Leader>ps :call system("xsend 'step'")<CR>
 " noremap <silent> <Leader>pp :yank<CR>:call system("xsend 'paste -q'")<CR>
 "}}}
+" Execute a selection of code (very cool!)
+" Use VISUAL to select a range and then hit ctrl-h to execute it.
+" python << EOL
+" import vim
+" def EvaluateCurrentRange():
+"     eval(compile('\n'.join(vim.current.range),'','exec'),globals())
+" EOL
+" autocmd FileType python map <C-m> :py EvaluateCurrentRange()<CR>
 
 " " map fuzzyfinder (CtrlP) plugin
 " " nmap <silent> <Leader>t :CtrlP<cr>

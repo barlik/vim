@@ -351,6 +351,7 @@ set directory=/tmp " swap files
 "set backup " enable backups
 " }}}
 
+set shortmess+=I        " Do not show startup message
 set whichwrap=b,s,[,],<,>,h,l " allow cursor to wrap between lines
 set nostartofline	" keep cursor in the same column if possible
 set virtualedit=block	" allow virtual editing in Visual block mode

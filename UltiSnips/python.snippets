@@ -16,6 +16,10 @@ snippet ipdb "ipdb breakpoint"
 import ipdb; ipdb.set_trace() # XXX: BREAKPOINT
 endsnippet
 
+snippet rpdb "rpdb breakpoint"
+import rpdb; rpdb.set_trace() # XXX: BREAKPOINT
+endsnippet
+
 snippet traceback "print traceback"
 import traceback, sys; traceback.print_exception(*sys.exc_info()) # XXX: TRACEBACK
 endsnippet

@@ -1,3 +1,26 @@
+" " set <A-a>=[27;3;97~
+" set <M-a>=^[a
+" map <Esc>[27;3;97~ iA-a<CR><Esc>
+" map <Esc>[27;3;98~ iA-b<CR><Esc>
+" map <Esc>[27;3;99~ iA-c<CR><Esc>
+" map <Esc>[27;3;100~ iA-d<CR><Esc>
+" map <Esc>[27;3;101~ iA-e<CR><Esc>
+" map <Esc>[27;3;102~ iA-e<CR><Esc>
+" map <Esc>[27;3;103~ iA-f<CR><Esc>
+" map <Esc>[27;3;104~ iA-g<CR><Esc>
+" map <Esc>[27;3;105~ iA-h<CR><Esc>
+" map <Esc>[27;3;106~ iA-i<CR><Esc>
+" map <Esc>[27;3;107~ iA-j<CR><Esc>
+
+" for i in range(65,90) + range(97,122)
+"   let c = nr2char(i)
+"   exec "map \e".c." <M-".c.">"
+"   exec "map! \e".c." <M-".c.">"
+" endfor
+" 
+" map a iA<Esc>
+" map b iB<Esc>
+
 " IDEA:
 " python: nmap <M-Down> <M-Up> ]m [m or ]] [[
 " PLUGINS {{{
@@ -11,7 +34,7 @@ Plugin 'gmarik/Vundle' " let Vundle manage Vundle, required
 Plugin 'tpope/vim-unimpaired'
 
 Plugin 'scrooloose/syntastic'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 " vim-autocomplpop
 "Plugin 'vim-scripts/OmniCppComplete'
 "Plugin 'justmao945/vim-clang'
@@ -166,10 +189,7 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'mattn/emmet-vim' " fancy automatic HTML tags
 
 " Marks
-Plugin 'kshenoy/vim-signature' " showing marks
-
-"YAML
-Plugin 'avakhov/vim-yaml'
+" Plugin 'kshenoy/vim-signature' " showing marks
 
 " Grammar
 Plugin 'LanguageTool'
@@ -329,6 +349,8 @@ function! SetupDiffMappings()
 	call SetColorscheme()
 endfunction
 
+set completeopt+=menuone,noselect " Dont automatically select completion
+
 call SetupDiffMappings()
 " Entering diff mode from within vim - diffsplit, etc.
 autocmd FilterWritePost * call SetupDiffMappings()
@@ -377,6 +399,8 @@ set linebreak           " wrap at WORD splits
 set breakindent         " keep wrapped lines indented
 set showbreak=……
 
+" set nofoldenable        " disable folding, enable by zi
+
 "set cursorline         " draw horizontal line on cursor's position 
 "set showtabline=2	" always show tab page labels
 set showmatch
@@ -384,8 +408,8 @@ set showmatch
 set dictionary=/usr/share/dict/words
 "set spell
 
-"set history=100         " keep X lines of command line history
-set scrolloff=5          " keep X previous lines during scrolling
+set history=200         " keep X lines of command line history
+set scrolloff=5         " keep X previous lines during scrolling
 "set textwidth=78
 "set textwidth=0
 set tabstop=8
@@ -399,12 +423,23 @@ set shiftwidth=8
 " Rearrange windows on resize
 au vimResized * :wincmd =
 
+set ttimeout		" time out for key codes
+set ttimeoutlen=100	" wait up to 100ms after Esc for special key
+set ttimeoutlen=10
+
 "set display=lastline    " Show as much as possible of a wrapped last line, not just "@".
+set display=truncate     " Show @@@ in the last line if it is truncated.
+
+" Do not recognize octal numbers for Ctrl-A and Ctrl-X, most users find it
+" confusing.
+set nrformats-=octal
 
 "set cinoptions=:0,+.5s,(.5s,u0,U1,t0,M1 " pozriet v manualy set noexpandtab
 "set cinoptions=:0,u0,U1,t0,M1 " pozriet v manualy set noexpandtab
 "set hidden " keep buffers when you leave them - unnecessary with autowrite on
+
 set autoread                    " Automatically reload externally changed file
+autocmd CursorHold * checktime  " check changed buffer after inactivity in normal mode
 set autowrite 			" Automatically write changes with tagging to a new file
 
 "set autochdir                   " Automatically change working directory
@@ -432,7 +467,7 @@ set wildignore+=.svn,CVS,*.o,*.a,*.class,*.mo,*.la,*.so,*.obj,*.swp,*.jpg,*.png,
 
 " different set list characters
 " set listchars=tab:>-,eol:$,precedes:>,trail:_ ¦│
-set listchars=tab:\│\ ,trail:_
+set listchars=tab:▸\ ,trail:_,precedes:…,extends:…
 let c_space_errors = 1 " Highlight space error in C/C++
 "TODO: use :match instead?
 "}}}
@@ -442,6 +477,12 @@ let g:SimpylFold_docstring_preview = 1
 "let g:SimpylFold_fold_docstring = 0
 "let g:SimpylFold_fold_import = 0
 "}}}
+" Startify {{{
+let g:startify_bookmarks = [ {'a': '~/.config/awesome/rc.lua'}, '~/.vimrc' ]
+let g:startify_relative_path = 1
+let g:startify_change_to_dir = 0
+" let g:startify_change_to_vcs_root = 0
+" }}}
 " Vimwiki {{{
 let g:vimwiki_list = [{'path': '/home/data/vimwiki/', 'auto_tags': 1}]
 let g:vimwiki_folding = 'expr'
@@ -578,6 +619,7 @@ omap z/	 	<Plug>(easymotion-sn)
 map s<Left>	<Plug>(easymotion-b)
 map s<Right>	<Plug>(easymotion-w)
 map sw		<Plug>(easymotion-bd-w)
+vmap sw		<Plug>(easymotion-bd-w)
 map s<Up>	<Plug>(easymotion-k)
 map s<Down>	<Plug>(easymotion-j)
 " }}}
@@ -738,23 +780,27 @@ nnoremap ,cd :lcd %:p:h<CR>:pwd<CR>
 " noremap! <C-h> <C-w>
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
-nnoremap <silent> <C-l> :nohl<CR><C-l>
+" nnoremap <silent> <C-l> :nohl<CR>:checktime<CR><C-l>
+nnoremap <silent> <C-L> :nohlsearch<CR>:diffupdate<CR>:syntax sync fromstart<CR>:checktime<CR><C-L>
 "nnoremap <Leader><space> :nohl<CR>
 
 " Search and replace word under cursor
 nnoremap <Leader>cc :%s/<C-r><C-w>/<C-r><C-w>/c<C-f>$F/i
-vnoremap <Leader>cc y:%s/<C-r>"/<C-r>"
+vnoremap <Leader>cc y:%s/\V<C-r>"/<C-r>"/c<C-f>$F/i
 " if set gdefault is not set append g   ^
 
 noremap <F1> <ESC> " Turn off F1 help
+inoremap <F1> <ESC> " Turn off F1 help
 nnoremap Q <nop> " Turn off Ex mode
-nnoremap Y y$ " Y yank to end of line
+" nnoremap Y y$ " Y yank to end of line
 vnoremap . :norm.<CR>
 " nnoremap <BS> <C-^>
 
-" Save Ctrl-U and Ctrl-W actions into undo buffer
-inoremap <c-u> <c-g>u<c-u>
-inoremap <c-w> <c-g>u<c-w>
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+" Revert with ":iunmap <C-U>".
+inoremap <C-U> <C-G>u<C-U>
+inoremap <C-W> <C-G>u<C-W>
 
 " nmap <leader>vs :so $MYVIMRC<CR>
 
@@ -779,16 +825,16 @@ imap <C-c> <Esc>
 " inoremap <C-@> <C-x><C-o>
 
 " fix Ctrl-space in GUI {{{
-" if has('gui_running')
-" 	imap <C-Space> <Esc>
-" 	smap <C-Space> <Esc>
-" 	cmap <C-Space> <Esc>
-" "else
-" 	imap <C-@> <Esc>
-" 	smap <C-@> <Esc>
-" 	cmap <C-@> <Esc>
-" 	"map <C-@> <Esc>
-" endif
+if has('gui_running')
+	imap <C-Space> <Esc>
+	smap <C-Space> <Esc>
+	cmap <C-Space> <Esc>
+"else
+	imap <C-@> <Esc>
+	smap <C-@> <Esc>
+	cmap <C-@> <Esc>
+	"map <C-@> <Esc>
+endif
 "}}}
 
 " don't jump over text-wrapped lines
@@ -891,6 +937,7 @@ cnoremap $d <CR>:d<CR>``
 "}}}
 " autocmd BufNewFile *.c 0r ~/.vim/skel/c
 
+nmap <F10> :silent !setsid term &<CR>
 
 " PYTHON {{{
 "au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
@@ -907,10 +954,13 @@ au FileType python nnoremap <buffer> <Leader>r :exec '!python' shellescape(@%, 1
 "noremap <F5> :w !python %<CR>
 "inoremap <F5> <ESC>:w !python %<CR>
 
-
 " nnoremap <silent> <F5> :!clear;python %<CR>
 
 
+" Auto evaluate program on write
+" autocmd BufWritePost *.py pyfile %
+
+" set colorcolumn=+1
 "au FileType python map <silent> <Leader>pb exe "!echo " . expand("%:p"). ":" . line(".")
 "nmap <C-LeftMouse> <LeftMouse>,d
 
@@ -918,7 +968,6 @@ au FileType python nnoremap <buffer> <Leader>r :exec '!python' shellescape(@%, 1
 "autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 
 autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 smarttab expandtab
-" set colorcolumn=+1
 " set textwidth=79
 
 " FIXME: change mapping (<Leader>ev?>
@@ -940,7 +989,7 @@ nmap ,br :silent exe "!term -e python -m pdb -c \"break " . expand('%:p') . ":" 
 "     autocmd FileType python set nowrap
 "     augroup END
 " PYTHON DEBUGGING {{{
-nnoremap <silent> <Leader>pb :call system("xsend 'break " . expand("%:p") . ":" . line(".") . "'")<CR>
+" nnoremap <silent> <Leader>pb :call system("xsend 'break " . expand("%:p") . ":" . line(".") . "'")<CR>
 " nnoremap <silent> <Leader>pc :call system("xsend 'continue'")<CR>
 " nnoremap <silent> <Leader>ps :call system("xsend 'step'")<CR>
 " noremap <silent> <Leader>pp :yank<CR>:call system("xsend 'paste -q'")<CR>
@@ -1002,4 +1051,21 @@ nmap <silent> <Leader>mo :Silent Repl file:///%:p<CR>
 nmap <silent> <Leader>md :Repl http://localhost/
 " mnemonic is MozRepl Development
 " }}}
+
+nnoremap <Leader>mru :CtrlPMRUFiles<CR>
+"nnoremap <leader>b :CtrlPBuffer<cr>
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+" Revert with: ":delcommand DiffOrig".
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
+endif
+
+cnoremap %% <C-R>=expand("%:h")."/"<CR>
+
+nnoremap <Leader>o :Silent !xdg-open <C-R><C-A> &<CR>
+"PYTHON:  vmap ,, "+y<Bar>:Silent !xsend paste >/dev/null 2>&1 &<CR><Bar>:redraw!<CR>
 " vim:foldmethod=marker

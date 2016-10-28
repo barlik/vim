@@ -1,13 +1,5 @@
 " " set <A-a>=[27;3;97~
 " set <M-a>=^[a
-" map <Esc>[27;3;97~ iA-a<CR><Esc>
-" map <Esc>[27;3;98~ iA-b<CR><Esc>
-" map <Esc>[27;3;99~ iA-c<CR><Esc>
-" map <Esc>[27;3;100~ iA-d<CR><Esc>
-" map <Esc>[27;3;101~ iA-e<CR><Esc>
-" map <Esc>[27;3;102~ iA-e<CR><Esc>
-" map <Esc>[27;3;103~ iA-f<CR><Esc>
-" map <Esc>[27;3;104~ iA-g<CR><Esc>
 " map <Esc>[27;3;105~ iA-h<CR><Esc>
 " map <Esc>[27;3;106~ iA-i<CR><Esc>
 " map <Esc>[27;3;107~ iA-j<CR><Esc>

@@ -1,3 +1,5 @@
 bundle/*
 !bundle/Vundle.vim
+undo/*
+view/*
 .netrwhist

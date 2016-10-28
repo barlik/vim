@@ -104,7 +104,7 @@ Plugin 'vim-scripts/a.vim'  " Toggle c/h files
 "Plugin 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
 
 " Directory navigation
-Plugin 'tpope/vim-vinegar'   " improved netrw
+" Plugin 'tpope/vim-vinegar'   " improved netrw
 " nmap - -
 " nmap <BackSpace> <Plug>VinegarUp
 
@@ -229,6 +229,8 @@ endfunction
 " let g:tq_enabled_backends=["mthesaur_txt"]
 " g:tq_enabled_backends=["woxikon_de","jeck_ru","thesaurus_com","openoffice_en","mthesaur_txt"]
 
+let g:virtualenv_directory = '/home/barlikr/.virtualenvs'
+
 let mapleader = ","
 let maplocalleader = ","
 
@@ -237,8 +239,6 @@ let maplocalleader = ","
 " autocmd FileType python imap <buffer> <C-@> <C-R>=RopeCodeAssistInsertMode()<CR>
 
 " let g:pyclewn_python='/tmp/x/bin/pyhon3.4'
-
-set fillchars=fold:\ 
 
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview 
@@ -312,13 +312,13 @@ setlocal spelllang=en_us
 " Diff Handling {{{
 function! SetupDiffMappings()
 	if &diff
-		nnoremap <M-Up> [c
-		nnoremap <M-Down> ]c
-		"nnoremap <M-Left> do
-		"nnoremap <M-Right> dp
+		nnoremap <buffer> <M-Up> [c
+		nnoremap <buffer> <M-Down> ]c
+		"nnoremap <buffer> <M-Left> do
+		"nnoremap <buffer> <M-Right> dp
 		nnoremap <buffer> <silent> <M-Left> :diffget<Bar>diffupdate<CR>
 		nnoremap <buffer> <silent> <M-Right> :diffput<Bar>diffupdate<CR>
-		"nnoremap <Leader>du :diffupdate<CR>
+		"nnoremap <buffer> <Leader>du :diffupdate<CR>
 	else
 		" TODO: <C-M-Up> ??
 		nnoremap <M-Up> :cprevious<CR>

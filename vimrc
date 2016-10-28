@@ -244,7 +244,7 @@ endfunction
 let g:virtualenv_directory = '/home/barlikr/.virtualenvs'
 
 let mapleader = ","
-let maplocalleader = ","
+let maplocalleader = "\\"
 
 " let g:ropevim_autoimport_modules = ["os", "shutil"]
 " let g:ropevim_guess_project = 1

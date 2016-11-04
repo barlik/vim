@@ -168,6 +168,8 @@ Plugin 'mattn/calendar-vim'
 " GIT
 Plugin 'airblade/vim-gitgutter' " git highlighter
 Plugin 'tpope/vim-fugitive'     " Git wrapper
+Plugin 'gregsexton/gitv'        " gitk in vim
+Plugin 'junegunn/gv.vim'        " alternative
 
 " Styling
 Plugin 'ap/vim-css-color' " Highlight css colors

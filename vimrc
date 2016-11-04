@@ -330,8 +330,9 @@ function! SetupDiffMappings()
 		nnoremap <buffer> <M-Down> ]c
 		"nnoremap <buffer> <M-Left> do
 		"nnoremap <buffer> <M-Right> dp
-		nnoremap <buffer> <silent> <M-Left> :diffget<Bar>diffupdate<CR>
-		nnoremap <buffer> <silent> <M-Right> :diffput<Bar>diffupdate<CR>
+		" TODO: Make this work with multiple buffers/windows
+		nnoremap <buffer> <silent> <M-Left> <C-W><Left>:diffget<Bar>diffupdate<CR>
+		nnoremap <buffer> <silent> <M-Right> <C-W><Left>:diffput<Bar>diffupdate<CR>
 		"nnoremap <buffer> <Leader>du :diffupdate<CR>
 	else
 		" TODO: <C-M-Up> ??

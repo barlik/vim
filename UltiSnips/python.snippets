@@ -1,5 +1,6 @@
 priority -49
 
+# Debugging {{{
 snippet interactive "embed interactive python"
 import code; code.interact(local=locals()) # XXX: BREAKPOINT
 endsnippet
@@ -27,4 +28,26 @@ endsnippet
 snippet nose_pdb "nose pdb breakpoint"
 from nose.tools import set_trace; set_trace() # XXX: BREAK
 endsnippet
-# vim:ft=snippets:
+# }}}
+
+# setuptools
+snippet setup "setuptools"
+from setuptools import setup
+
+# TODO: finish the snippet
+setup(
+	name="", # <--- This is your egg name
+	version=VERSION,
+	description=DESCRIPTION,
+	long_description=LONG_DESCRIPTION,
+	classifiers=CLASSIFIERS,
+	author="",
+	author_email="",
+	url="",
+	license="MIT License",
+	packages=['simplejson', 'simplejson.tests'],
+	platforms=['any'],
+	**kw)
+endsnippet
+
+# vim:ft=snippets:foldmethod=marker

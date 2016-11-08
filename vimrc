@@ -162,6 +162,7 @@ Plugin 'tomtom/tcomment_vim'
 "Plugin 'jamessan/vim-gnupg'
 Plugin 'tpope/vim-surround'
 Plugin 'vimoutliner/vimoutliner'
+
 Plugin 'vimwiki/vimwiki'
 Plugin 'mattn/calendar-vim'
 
@@ -246,6 +247,7 @@ endfunction
 let g:virtualenv_directory = '/home/barlikr/.virtualenvs'
 
 let mapleader = ","
+" let mapleader = " "
 let maplocalleader = "\\"
 
 " let g:ropevim_autoimport_modules = ["os", "shutil"]
@@ -254,8 +256,9 @@ let maplocalleader = "\\"
 
 " let g:pyclewn_python='/tmp/x/bin/pyhon3.4'
 
-autocmd BufWinLeave *.* mkview
-autocmd BufWinEnter *.* silent loadview 
+" This doesn't work with you-complete-me
+" autocmd BufWinLeave *.* mkview
+" autocmd BufWinEnter *.* silent loadview
 
 " let g:vim_isort_map = '<C-i>'
 " " Or disable the mapping with this:
@@ -372,7 +375,7 @@ set shortmess+=I        " Do not show startup message
 set whichwrap=b,s,[,],<,>,h,l " allow cursor to wrap between lines
 set nostartofline	" keep cursor in the same column if possible
 set virtualedit=block	" allow virtual editing in Visual block mode
-"set lazyredraw		" don't redraw screen while executing macros/mappings
+set lazyredraw		" don't redraw screen while executing macros/mappings
 set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set winaltkeys=no	" allow mapping of alt (meta) key shortcuts
 set nojoinspaces	" do not insert two spaces in join
@@ -394,7 +397,7 @@ set linebreak           " wrap at WORD splits
 set breakindent         " keep wrapped lines indented
 set showbreak=……
 
-" set nofoldenable        " disable folding, enable by zi
+set nofoldenable        " disable folding, enable by zi
 
 "set cursorline         " draw horizontal line on cursor's position 
 "set showtabline=2	" always show tab page labels
@@ -479,6 +482,8 @@ let g:startify_change_to_dir = 0
 " let g:startify_change_to_vcs_root = 0
 " }}}
 " Vimwiki {{{
+let g:vimwiki_map_prefix = '<Leader>v'
+
 let g:vimwiki_list = [{'path': '/home/data/vimwiki/', 'auto_tags': 1}]
 let g:vimwiki_folding = 'expr'
   function! VimwikiLinkHandler(link)
@@ -726,6 +731,7 @@ nnoremap <Leader>ag :Ag <C-R><C-W>
 vnoremap <Leader>ag y:Ag <C-R>"
 " Zeavim {{{
 " FIXME: z or k for this?
+let g:zv_keep_focus = 1 " Desn't work
 nmap ,k <Plug>Zeavim
 vmap ,k <Plug>ZVVisSelection
 nmap gk <Plug>ZVMotion
@@ -786,7 +792,8 @@ vnoremap <Leader>cc y:%s/\V<C-r>"/<C-r>"/c<C-f>$F/i
 
 noremap <F1> <ESC> " Turn off F1 help
 inoremap <F1> <ESC> " Turn off F1 help
-nnoremap Q <nop> " Turn off Ex mode
+" nnoremap Q <nop> " Turn off Ex mode
+nnoremap Q @q
 " nnoremap Y y$ " Y yank to end of line
 vnoremap . :norm.<CR>
 " nnoremap <BS> <C-^>
@@ -1058,6 +1065,9 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
 endif
+
+" au WinLeave * set nocursorline nocursorcolumn
+" au WinEnter * set cursorline cursorcolumn
 
 cnoremap %% <C-R>=expand("%:h")."/"<CR>
 

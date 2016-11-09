@@ -132,6 +132,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 " Plugin 'Shougo/unite.vim'
 " Plugin 'Shougo/vimfiler.vim'
 "
+Plugin 'diepm/vim-rest-console' " REST console
 Plugin 'rickhowe/diffchar.vim' " TEST THIS
 " Plugin 'ternjs/tern_for_vim' " JavaScript
 
@@ -746,6 +747,11 @@ let g:zv_file_types = {
 "let g:tcommentMapLeader1 = '<c-a>'
 "let g:tcommentMapLeader2 = '<Leader>a'
 "let g:tcommentOptions = {'whitespace': 'no'}
+
+"}}}
+" REST console {{{
+" Allow request body to be processed line by line.
+let g:vrc_split_request_body = 1
 
 "}}}
 " Key Remapping {{{

@@ -815,6 +815,8 @@ nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <Leader>ge :Gedit<CR>
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gw :Gwrite<CR>
+nnoremap <Leader>go :Gpull<CR>
+nnoremap <Leader>gp :Gpush<CR>
 
 " C-c will trigger InsertLeave
 " TODO: Learn to use either C-c or C-[

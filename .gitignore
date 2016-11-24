@@ -3,3 +3,4 @@ bundle/*
 undo/*
 view/*
 .netrwhist
+.lvimrc_cache

@@ -1,3 +1,4 @@
+" TODO: add git branch to statusline
 " " set <A-a>=[27;3;97~
 " set <M-a>=^[a
 " map <Esc>[27;3;105~ iA-h<CR><Esc>
@@ -119,9 +120,10 @@ Plugin 'vim-scripts/a.vim'  " Toggle c/h files
 "Plugin 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
 
 " Directory navigation
-" Plugin 'tpope/vim-vinegar'   " improved netrw
-" nmap - -
+Plugin 'tpope/vim-vinegar'   " improved netrw
+nmap - -
 " nmap <BackSpace> <Plug>VinegarUp
+nmap <Esc>- <Plug>VinegarUp
 
 Plugin 'scrooloose/nerdtree' " NERDTree
 Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
@@ -133,6 +135,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 " Plugin 'Shougo/vimfiler.vim'
 "
 Plugin 'diepm/vim-rest-console' " REST console
+let g:vrc_show_command = 1
 Plugin 'rickhowe/diffchar.vim' " TEST THIS
 " Plugin 'ternjs/tern_for_vim' " JavaScript
 
@@ -307,18 +310,20 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 " Colorscheme {{{
 function! SetColorscheme()
 	"colorscheme seti,jellybeans,distinguished, molokai, jellybeans
-	colorscheme jellybeans
+	colorscheme seti
 		hi link pythonOperator Statement
 	" colorscheme seti
 	" 	hi Visual cterm=reverse ctermbg=bg ctermfg=fg
 		hi Search ctermbg=black ctermfg=red cterm=bold,italic
 		hi IncSearch ctermbg=black ctermfg=red cterm=bold,italic
-	if &diff
-		"calmar256-dark, pablo,murphy,slate,desert
-		colorscheme jellybeans
-	else
-		"colorscheme desert, seti
-	endif
+		hi DiffAdd guibg='#1F3523'
+		hi DiffDelete guibg='#4A2324'
+	" if &diff
+	" 	"calmar256-dark, pablo,murphy,slate,desert
+	" 	colorscheme jellybeans
+	" else
+	" 	"colorscheme desert, seti
+	" endif
 	hi SpellBad cterm=underline ctermbg=bg
 endfunction
 call SetColorscheme()
@@ -751,7 +756,7 @@ let g:zv_file_types = {
 "}}}
 " REST console {{{
 " Allow request body to be processed line by line.
-let g:vrc_split_request_body = 1
+" let g:vrc_split_request_body = 1
 
 "}}}
 " Key Remapping {{{
@@ -907,7 +912,7 @@ command! -nargs=+ Silent execute 'silent <args>' | redraw!
 
 nnoremap <Leader>q :qall<CR>
 "Save file
-nnoremap <Leader>s :w<CR>
+nnoremap <Leader>w :w<CR>
 
 " TODO
 " noautocmd - do not trigger any autocmd while loading files - much quicker
@@ -947,7 +952,8 @@ cnoremap $d <CR>:d<CR>``
 "}}}
 " autocmd BufNewFile *.c 0r ~/.vim/skel/c
 
-nmap <F10> :silent !setsid term &<CR>
+" FIXME: change shortcut
+nmap <F10> :Silent !setsid term >&/dev/null &<CR>
 
 " PYTHON {{{
 "au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
@@ -1081,4 +1087,7 @@ cnoremap %% <C-R>=expand("%:h")."/"<CR>
 
 nnoremap <Leader>o :Silent !xdg-open <C-R><C-A> &<CR>
 "PYTHON:  vmap ,, "+y<Bar>:Silent !xsend paste >/dev/null 2>&1 &<CR><Bar>:redraw!<CR>
+
+" map <ScrollWheelUp> <C-Y>
+" map <ScrollWheelDown> <C-E>
 " vim:foldmethod=marker

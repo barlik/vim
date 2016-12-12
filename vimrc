@@ -304,7 +304,14 @@ filetype plugin indent on " required by vundle
 "filetype plugin on " To ignore plugin indent changes, instead use:
 
 " automaticaly open last position in file
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup vimStartup
+  au!
+  autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
+augroup END
 "}}}
 " Settings {{{
 " Colorscheme {{{

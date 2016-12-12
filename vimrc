@@ -25,11 +25,17 @@ call vundle#begin()
 Plugin 'gmarik/Vundle' " let Vundle manage Vundle, required
 
 Plugin 'tpope/vim-unimpaired'
+"Plugin 'tpope/vim-abolish' " TRY THIS
 
-Plugin 'scrooloose/syntastic'
+" Linters
+" Plugin 'scrooloose/syntastic'
+Plugin 'w0rp/ale'
+Plugin 'neomake/neomake'
+
 " Plugin 'Valloric/YouCompleteMe'
 " vim-autocomplpop
-"Plugin 'vim-scripts/OmniCppComplete'
+
+" Plugin 'vim-scripts/OmniCppComplete'
 "Plugin 'justmao945/vim-clang'
 "Plugin 'Shougo/neocomplcache'
 "Plugin 'spolu/dwm.vim'
@@ -41,7 +47,11 @@ Plugin 'scrooloose/syntastic'
 " Plugin 'metakirby5/codi.vim'
 
 " UNSORTED
+
+" Auto closing of ({[ ...
 " Plugin 'jiangmiao/auto-pairs'
+" Plugin 'Raimondi/delimitMate' " Auto closing
+
 Plugin 'tpope/vim-dispatch'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'ryanss/vim-hackernews'
@@ -66,6 +76,7 @@ Plugin 'csv.vim'
 " Plugin 'mcepl/vim-behave'
 
 Plugin 'christoomey/vim-sort-motion'
+Plugin 'nelstrom/vim-visual-star-search'
 
 "Plugin 'joonty/vdebug'
 "Plugin 'wincent/terminus'
@@ -85,6 +96,9 @@ Plugin 'fisadev/vim-isort'
 Plugin 'Glench/Vim-Jinja2-Syntax' " Jinja2 syntax
 
 "Plugin 'amigrave/vim-pudb'
+
+" Rust
+Plugin 'rust-lang/rust.vim'
 
 " Directory diff
 Plugin 'will133/vim-dirdiff'
@@ -136,7 +150,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 "
 Plugin 'diepm/vim-rest-console' " REST console
 let g:vrc_show_command = 1
-Plugin 'rickhowe/diffchar.vim' " TEST THIS
+" Plugin 'rickhowe/diffchar.vim' " TEST THIS
 " Plugin 'ternjs/tern_for_vim' " JavaScript
 
 Plugin 'janko-m/vim-test'
@@ -248,7 +262,7 @@ endfunction
 " let g:tq_enabled_backends=["mthesaur_txt"]
 " g:tq_enabled_backends=["woxikon_de","jeck_ru","thesaurus_com","openoffice_en","mthesaur_txt"]
 
-let g:virtualenv_directory = '/home/barlikr/.virtualenvs'
+" let g:virtualenv_directory = '/home/barlikr/.virtualenvs'
 
 let mapleader = ","
 " let mapleader = " "
@@ -435,7 +449,7 @@ set shiftwidth=8
 au vimResized * :wincmd =
 
 set ttimeout		" time out for key codes
-set ttimeoutlen=100	" wait up to 100ms after Esc for special key
+" set ttimeoutlen=100	" wait up to 100ms after Esc for special key
 set ttimeoutlen=10
 
 "set display=lastline    " Show as much as possible of a wrapped last line, not just "@".
@@ -497,7 +511,7 @@ let g:startify_change_to_dir = 0
 " Vimwiki {{{
 let g:vimwiki_map_prefix = '<Leader>v'
 
-let g:vimwiki_list = [{'path': '/home/data/vimwiki/', 'auto_tags': 1}]
+let g:vimwiki_list = [{'path': '/home/data/vimwiki/', 'syntax': 'markdown', 'auto_tags': 1}]
 let g:vimwiki_folding = 'expr'
   function! VimwikiLinkHandler(link)
     " Use Vim to open external files with the 'vfile:' scheme.  E.g.:
@@ -772,11 +786,6 @@ let g:zv_file_types = {
 "let g:tcommentOptions = {'whitespace': 'no'}
 
 "}}}
-" REST console {{{
-" Allow request body to be processed line by line.
-" let g:vrc_split_request_body = 1
-
-"}}}
 " Key Remapping {{{
 " Keyboard shortcuts
 " recursive non-recursive mode
@@ -811,7 +820,8 @@ nnoremap ,cd :lcd %:p:h<CR>:pwd<CR>
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 " nnoremap <silent> <C-l> :nohl<CR>:checktime<CR><C-l>
-nnoremap <silent> <C-L> :nohlsearch<CR>:diffupdate<CR>:syntax sync fromstart<CR>:checktime<CR><C-L>
+inoremap <silent> <C-L> <C-\><C-O>:nohlsearch<CR>
+nnoremap <silent> <C-L> :nohlsearch <bar> diffupdate <bar> syntax sync fromstart<CR><C-L>
 "nnoremap <Leader><space> :nohl<CR>
 
 " Search and replace word under cursor

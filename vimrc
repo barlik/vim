@@ -489,7 +489,7 @@ let g:SimpylFold_docstring_preview = 1
 "let g:SimpylFold_fold_import = 0
 "}}}
 " Startify {{{
-let g:startify_bookmarks = [ {'a': '~/.config/awesome/rc.lua'}, '~/.vimrc' ]
+let g:startify_bookmarks = [ {'a': '~/.config/awesome/rc.lua'}, { 'v': '~/.vimrc' } ]
 let g:startify_relative_path = 1
 let g:startify_change_to_dir = 0
 " let g:startify_change_to_vcs_root = 0
@@ -740,6 +740,17 @@ xmap ih <Plug>GitGutterTextObjectInnerVisual
 xmap ah <Plug>GitGutterTextObjectOuterVisual
 
 " }}}
+" Fugitive {{{
+nnoremap <Leader>gb :Gblame<CR>
+nnoremap <Leader>gc :Gcommit -v<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>ge :Gedit<CR>
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gw :Gwrite<CR>
+nnoremap <Leader>go :Gpull<CR>
+nnoremap <Leader>gp :Gpush<CR>
+" }}}
+
 nnoremap <Leader>ag :Ag <C-R><C-W>
 vnoremap <Leader>ag y:Ag <C-R>"
 " Zeavim {{{
@@ -827,15 +838,6 @@ inoremap <C-W> <C-G>u<C-W>
 " join line downwards
 nnoremap gK :m+1<bar>-1<bar>j<CR>
 
-nnoremap <Leader>gb :Gblame<CR>
-nnoremap <Leader>gc :Gcommit -v<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>ge :Gedit<CR>
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gw :Gwrite<CR>
-nnoremap <Leader>go :Gpull<CR>
-nnoremap <Leader>gp :Gpush<CR>
-
 " C-c will trigger InsertLeave
 " TODO: Learn to use either C-c or C-[
 imap <C-c> <Esc>
@@ -851,7 +853,7 @@ if has('gui_running')
 	imap <C-Space> <Esc>
 	smap <C-Space> <Esc>
 	cmap <C-Space> <Esc>
-"else
+else
 	imap <C-@> <Esc>
 	smap <C-@> <Esc>
 	cmap <C-@> <Esc>
@@ -952,8 +954,6 @@ set tags=./tags;$HOME
 cnoremap $t <CR>:t''<CR>
 cnoremap $T <CR>:T''<CR>
 cnoremap $m <CR>:m''<CR>
-cnoremap $M <CR>:M''<CR>
-cnoremap $d <CR>:d<CR>``
 
 "highlight clear SignColumn
 "}}}

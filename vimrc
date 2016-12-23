@@ -17,151 +17,173 @@
 " IDEA:
 " python: nmap <M-Down> <M-Up> ]m [m or ]] [[
 " PLUGINS {{{
-set nocompatible " required for vundle
-filetype off " required for vundle
-set runtimepath+=~/.vim/bundle/Vundle
-call vundle#begin()
+" {{{ Bootstrap vim-plug
+" vim-plug (https://github.com/junegunn/vim-plug) settings
+" Automatically install vim-plug and run PlugInstall if vim-plug not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+"}}}
+call plug#begin('~/.vim/plugged')
 
-Plugin 'gmarik/Vundle' " let Vundle manage Vundle, required
-
-Plugin 'tpope/vim-unimpaired'
-"Plugin 'tpope/vim-abolish' " TRY THIS
+Plug 'tpope/vim-unimpaired'
+"Plug 'tpope/vim-abolish' " TRY THIS
 
 " Linters
-" Plugin 'scrooloose/syntastic'
-Plugin 'w0rp/ale'
-Plugin 'neomake/neomake'
+" Plug 'scrooloose/syntastic'
+" Plug 'w0rp/ale'
+Plug 'neomake/neomake'
 
-" Plugin 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 " vim-autocomplpop
 
-" Plugin 'vim-scripts/OmniCppComplete'
-"Plugin 'justmao945/vim-clang'
-"Plugin 'Shougo/neocomplcache'
-"Plugin 'spolu/dwm.vim'
-"Plugin 'jeaye/color_coded'
-" Plugin 'python-rope/ropevim'
-" Plugin 'klen/python-mode'
+" Plug 'vim-scripts/OmniCppComplete'
+"Plug 'justmao945/vim-clang'
+"Plug 'Shougo/neocomplcache'
+"Plug 'spolu/dwm.vim'
+"Plug 'jeaye/color_coded'
+" Plug 'python-rope/ropevim'
+" Plug 'klen/python-mode'
 
 " Interactive scripting
-" Plugin 'metakirby5/codi.vim'
+" Plug 'metakirby5/codi.vim'
 
 " UNSORTED
 
 " Auto closing of ({[ ...
-" Plugin 'jiangmiao/auto-pairs'
-" Plugin 'Raimondi/delimitMate' " Auto closing
+" Plug 'jiangmiao/auto-pairs'
+" Plug 'Raimondi/delimitMate' " Auto closing
 
-Plugin 'tpope/vim-dispatch'
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'ryanss/vim-hackernews'
+Plug 'tpope/vim-dispatch'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'ryanss/vim-hackernews'
 
-Plugin 'Ron89/thesaurus_query.vim'
-Plugin 'krisajenkins/vim-pipe'
-Plugin 'KabbAmine/zeavim.vim'
+Plug 'Ron89/thesaurus_query.vim'
+Plug 'krisajenkins/vim-pipe'
+Plug 'KabbAmine/zeavim.vim'
 " Or simply: nnoremap gz :!zeal "<cword>"&<CR><CR>
-" Plugin 'ivanov/vim-ipython'
-Plugin 'wilywampa/vim-ipython'
+" Plug 'ivanov/vim-ipython'
+Plug 'wilywampa/vim-ipython'
 
-Plugin 'vimux' " tmux integration
-" Plugin 'julienr/vimux-pyutils'
+Plug 'vimux' " tmux integration
+" Plug 'julienr/vimux-pyutils'
 
-" Plugin 'AnsiEsc.vim' " ansi colors
-" Plugin 'DrawIt' " ascii drawing
-Plugin 'csv.vim'
-" Plugin 'dbext.vim'
+" Plug 'AnsiEsc.vim' " ansi colors
+" Plug 'DrawIt' " ascii drawing
+Plug 'csv.vim'
+" Plug 'dbext.vim'
 " let g:dbext_default_usermaps = 0
 
-" Plugin 'tpope/vim-cucumber'
-" Plugin 'mcepl/vim-behave'
+" Plug 'tpope/vim-cucumber'
+" Plug 'mcepl/vim-behave'
 
-Plugin 'christoomey/vim-sort-motion'
-Plugin 'nelstrom/vim-visual-star-search'
+Plug 'christoomey/vim-sort-motion'
+Plug 'nelstrom/vim-visual-star-search'
 
-"Plugin 'joonty/vdebug'
-"Plugin 'wincent/terminus'
-Plugin 'ConradIrwin/vim-bracketed-paste'
+"Plug 'joonty/vdebug'
+Plug 'tmux-plugins/vim-tmux-focus-events'
 
-Plugin 'FooSoft/vim-argwrap'
+Plug 'barlik/terminus'
+" Plug 'wincent/terminus'
+" Use different bracketed paste (this doesn't cause Esc delay in tmux)
+let g:TerminusCursorShape=1
+let g:TerminusBracketedPaste=0
+Plug 'ConradIrwin/vim-bracketed-paste'
+
+Plug 'FooSoft/vim-argwrap'
 
 " Python
-Plugin 'jmcantrell/vim-virtualenv'
-Plugin 'davidhalter/jedi-vim' " Python auto-completion
-Plugin 'nvie/vim-flake8'      " Python pep8 checker
-Plugin 'hynek/vim-python-pep8-indent' " auto indent
-Plugin 'alfredodeza/coveragepy.vim'
-Plugin 'fisadev/vim-isort'
-" Plugin 'tmhedberg/SimpylFold' " improved Python folding
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'davidhalter/jedi-vim' " Python auto-completion
+Plug 'nvie/vim-flake8'      " Python pep8 checker
+Plug 'hynek/vim-python-pep8-indent' " auto indent
+Plug 'alfredodeza/coveragepy.vim'
+Plug 'fisadev/vim-isort'
+" Plug 'tmhedberg/SimpylFold' " improved Python folding
 
-Plugin 'Glench/Vim-Jinja2-Syntax' " Jinja2 syntax
+Plug 'Glench/Vim-Jinja2-Syntax' " Jinja2 syntax
 
-"Plugin 'amigrave/vim-pudb'
+"Plug 'amigrave/vim-pudb'
 
 " Rust
-Plugin 'rust-lang/rust.vim'
+Plug 'rust-lang/rust.vim'
 
 " Directory diff
-Plugin 'will133/vim-dirdiff'
+Plug 'will133/vim-dirdiff'
 
 " Colors
-Plugin 'morhetz/gruvbox'
-"Plugin 'godlygeek/csapprox' " Colorscheme fixer
-" Plugin 'Yggdroot/indentLine'
+Plug 'morhetz/gruvbox'
+"Plug 'godlygeek/csapprox' " Colorscheme fixer
+" Plug 'Yggdroot/indentLine'
 
 " Start screen
-Plugin 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify'
 
-"Plugin 'ervandew/supertab'
-Plugin 'SirVer/ultisnips'   " Snippets engine
-Plugin 'honza/vim-snippets' " Snippets
+"Plug 'ervandew/supertab'
+Plug 'SirVer/ultisnips'   " Snippets engine
+Plug 'honza/vim-snippets' " Snippets
 
 " Buffers
-"Plugin 'bling/vim-bufferline'
-Plugin 'fholgado/minibufexpl.vim'
-Plugin 'jlanzarotta/bufexplorer'
+"Plug 'bling/vim-bufferline'
+Plug 'fholgado/minibufexpl.vim'
+Plug 'jlanzarotta/bufexplorer'
 
 " Status bar
-" Plugin 'bling/vim-airline'
-" Plugin 'itchyny/lightline.vim'
+" Plug 'bling/vim-airline'
+" Plug 'itchyny/lightline.vim'
 
-Plugin 'vim-scripts/taglist.vim'
-Plugin 'majutsushi/tagbar'
-Plugin 'ludovicchabant/vim-gutentags'
+Plug 'vim-scripts/taglist.vim'
+Plug 'majutsushi/tagbar'
+Plug 'ludovicchabant/vim-gutentags'
 
-" Plugin 'sjl/gundo.vim'     " Super Undo
-Plugin 'mbbill/undotree'    " alternative Undotree
-Plugin 'vim-scripts/a.vim'  " Toggle c/h files
-"Plugin 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
+" Undo
+" Plug 'sjl/gundo.vim'     " Super Undo
+Plug 'mbbill/undotree'    " alternative Undotree
+
+Plug 'vim-scripts/a.vim'  " Toggle c/h files
+"Plug 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
 
 " Directory navigation
-Plugin 'tpope/vim-vinegar'   " improved netrw
+Plug 'tpope/vim-vinegar'   " improved netrw
+" unmap overriden dash in vinegar
 nmap - -
-" nmap <BackSpace> <Plug>VinegarUp
+" remap to alt-
 nmap <Esc>- <Plug>VinegarUp
+" another one for  gvim
+nmap <A--> <Plug>VinegarUp
 
-Plugin 'scrooloose/nerdtree' " NERDTree
-Plugin 'Xuyuanp/nerdtree-git-plugin' " GIT integration
+Plug 'scrooloose/nerdtree' " NERDTree
+Plug 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 
 " Experimental
-" Plugin 'Shougo/vimproc.vim'
-" Plugin 'Shougo/vimshell.vim'
-" Plugin 'Shougo/unite.vim'
-" Plugin 'Shougo/vimfiler.vim'
-"
-Plugin 'diepm/vim-rest-console' " REST console
-let g:vrc_show_command = 1
-" Plugin 'rickhowe/diffchar.vim' " TEST THIS
-" Plugin 'ternjs/tern_for_vim' " JavaScript
+" Plug 'Shougo/vimproc.vim'
+" Plug 'Shougo/vimshell.vim'
+" Plug 'Shougo/unite.vim'
+Plug 'Shougo/denite.nvim'
+" Plug 'Shougo/vimfiler.vim'
+" Plug 'YankRing.vim'
+" Plug 'justinmk/vim-dirvish'
+" Plug 'Shougo/vimfiler.vim'
+Plug 'metakirby5/codi.vim'
+Plug 'skywind3000/asyncrun.vim'
 
-Plugin 'janko-m/vim-test'
-Plugin 'embear/vim-localvimrc'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'diepm/vim-rest-console' " REST console
+let g:vrc_show_command = 1
+" Plug 'rickhowe/diffchar.vim' " TEST THIS
+" Plug 'ternjs/tern_for_vim' " JavaScript
+
+Plug 'janko-m/vim-test'
+Plug 'embear/vim-localvimrc'
 let g:localvimrc_persistence_file=$HOME . "/.vim/.lvimrc_cache"
 let g:localvimrc_persistent=1
 " autocmd BufNewFile,BufRead /tmp/* nmap ,q :smile<CR>
 
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'rking/ag.vim'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'rking/ag.vim'
 ""
 " You know that you do not need ag.vim to use ag with Vim. Setting:
 "
@@ -170,53 +192,55 @@ Plugin 'rking/ag.vim'
 " Will do (and then you should use :grep instead of :Ag).
 
 ""
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 " Comments
-"Plugin 'scrooloose/nerdcommenter'
-Plugin 'tomtom/tcomment_vim'
+"Plug 'scrooloose/nerdcommenter'
+Plug 'tomtom/tcomment_vim'
 
-"Plugin 'jamessan/vim-gnupg'
-Plugin 'tpope/vim-surround'
-Plugin 'vimoutliner/vimoutliner'
+"Plug 'jamessan/vim-gnupg'
+Plug 'tpope/vim-surround'
+Plug 'vimoutliner/vimoutliner'
 
-Plugin 'vimwiki/vimwiki'
-Plugin 'mattn/calendar-vim'
+" Note taking
+" Plug 'xolox/vim-notes'
+Plug 'vimwiki/vimwiki'
 
-" GIT
-Plugin 'airblade/vim-gitgutter' " git highlighter
-Plugin 'tpope/vim-fugitive'     " Git wrapper
-Plugin 'gregsexton/gitv'        " gitk in vim
-Plugin 'junegunn/gv.vim'        " alternative
+Plug 'mattn/calendar-vim'
+
+" git integration
+Plug 'airblade/vim-gitgutter' " git highlighter
+Plug 'tpope/vim-fugitive'     " Git wrapper
+Plug 'gregsexton/gitv'        " gitk in vim
+Plug 'junegunn/gv.vim'        " alternative
 
 " Styling
-Plugin 'ap/vim-css-color' " Highlight css colors
+Plug 'ap/vim-css-color' " Highlight css colors
 " TODO: CSS is slow on json with foldings
-Plugin 'kien/rainbow_parentheses.vim' " Highligh parenthesis
+Plug 'kien/rainbow_parentheses.vim' " Highligh parenthesis
 
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 
 " HTML
-Plugin 'mattn/emmet-vim' " fancy automatic HTML tags
+Plug 'mattn/emmet-vim' " fancy automatic HTML tags
 
 " Marks
-" Plugin 'kshenoy/vim-signature' " showing marks
+" Plug 'kshenoy/vim-signature' " showing marks
 
 " Grammar
-Plugin 'LanguageTool'
+Plug 'LanguageTool'
 
 " {{{ Check
-Plugin 'tpope/vim-repeat'
-"Plugin 'tpope/vim-commentary'
-"Plugin 'paster.vim'
-"Plugin 'ciaranm/securemodelines'
-"Plugin 'AutoComplPop'
-"Plugin 'drmingdrmer/xptemplate'
-"Plugin 'file:///$HOME/development/xptemplate-snippets'
-"Plugin 'nblock/vim-dokuwiki'
-"Plugin 'altercation/vim-colors-solarized'
+Plug 'tpope/vim-repeat'
+"Plug 'tpope/vim-commentary'
+"Plug 'paster.vim'
+"Plug 'AutoComplPop'
+"Plug 'drmingdrmer/xptemplate'
+"Plug 'file:///$HOME/development/xptemplate-snippets'
+"Plug 'nblock/vim-dokuwiki'
+"Plug 'altercation/vim-colors-solarized'
 "}}}
 
 " Vim integrated plugins {{{
@@ -225,7 +249,9 @@ packadd! matchit
 "}}}
 
 " All of your Plugins must be added before the following line
-call vundle#end() " required
+"call vundle#end() " required
+call plug#end()
+
 "}}}
 " {{{ EXPERIMENTAL
 " Highlight all instances of word under cursor, when idle.

@@ -1,21 +1,3 @@
-" TODO: add git branch to statusline
-" " set <A-a>=[27;3;97~
-" set <M-a>=^[a
-" map <Esc>[27;3;105~ iA-h<CR><Esc>
-" map <Esc>[27;3;106~ iA-i<CR><Esc>
-" map <Esc>[27;3;107~ iA-j<CR><Esc>
-
-" for i in range(65,90) + range(97,122)
-"   let c = nr2char(i)
-"   exec "map \e".c." <M-".c.">"
-"   exec "map! \e".c." <M-".c.">"
-" endfor
-" 
-" map a iA<Esc>
-" map b iB<Esc>
-
-" IDEA:
-" python: nmap <M-Down> <M-Up> ]m [m or ]] [[
 " PLUGINS {{{
 " {{{ Bootstrap vim-plug
 " vim-plug (https://github.com/junegunn/vim-plug) settings
@@ -36,7 +18,7 @@ Plug 'tpope/vim-unimpaired'
 " Plug 'w0rp/ale'
 Plug 'neomake/neomake'
 
-" Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe'
 " vim-autocomplpop
 
 " Plug 'vim-scripts/OmniCppComplete'
@@ -149,6 +131,8 @@ Plug 'vim-scripts/a.vim'  " Toggle c/h files
 Plug 'tpope/vim-vinegar'   " improved netrw
 " unmap overriden dash in vinegar
 nmap - -
+" FIXME: Replace with leader
+nmap <space>- <Plug>VinegarUp
 " remap to alt-
 nmap <Esc>- <Plug>VinegarUp
 " another one for  gvim
@@ -158,6 +142,7 @@ Plug 'scrooloose/nerdtree' " NERDTree
 Plug 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 
 " Experimental
+
 " Plug 'Shougo/vimproc.vim'
 " Plug 'Shougo/vimshell.vim'
 " Plug 'Shougo/unite.vim'
@@ -211,7 +196,8 @@ Plug 'mattn/calendar-vim'
 
 " git integration
 Plug 'airblade/vim-gitgutter' " git highlighter
-Plug 'tpope/vim-fugitive'     " Git wrapper
+Plug 'tpope/vim-fugitive'     " git wrapper
+"Plug 'jreybert/vimagit'      " alternative git wrapper
 Plug 'gregsexton/gitv'        " gitk in vim
 Plug 'junegunn/gv.vim'        " alternative
 
@@ -279,6 +265,10 @@ endfunction
 " }}}
 "Plugins configuration {{{
 "}}}
+" Undotree {
+autocmd FileType undotree map <M-Down> J
+autocmd FileType undotree map <M-Up> K
+" }
 " DANGEROUS
 " Source a local configuration file if available {{{
 " set exrc " Load vimrc from current working directory
@@ -290,8 +280,8 @@ endfunction
 
 " let g:virtualenv_directory = '/home/barlikr/.virtualenvs'
 
-let mapleader = ","
-" let mapleader = " "
+" let mapleader = ","
+let mapleader = " "
 let maplocalleader = "\\"
 
 " let g:ropevim_autoimport_modules = ["os", "shutil"]
@@ -321,8 +311,6 @@ nnoremap <Leader>, :normal ,<CR>:<CR>
 " autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-" silent will not complaint about untitled buffers
-" :au FocusLost * nested silent! update # (or wall)
 "}}}
 " Autocommands {{{
 " {{{ Reindent after save
@@ -359,12 +347,16 @@ function! SetColorscheme()
 	"colorscheme seti,jellybeans,distinguished, molokai, jellybeans
 	colorscheme seti
 		hi link pythonOperator Statement
+		" let background = system("xrdb -query | awk '/*background/ {print $2}'")
+		" execute "hi Normal guibg=" . background
 	" colorscheme seti
 	" 	hi Visual cterm=reverse ctermbg=bg ctermfg=fg
-		hi Search ctermbg=black ctermfg=red cterm=bold,italic
-		hi IncSearch ctermbg=black ctermfg=red cterm=bold,italic
-		hi DiffAdd guibg='#1F3523'
-		hi DiffDelete guibg='#4A2324'
+		" hi NonText guibg=bg
+		hi Search ctermbg=black ctermfg=red cterm=bold,italic guibg=bg guifg=LightRed
+		hi IncSearch ctermbg=black ctermfg=red cterm=bold,italic,underline guibg=bg guifg=LightRed
+        hi TabLine NONE
+        hi TabLineFill NONE
+        hi TabLineSel term=bold cterm=bold ctermfg=16 ctermbg=254 gui=bold,italic guifg=#000000 guibg=#f0f0f0
 	" if &diff
 	" 	"calmar256-dark, pablo,murphy,slate,desert
 	" 	colorscheme jellybeans
@@ -459,7 +451,7 @@ set showmatch
 set dictionary=/usr/share/dict/words
 "set spell
 
-set history=200         " keep X lines of command line history
+set history=500         " keep X lines of command line history
 set scrolloff=5         " keep X previous lines during scrolling
 "set textwidth=78
 "set textwidth=0
@@ -469,7 +461,8 @@ set shiftwidth=8
 "set expandtab
 
 " Save when losing focus
-" au FocusLost * :silent! wall
+" silent will stop complaining about untitled buffers
+"au FocusLost * silent! update " (or wall)
 
 " Rearrange windows on resize
 au vimResized * :wincmd =
@@ -490,8 +483,7 @@ set nrformats-=octal
 "set hidden " keep buffers when you leave them - unnecessary with autowrite on
 
 set autoread                    " Automatically reload externally changed file
-autocmd CursorHold * checktime  " check changed buffer after inactivity in normal mode
-set autowrite 			" Automatically write changes with tagging to a new file
+"set autowrite 			" Automatically write changes with tagging to a new file
 
 "set autochdir                   " Automatically change working directory
 
@@ -504,7 +496,7 @@ endif
 " set autosave " NOT IMPLEMENTED YET
 " autocmd TextChanged,TextChangedI <buffer> silent write " should work with vim7
 "set splitbelow
-set splitright			" Put vertical splits to the right of the current window
+"set splitright			" Put vertical splits to the right of the current window
 set vb t_vb=			" disable visual bell
 set mouse=a			" enable mouse
 " autoselect - use primary buffer for middle-mouse pasting
@@ -523,6 +515,19 @@ let c_space_errors = 1 " Highlight space error in C/C++
 "TODO: use :match instead?
 "}}}
 " Plugin settings {{{
+" The Silver Searcher {{{
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+"}}} 
+
 " SimpylFold {{{
 let g:SimpylFold_docstring_preview = 1
 "let g:SimpylFold_fold_docstring = 0
@@ -537,7 +542,7 @@ let g:startify_change_to_dir = 0
 " Vimwiki {{{
 let g:vimwiki_map_prefix = '<Leader>v'
 
-let g:vimwiki_list = [{'path': '/home/data/vimwiki/', 'syntax': 'markdown', 'auto_tags': 1}]
+let g:vimwiki_list = [{'path': '/home/data/vimwiki/', 'auto_tags': 1}]
 let g:vimwiki_folding = 'expr'
   function! VimwikiLinkHandler(link)
     " Use Vim to open external files with the 'vfile:' scheme.  E.g.:
@@ -585,6 +590,7 @@ let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language
 let g:ycm_complete_in_comments = 1 " Completion in comments
 let g:ycm_complete_in_strings = 1 " Completion in string
 
+" Use Jedi for python
 let g:ycm_filetype_blacklist = {
 			\ 'python' : 1,
 			\}
@@ -751,6 +757,10 @@ autocmd FileType html,css EmmetInstall
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 let NERDTreeHijackNetrw=0 " do not hijack netrw
 " let g:netrw_preview = 1
+let g:netrw_banner       = 0
+let g:netrw_keepdir      = 0
+let g:netrw_liststyle    = 1 " or 3
+let g:netrw_sort_options = 'i'
 "
 " }}}
 " Language Tool {{{
@@ -796,10 +806,10 @@ vnoremap <Leader>ag y:Ag <C-R>"
 " Zeavim {{{
 " FIXME: z or k for this?
 let g:zv_keep_focus = 1 " Desn't work
-nmap ,k <Plug>Zeavim
-vmap ,k <Plug>ZVVisSelection
+nmap <Leader>k <Plug>Zeavim
+vmap <Leader>k <Plug>ZVVisSelection
 nmap gk <Plug>ZVMotion
-nmap ,K <Plug>ZVKeyDocset
+nmap <Leader>K <Plug>ZVKeyDocset
 let g:zv_file_types = {
 			\ 'cpp': 'cpp',
 			\}
@@ -823,6 +833,10 @@ let g:zv_file_types = {
 " smap | snoremap | select
 " vmap | vnoremap | visual, select
 " xmap | xnoremap | visual
+
+" TODO: Look at this!
+nnoremap <Leader>g- :Silent Git stash<CR>:e<CR>
+nnoremap <Leader>g+ :Silent Git stash pop<CR>:e<CR>
 
 "map argwrap
 nnoremap <silent> <Leader>aw :ArgWrap<CR>
@@ -851,15 +865,21 @@ nnoremap <silent> <C-L> :nohlsearch <bar> diffupdate <bar> syntax sync fromstart
 "nnoremap <Leader><space> :nohl<CR>
 
 " Search and replace word under cursor
-nnoremap <Leader>cc :%s/<C-r><C-w>/<C-r><C-w>/c<C-f>$F/i
-vnoremap <Leader>cc y:%s/\V<C-r>"/<C-r>"/c<C-f>$F/i
+" noremap <leader>r :%s/\<<C-r><C-w>\>/&/<left>
+"
+" noremap <Leader>s :%s/\<<C-r><C-w>\>/
+" noremap <Leader><Leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/g
+"
+nnoremap <Leader>cc :%s/<C-r><C-w>/&/
+"<C-f>$F/i
+vnoremap <Leader>cc y:%s/\V<C-r>"/<C-r>"/<C-f>$F/i
 " if set gdefault is not set append g   ^
 
 noremap <F1> <ESC> " Turn off F1 help
 inoremap <F1> <ESC> " Turn off F1 help
 " nnoremap Q <nop> " Turn off Ex mode
 nnoremap Q @q
-" nnoremap Y y$ " Y yank to end of line
+nnoremap Y y$ " Y yank to end of line
 vnoremap . :norm.<CR>
 " nnoremap <BS> <C-^>
 
@@ -869,7 +889,8 @@ vnoremap . :norm.<CR>
 inoremap <C-U> <C-G>u<C-U>
 inoremap <C-W> <C-G>u<C-W>
 
-" nmap <leader>vs :so $MYVIMRC<CR>
+nmap <leader>sv :so $MYVIMRC<CR>
+nmap <leader>ev :vsplit $MYVIMRC<CR>
 
 " join line downwards
 nnoremap gK :m+1<bar>-1<bar>j<CR>
@@ -912,8 +933,9 @@ endif
 set pastetoggle=<F11>
 
 " nnoremap <leader>gu :GundoToggle<CR>
-nnoremap <leader>gu :UndotreeToggle<CR>
-cmap w!! w !sudo tee % >/dev/null
+nnoremap <leader>u :UndotreeToggle<CR>
+" This causes a delay on entering w when searching
+" cmap w!! w !sudo tee % >/dev/null
 nnoremap <Leader>ma :make<CR>
 nnoremap <Leader>nu :setlocal number! number?<CR>
 nnoremap <Leader>nr :setlocal relativenumber! relativenumber?<CR>
@@ -940,10 +962,10 @@ nnoremap K K<CR>
 
 
 " Split navigations
-nnoremap <silent> <C-Right>   :wincmd l<CR>
-nnoremap <silent> <C-Left>    :wincmd h<CR>
-nnoremap <silent> <C-Up>      :wincmd k<CR>
-nnoremap <silent> <C-Down>    :wincmd j<CR>
+" nnoremap <silent> <C-Right>   :wincmd l<CR>
+" nnoremap <silent> <C-Left>    :wincmd h<CR>
+" nnoremap <silent> <C-Up>      :wincmd k<CR>
+" nnoremap <silent> <C-Down>    :wincmd j<CR>
 "nnoremap <silent> <S-Right> :wincmd L<CR>
 "nnoremap <silent> <S-Left>  :wincmd H<CR>
 "nnoremap <silent> <S-Up>    :wincmd K<CR>
@@ -951,13 +973,16 @@ nnoremap <silent> <C-Down>    :wincmd j<CR>
 
 " Silent won't display Press Enter to continue command
 command! -nargs=+ Silent execute 'silent <args>' | redraw!
+"FIXME: diff between those?
+":command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
 " nmap <Leader>r :!clear; python %:p<CR>
 " nmap <Leader>R :Silent !ipython -i %:p<CR>
 " au FileType python nnoremap <buffer> <F9> :wa<CR>:!clear; nosetests %<CR>
 
 nnoremap <Leader>q :qall<CR>
 "Save file
-nnoremap <Leader>w :w<CR>
+nnoremap <Leader>w :update<CR>
+nnoremap <Leader>s :smile<CR>
 
 " TODO
 " noautocmd - do not trigger any autocmd while loading files - much quicker
@@ -1084,7 +1109,17 @@ nmap ,br :silent exe "!term -e python -m pdb -c \"break " . expand('%:p') . ":" 
 " MozRepl {{{
 autocmd BufWriteCmd *.html,*.css,*.gtpl,*.md :call Refresh_firefox()
 function! Refresh_firefox()
+	" FIXME: FINISH THIS!
+  " silent !markdown % > %:r.html
+  " silent !pandoc -f markdown -t html % -o /tmp/%:r.html
   " silent !xdotool search --classname Navigator key F5
+    " silent !echo  'vimYo = content.window.pageYOffset;
+    "       \ vimXo = content.window.pageXOffset;
+    "       \ BrowserReload();
+    "       \ content.window.scrollTo(vimXo,vimYo);
+    "       \ repl.quit();'  |
+    "       \ ncat -4 -w 1 localhost 4242 2>&1 > /dev/null
+  " silent !rm %:r.html
   if &modified
     write
     silent !echo  'vimYo = content.window.pageYOffset;
@@ -1109,6 +1144,18 @@ nmap <silent> <Leader>mo :Silent Repl file:///%:p<CR>
 " mnemonic is MozRepl Local
 nmap <silent> <Leader>md :Repl http://localhost/
 " mnemonic is MozRepl Development
+
+" nnoremap <silent> <c-f><c-d> :call Firefox_scroll_down()<cr><br>
+" function! Firefox_scroll_down()<br>
+"   silent call system("echo 'content.window.scrollByPages(1); repl.quit();' | nc -w 1 localhost 4242")<br>
+" endfunction
+"
+" nnoremap <silent> <c-f><c-u> :call Firefox_scroll_up()<cr><br>
+" function! Firefox_scroll_up()<br>
+"   silent call system("echo 'content.window.scrollByPages(-1); repl.quit();' | nc -w 1 localhost 4242")<br>
+" endfunction
+
+
 " }}}
 
 nnoremap <Leader>mru :CtrlPMRUFiles<CR>
@@ -1126,11 +1173,130 @@ endif
 " au WinLeave * set nocursorline nocursorcolumn
 " au WinEnter * set cursorline cursorcolumn
 
-cnoremap %% <C-R>=expand("%:h")."/"<CR>
+" %% expands to current basename of the file
+cnoremap <expr> %% getcmdtype() == ":" ? expand("%:h")."/" : "%%"
 
+" C-p and C-n do not filter the command history by default, remap to Up/Down
+" cnoremap <C-p> <Up>
+" cnoremap <C-n> <Down>
+
+" nnoremap <silent> <F4> gg=G''
+" Reformat whole file and move back to original position
+nnoremap g= gg=G``
+
+" preserve flags from previous substitute when using & command
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
+
+" onoremap <silent> ie :normal! ggVG<CR>
+" vnoremap <silent> ie :<C-u>normal! ggVG<CR>
+
+" Open alternate file (c/cpp)
+" map <Leader>h :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 nnoremap <Leader>o :Silent !xdg-open <C-R><C-A> &<CR>
 "PYTHON:  vmap ,, "+y<Bar>:Silent !xsend paste >/dev/null 2>&1 &<CR><Bar>:redraw!<CR>
 
-" map <ScrollWheelUp> <C-Y>
-" map <ScrollWheelDown> <C-E>
+iabbrev ssig -- <CR>Rastislav Barlik<CR>barlik@gmx.com
+
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+" shortcut to open filetype plugin file
+imap <C-R><C-R> <C-R>"
+" C-Tab
+execute "set <F31>=\e[27;5;9~"
+nnoremap <F31> gt
+" C-S-Tab
+execute "set <F32>=\e[27;6;9~"
+nnoremap <F32> gT
+" M-Tab
+nnoremap <Esc><Tab> gt
+" M-S-Tab
+nnoremap <Esc><Esc>[Z gT
+
+
+nnoremap <Esc>1 1gt
+nnoremap <Esc>2 2gt
+nnoremap <Esc>3 3gt
+nnoremap <Esc>4 4gt
+nnoremap <Esc>5 5gt
+nnoremap <Esc>6 6gt
+nnoremap <Esc>7 7gt
+nnoremap <Esc>8 8gt
+nnoremap <Esc>9 9gt
+nnoremap <Esc>0 10gt
+
+" Disable python2 support
+set pythondll=
+
+" au FocusLost * unsilent echo("lost")
+" au FocusGained * unsilent echo("gained")
+runtime ftplugin/man.vim
+
+" " set cursor shapes by mode
+"  let &t_SI = "\<Esc>[6 q"
+"  let &t_SR = "\<Esc>[4 q"
+"  let &t_EI = "\<Esc>[2 q"
+
+    " if &term =~ "xterm"
+	" let &t_SI = "\<Esc>]12;purple\x7"
+	" let &t_SR = "\<Esc>]12;red\x7"
+	" let &t_EI = "\<Esc>]12;blue\x7"
+    " endif
+if has('termguicolors')
+    set termguicolors
+    " Fix 24bit colors for tmux
+    if &term =~ '^tmux'
+	let &t_8f = "\e[38;2;%lu;%lu;%lum"
+	let &t_8b = "\e[48;2;%lu;%lu;%lum"
+    endif
+endif
+
+let g:tmux_navigator_no_mappings = 1
+
+if &term =~ '^tmux'
+    " tmux will send xterm-style keys when its xterm-keys option is on
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
+
+nnoremap <silent> <C-Left>  :TmuxNavigateLeft<CR>
+nnoremap <silent> <C-Down>  :TmuxNavigateDown<CR>
+nnoremap <silent> <C-Up>    :TmuxNavigateUp<CR>
+nnoremap <silent> <C-Right> :TmuxNavigateRight<CR>
+nnoremap <silent> <C-\>     :TmuxNavigatePrevious<CR>
+
+
+" Look for current word everywhere
+nnoremap <Leader>* :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+"delete current selection into 'black hole register'
+nmap <leader>d "_d
+vmap <leader>d "_d
+" Reselect visual block after numeric increment/decrement
+" vnoremap <c-a> <c-a>gv
+" vnoremap <c-x> <c-x>gv
+
+" TODO: remove imap IHS
+ " set <A-a>=[27;3;97~
+" set <M-a>=^[a
+" map <Esc>[27;3;105~ iA-h<CR><Esc>
+" map <Esc>[27;3;106~ iA-i<CR><Esc>
+" map <Esc>[27;3;107~ iA-j<CR><Esc>
+
+" for i in range(65,90) + range(97,122)
+"   let c = nr2char(i)
+"   exec "map \e".c." <M-".c.">"
+"   exec "map! \e".c." <M-".c.">"
+" endfor
+" 
+" map a iA<Esc>
+" map b iB<Esc>
+
+" IDEA:
+" python: nmap <M-Down> <M-Up> ]m [m or ]] [[
 " vim:foldmethod=marker
+

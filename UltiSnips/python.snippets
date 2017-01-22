@@ -1,5 +1,9 @@
 priority -49
 
+snippet nt "named tuple"
+namedtuple('$1', ['$2'])
+endsnippet
+
 # Debugging {{{
 snippet interactive "embed interactive python"
 import code; code.interact(local=locals()) # XXX: BREAKPOINT
@@ -30,7 +34,7 @@ from nose.tools import set_trace; set_trace() # XXX: BREAK
 endsnippet
 # }}}
 
-# setuptools
+# setuptools {{{
 snippet setuptools "setuptools"
 import os
 from setuptools import setup, find_packages
@@ -78,5 +82,6 @@ setup(
     tests_require=['nose'],
 )
 endsnippet
+# }}}
 
 # vim:ft=snippets:foldmethod=marker

@@ -18,7 +18,7 @@ Plug 'tpope/vim-unimpaired'
 " Plug 'w0rp/ale'
 Plug 'neomake/neomake'
 
-Plug 'Valloric/YouCompleteMe'
+" Plug 'Valloric/YouCompleteMe'
 " vim-autocomplpop
 
 " Plug 'vim-scripts/OmniCppComplete'
@@ -30,13 +30,13 @@ Plug 'Valloric/YouCompleteMe'
 " Plug 'klen/python-mode'
 
 " Interactive scripting
-" Plug 'metakirby5/codi.vim'
+Plug 'metakirby5/codi.vim'
 
 " UNSORTED
 
 " Auto closing of ({[ ...
 " Plug 'jiangmiao/auto-pairs'
-" Plug 'Raimondi/delimitMate' " Auto closing
+Plug 'Raimondi/delimitMate' " Auto closing
 
 Plug 'tpope/vim-dispatch'
 Plug 'michaeljsmith/vim-indent-object'
@@ -91,6 +91,8 @@ Plug 'Glench/Vim-Jinja2-Syntax' " Jinja2 syntax
 
 " Rust
 Plug 'rust-lang/rust.vim'
+" Go
+Plug 'fatih/vim-go'
 
 " Directory diff
 Plug 'will133/vim-dirdiff'
@@ -265,10 +267,10 @@ endfunction
 " }}}
 "Plugins configuration {{{
 "}}}
-" Undotree {
+" Undotree {{{
 autocmd FileType undotree map <M-Down> J
 autocmd FileType undotree map <M-Up> K
-" }
+" }}}
 " DANGEROUS
 " Source a local configuration file if available {{{
 " set exrc " Load vimrc from current working directory
@@ -392,7 +394,7 @@ function! SetupDiffMappings()
 	call SetColorscheme()
 endfunction
 
-set completeopt+=menuone,noselect " Dont automatically select completion
+"set completeopt+=menuone,noselect " Dont automatically select completion
 
 call SetupDiffMappings()
 " Entering diff mode from within vim - diffsplit, etc.
@@ -534,7 +536,7 @@ let g:SimpylFold_docstring_preview = 1
 "let g:SimpylFold_fold_import = 0
 "}}}
 " Startify {{{
-let g:startify_bookmarks = [ {'a': '~/.config/awesome/rc.lua'}, { 'v': '~/.vimrc' } ]
+let g:startify_bookmarks = [ {'a': '~/.config/awesome/rc.lua'}, {'s': '~/.vim/plugged/vim-snippets/'}, { 'v': '~/.vimrc' } ]
 let g:startify_relative_path = 1
 let g:startify_change_to_dir = 0
 " let g:startify_change_to_vcs_root = 0
@@ -564,6 +566,10 @@ let g:vimwiki_folding = 'expr'
     endif
   endfunction
 "}}}
+" Delimmate {{{
+let g:delimitMate_expand_cr = 1
+" Other option: inoremap { {<CR>}<Esc>ko
+" }}}
 " Ycm + UltiSnips {{{
 " http://www.0x3f.org/blog/make-youcompleteme-ultisnips-compatible/
 " make YCM compatible with UltiSnips (using supertab)
@@ -573,6 +579,7 @@ let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
+let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
 let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
@@ -849,7 +856,7 @@ xnoremap <F8> !sort<CR>
 
 
 " change directory to currently opened file
-nnoremap ,cd :lcd %:p:h<CR>:pwd<CR>
+nnoremap <Leader>cd :lcd %:p:h<CR>:pwd<CR>
 
 " visual shifting (builtin-repeat)
 ":vnoremap < <gv
@@ -865,12 +872,11 @@ nnoremap <silent> <C-L> :nohlsearch <bar> diffupdate <bar> syntax sync fromstart
 "nnoremap <Leader><space> :nohl<CR>
 
 " Search and replace word under cursor
-" noremap <leader>r :%s/\<<C-r><C-w>\>/&/<left>
 "
 " noremap <Leader>s :%s/\<<C-r><C-w>\>/
 " noremap <Leader><Leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/g
 "
-nnoremap <Leader>cc :%s/<C-r><C-w>/&/
+nnoremap <Leader>cc :%s/\<<C-r><C-w>\>/&/
 "<C-f>$F/i
 vnoremap <Leader>cc y:%s/\V<C-r>"/<C-r>"/<C-f>$F/i
 " if set gdefault is not set append g   ^
@@ -879,7 +885,7 @@ noremap <F1> <ESC> " Turn off F1 help
 inoremap <F1> <ESC> " Turn off F1 help
 " nnoremap Q <nop> " Turn off Ex mode
 nnoremap Q @q
-nnoremap Y y$ " Y yank to end of line
+"nnoremap Y y$ " Y yank to end of line
 vnoremap . :norm.<CR>
 " nnoremap <BS> <C-^>
 
@@ -1063,7 +1069,7 @@ map <F5> :py EvaluateCurrentRange()
 
 "}}}
 " autocmd FileType python map <buffer> <M-d> :w<CR>:lcd %:h<CR>:!start python
-nmap ,br :silent exe "!term -e python -m pdb -c \"break " . expand('%:p') . ":" . line(".") . "\" -c continue " . expand("%:p") . ' &'<CR>
+nmap <Leader>br :silent exe "!term -e python -m pdb -c \"break " . expand('%:p') . ":" . line(".") . "\" -c continue " . expand("%:p") . ' &'<CR>
 " -m pdb "%" <CR>
 " augroup vimrc_autocmds
 "     autocmd!
@@ -1296,7 +1302,43 @@ vmap <leader>d "_d
 " map a iA<Esc>
 " map b iB<Esc>
 
+" Quick run via <F5>
+nnoremap <F5> :call <SID>compile_and_run()<CR>
+
+augroup SPACEVIM_ASYNCRUN
+    autocmd!
+    " Automatically open the quickfix window
+    autocmd User AsyncRunStart call asyncrun#quickfix_toggle(15, 1)
+augroup END
+
+function! s:compile_and_run()
+    exec 'w'
+    if &filetype == 'c'
+	exec "AsyncRun! gcc % -o %<; time ./%<"
+    elseif &filetype == 'cpp'
+       exec "AsyncRun! g++ -std=c++11 % -o %<; time ./%<"
+    elseif &filetype == 'java'
+       exec "AsyncRun! javac %; time java %<"
+    elseif &filetype == 'sh'
+       exec "AsyncRun! time bash %"
+    elseif &filetype == 'python'
+       exec "AsyncRun! time python %"
+    endif
+endfunction
 " IDEA:
 " python: nmap <M-Down> <M-Up> ]m [m or ]] [[
-" vim:foldmethod=marker
+" highlight nonascii guibg=red
+" syntax match nonascii "[^\u00-\u7F]"
 
+function! NonPrintable()
+  setlocal enc=utf8
+  if search('[^\x00-\xff]') != 0
+    call matchadd('Error', '[^\x00-\xff]')
+    echo 'Non printable characters in text'
+  else
+    setlocal enc=latin1
+    echo 'All characters are printable'
+  endif
+endfunction
+
+" vim:foldmethod=marker

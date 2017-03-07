@@ -10,6 +10,7 @@ endif
 "}}}
 call plug#begin('~/.vim/plugged')
 
+Plug 'vmchale/howdoi-vim'
 Plug 'tpope/vim-unimpaired'
 "Plug 'tpope/vim-abolish' " TRY THIS
 
@@ -628,6 +629,7 @@ let g:syntastic_python_pylint_args ="-E"
 "highligh Error ctermbg=bg
 "}}}
 " Vim Jedi {{{
+let g:jedi#show_call_signatures = "2" " Show signatures in status bar
 let g:jedi#completions_command = "<C-N>"
 let g:jedi#goto_assignments_command = "<leader>ga" " FIXME
 let g:jedi#usages_command = "<leader>gu" " FIXME
@@ -903,7 +905,7 @@ nnoremap gK :m+1<bar>-1<bar>j<CR>
 
 " C-c will trigger InsertLeave
 " TODO: Learn to use either C-c or C-[
-imap <C-c> <Esc>
+inoremap <C-c> <Esc>
 
 " Alternative
 " <C-space> worked for me in Macvim but not <C-@> or <Nul>, and vice-versa for command-line vim.

@@ -631,8 +631,9 @@ let g:syntastic_python_pylint_args ="-E"
 " Vim Jedi {{{
 let g:jedi#show_call_signatures = "2" " Show signatures in status bar
 let g:jedi#completions_command = "<C-N>"
-let g:jedi#goto_assignments_command = "<leader>ga" " FIXME
-let g:jedi#usages_command = "<leader>gu" " FIXME
+let g:jedi#goto_assignments_command = "<Leader>ga" " FIXME
+let g:jedi#rename_command = "<Leader>gr" " FIXME
+let g:jedi#usages_command = "<Leader>gu" " FIXME
 
 " }}}
 " Rainbow Parentheses {{{
@@ -997,7 +998,7 @@ nnoremap <Leader>s :smile<CR>
 " /j - do not jump to first occurence
 nnoremap <Leader>todo :noautocmd vimgrep /TODO\<bar>FIXME\<bar>XXX/j **/*<CR>:cw<CR>
 " find all occurences of last find pattern
-nnoremap <Leader>grep :noautocmd vimgrep //j **/*<CR>:cw<CR>
+nnoremap <Leader>find :noautocmd vimgrep //j **/*<CR>:cw<CR>
 "}}}
 " {{{ Tags
 "- "./" starting in the directory where the current file is. 
@@ -1343,4 +1344,8 @@ function! NonPrintable()
   endif
 endfunction
 
+" For local replace
+nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left> "FIXME: change
+" For global replace
+nnoremap gR gD:%s/<C-R>///gc<left><left><left>
 " vim:foldmethod=marker

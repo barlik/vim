@@ -14,17 +14,21 @@ Plug 'vmchale/howdoi-vim'
 Plug 'tpope/vim-unimpaired'
 "Plug 'tpope/vim-abolish' " TRY THIS
 
-" Linters
+" Linters {{{
 " Plug 'scrooloose/syntastic'
 " Plug 'w0rp/ale'
 Plug 'neomake/neomake'
+"}}}
 
+" Autocompletion {{{
 " Plug 'Valloric/YouCompleteMe'
 " vim-autocomplpop
 
 " Plug 'vim-scripts/OmniCppComplete'
 "Plug 'justmao945/vim-clang'
 "Plug 'Shougo/neocomplcache'
+" }}}
+
 "Plug 'spolu/dwm.vim'
 "Plug 'jeaye/color_coded'
 " Plug 'python-rope/ropevim'
@@ -35,9 +39,10 @@ Plug 'metakirby5/codi.vim'
 
 " UNSORTED
 
-" Auto closing of ({[ ...
+" Auto closing of ({[ ... {{{
 " Plug 'jiangmiao/auto-pairs'
 Plug 'Raimondi/delimitMate' " Auto closing
+" }}}
 
 Plug 'tpope/vim-dispatch'
 Plug 'michaeljsmith/vim-indent-object'
@@ -47,8 +52,6 @@ Plug 'Ron89/thesaurus_query.vim'
 Plug 'krisajenkins/vim-pipe'
 Plug 'KabbAmine/zeavim.vim'
 " Or simply: nnoremap gz :!zeal "<cword>"&<CR><CR>
-" Plug 'ivanov/vim-ipython'
-Plug 'wilywampa/vim-ipython'
 
 Plug 'vimux' " tmux integration
 " Plug 'julienr/vimux-pyutils'
@@ -75,9 +78,17 @@ let g:TerminusCursorShape=1
 let g:TerminusBracketedPaste=0
 Plug 'ConradIrwin/vim-bracketed-paste'
 
+" Editing {{{
 Plug 'FooSoft/vim-argwrap'
-
-" Python
+" Snippets {{{
+"Plug 'ervandew/supertab'
+Plug 'SirVer/ultisnips'   " Snippets engine
+Plug 'honza/vim-snippets' " Snippets
+" }}}
+" }}}
+"
+" Languages {{{
+" Python {{{
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'davidhalter/jedi-vim' " Python auto-completion
 Plug 'nvie/vim-flake8'      " Python pep8 checker
@@ -85,15 +96,15 @@ Plug 'hynek/vim-python-pep8-indent' " auto indent
 Plug 'alfredodeza/coveragepy.vim'
 Plug 'fisadev/vim-isort'
 " Plug 'tmhedberg/SimpylFold' " improved Python folding
-
-Plug 'Glench/Vim-Jinja2-Syntax' " Jinja2 syntax
+" Plug 'ivanov/vim-ipython'
+Plug 'wilywampa/vim-ipython'
+" }}}
+Plug 'Glench/Vim-Jinja2-Syntax' " Jinja2
+Plug 'rust-lang/rust.vim' " Rust
+Plug 'fatih/vim-go' " Go
+" }}}
 
 "Plug 'amigrave/vim-pudb'
-
-" Rust
-Plug 'rust-lang/rust.vim'
-" Go
-Plug 'fatih/vim-go'
 
 " Directory diff
 Plug 'will133/vim-dirdiff'
@@ -106,30 +117,10 @@ Plug 'morhetz/gruvbox'
 " Start screen
 Plug 'mhinz/vim-startify'
 
-"Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips'   " Snippets engine
-Plug 'honza/vim-snippets' " Snippets
-
-" Buffers
-"Plug 'bling/vim-bufferline'
-Plug 'fholgado/minibufexpl.vim'
-Plug 'jlanzarotta/bufexplorer'
-
-" Status bar
-" Plug 'bling/vim-airline'
-" Plug 'itchyny/lightline.vim'
-
-Plug 'vim-scripts/taglist.vim'
-Plug 'majutsushi/tagbar'
-Plug 'ludovicchabant/vim-gutentags'
-
-" Undo
-" Plug 'sjl/gundo.vim'     " Super Undo
-Plug 'mbbill/undotree'    " alternative Undotree
-
-Plug 'vim-scripts/a.vim'  " Toggle c/h files
-"Plug 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
-
+" Navigation {{{
+" Tree navigation {{{
+Plug 'scrooloose/nerdtree' " NERDTree
+Plug 'Xuyuanp/nerdtree-git-plugin' " GIT integration
 " Directory navigation
 Plug 'tpope/vim-vinegar'   " improved netrw
 " unmap overriden dash in vinegar
@@ -141,8 +132,39 @@ nmap <Esc>- <Plug>VinegarUp
 " another one for  gvim
 nmap <A--> <Plug>VinegarUp
 
-Plug 'scrooloose/nerdtree' " NERDTree
-Plug 'Xuyuanp/nerdtree-git-plugin' " GIT integration
+" }}}
+" Buffers {{{
+"Plug 'bling/vim-bufferline'
+Plug 'fholgado/minibufexpl.vim'
+Plug 'jlanzarotta/bufexplorer'
+
+" }}}
+Plug 'Lokaltog/vim-easymotion'
+
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+
+" }}}
+
+" Status bar {{{
+" Plug 'bling/vim-airline'
+" Plug 'itchyny/lightline.vim'
+" }}}
+
+" Tags {{{
+Plug 'vim-scripts/taglist.vim'
+Plug 'majutsushi/tagbar'
+Plug 'ludovicchabant/vim-gutentags'
+" }}}
+
+" Undo {{{
+" Plug 'sjl/gundo.vim'     " Super Undo
+Plug 'mbbill/undotree'    " alternative Undotree
+" }}}
+
+Plug 'vim-scripts/a.vim'  " Toggle c/h files
+"Plug 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
 
 " Experimental
 
@@ -169,8 +191,6 @@ let g:localvimrc_persistence_file=$HOME . "/.vim/.lvimrc_cache"
 let g:localvimrc_persistent=1
 " autocmd BufNewFile,BufRead /tmp/* nmap ,q :smile<CR>
 
-Plug 'Lokaltog/vim-easymotion'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'rking/ag.vim'
 ""
 " You know that you do not need ag.vim to use ag with Vim. Setting:
@@ -180,9 +200,6 @@ Plug 'rking/ag.vim'
 " Will do (and then you should use :grep instead of :Ag).
 
 ""
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-
 " Comments
 "Plug 'scrooloose/nerdcommenter'
 Plug 'tomtom/tcomment_vim'
@@ -192,22 +209,22 @@ Plug 'tpope/vim-surround'
 Plug 'vimoutliner/vimoutliner'
 
 " Note taking
-" Plug 'xolox/vim-notes'
 Plug 'vimwiki/vimwiki'
 
 Plug 'mattn/calendar-vim'
 
-" git integration
+" Git {{{
 Plug 'airblade/vim-gitgutter' " git highlighter
 Plug 'tpope/vim-fugitive'     " git wrapper
 "Plug 'jreybert/vimagit'      " alternative git wrapper
 Plug 'gregsexton/gitv'        " gitk in vim
 Plug 'junegunn/gv.vim'        " alternative
+" }}}
 
 " Styling
 Plug 'ap/vim-css-color' " Highlight css colors
 " TODO: CSS is slow on json with foldings
-Plug 'kien/rainbow_parentheses.vim' " Highligh parenthesis
+"Plug 'kien/rainbow_parentheses.vim' " Highligh parenthesis
 
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
@@ -266,12 +283,6 @@ function! AutoHighlightToggle()
 	endif
 endfunction
 " }}}
-"Plugins configuration {{{
-"}}}
-" Undotree {{{
-autocmd FileType undotree map <M-Down> J
-autocmd FileType undotree map <M-Up> K
-" }}}
 " DANGEROUS
 " Source a local configuration file if available {{{
 " set exrc " Load vimrc from current working directory
@@ -287,8 +298,6 @@ autocmd FileType undotree map <M-Up> K
 let mapleader = " "
 let maplocalleader = "\\"
 
-" let g:ropevim_autoimport_modules = ["os", "shutil"]
-" let g:ropevim_guess_project = 1
 " autocmd FileType python imap <buffer> <C-@> <C-R>=RopeCodeAssistInsertMode()<CR>
 
 " let g:pyclewn_python='/tmp/x/bin/pyhon3.4'
@@ -333,8 +342,10 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 syntax on		  " enable syntax highlighting
 filetype plugin indent on " required by vundle
 "filetype plugin on " To ignore plugin indent changes, instead use:
+" }}}
 
-" automaticaly open last position in file
+" Autocommands {{{
+" Automaticaly open last position in file {{{
 augroup vimStartup
   au!
   autocmd BufReadPost *
@@ -343,7 +354,8 @@ augroup vimStartup
     \ endif
 
 augroup END
-"}}}
+" }}}
+" }}}
 " Settings {{{
 " Colorscheme {{{
 function! SetColorscheme()
@@ -517,7 +529,12 @@ set listchars=tab:▸\ ,trail:_,precedes:…,extends:…
 let c_space_errors = 1 " Highlight space error in C/C++
 "TODO: use :match instead?
 "}}}
+"
 " Plugin settings {{{
+" Ropevim {{{
+" let g:ropevim_autoimport_modules = ["os", "shutil"]
+" let g:ropevim_guess_project = 1
+" }}}
 " The Silver Searcher {{{
 if executable('ag')
   " Use ag over grep
@@ -815,7 +832,7 @@ nnoremap <Leader>ag :Ag <C-R><C-W>
 vnoremap <Leader>ag y:Ag <C-R>"
 " Zeavim {{{
 " FIXME: z or k for this?
-let g:zv_keep_focus = 1 " Desn't work
+let g:zv_keep_focus = 1 " Doesn't work
 nmap <Leader>k <Plug>Zeavim
 vmap <Leader>k <Plug>ZVVisSelection
 nmap gk <Plug>ZVMotion
@@ -825,24 +842,12 @@ let g:zv_file_types = {
 			\}
 
 " }}}
-"TComment
-"TODO: FINISH THIS OFF
-"let g:tcommentMapLeader1 = '<c-a>'
-"let g:tcommentMapLeader2 = '<Leader>a'
-"let g:tcommentOptions = {'whitespace': 'no'}
-
 "}}}
+" Undotree {{{
+autocmd FileType undotree map <M-Down> J
+autocmd FileType undotree map <M-Up> K
+" }}}
 " Key Remapping {{{
-" Keyboard shortcuts
-" recursive non-recursive mode
-" map  | noremap  | normal, visual, select, operator-pending
-" cmap | cnoremap | command-line
-" imap | inoremap | insert
-" nmap | nnoremap | normal
-" omap | onoremap | operator-pending
-" smap | snoremap | select
-" vmap | vnoremap | visual, select
-" xmap | xnoremap | visual
 
 " TODO: Look at this!
 nnoremap <Leader>g- :Silent Git stash<CR>:e<CR>
@@ -1070,7 +1075,6 @@ map <F5> :py EvaluateCurrentRange()
 " match git conflicts
 "match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
 
-"}}}
 " autocmd FileType python map <buffer> <M-d> :w<CR>:lcd %:h<CR>:!start python
 nmap <Leader>br :silent exe "!term -e python -m pdb -c \"break " . expand('%:p') . ":" . line(".") . "\" -c continue " . expand("%:p") . ' &'<CR>
 " -m pdb "%" <CR>
@@ -1095,6 +1099,7 @@ nmap <Leader>br :silent exe "!term -e python -m pdb -c \"break " . expand('%:p')
 "     eval(compile('\n'.join(vim.current.range),'','exec'),globals())
 " EOL
 " autocmd FileType python map <C-m> :py EvaluateCurrentRange()<CR>
+"}}}
 
 " " map fuzzyfinder (CtrlP) plugin
 " " nmap <silent> <Leader>t :CtrlP<cr>
@@ -1222,6 +1227,7 @@ nnoremap <Esc><Tab> gt
 nnoremap <Esc><Esc>[Z gT
 
 
+" Tab navigation
 nnoremap <Esc>1 1gt
 nnoremap <Esc>2 2gt
 nnoremap <Esc>3 3gt

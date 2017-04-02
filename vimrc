@@ -1,4 +1,4 @@
-" PLUGINS {{{
+" Plugins {{{
 " {{{ Bootstrap vim-plug
 " vim-plug (https://github.com/junegunn/vim-plug) settings
 " Automatically install vim-plug and run PlugInstall if vim-plug not found
@@ -10,34 +10,50 @@ endif
 "}}}
 call plug#begin('~/.vim/plugged')
 
+" UNSORTED
+Plug 'airblade/vim-rooter'
+" Plug 'jaxbot/semantic-highlight.vim'
+Plug 'barlik/semantic-highlight.vim'
+"Plug 'spolu/dwm.vim'
+"Plug 'jeaye/color_coded'
+
 Plug 'vmchale/howdoi-vim'
+
+" Editing {{{
+Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'godlygeek/tabular'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'christoomey/vim-sort-motion'
+Plug 'nelstrom/vim-visual-star-search'
+" }}}
 "Plug 'tpope/vim-abolish' " TRY THIS
 
 " Linters {{{
 " Plug 'scrooloose/syntastic'
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
+" let g:ale_python_flake8_executable = 'python'
+" let g:ale_python_flake8_args = '-m flake8'
+" let g:ale_python_pylint_executable = 'python'
+" let g:ale_python_pylint_args = '-m pylint'
 Plug 'neomake/neomake'
 "}}}
-
 " Autocompletion {{{
 " Plug 'Valloric/YouCompleteMe'
 " vim-autocomplpop
 
 " Plug 'vim-scripts/OmniCppComplete'
-"Plug 'justmao945/vim-clang'
-"Plug 'Shougo/neocomplcache'
+" Plug 'justmao945/vim-clang'
+" Plug 'Shougo/neocomplcache'
+" Plug 'othree/vim-autocomplpop'
+" Plug 'lifepillar/vim-mucomplete'
 " }}}
-
-"Plug 'spolu/dwm.vim'
-"Plug 'jeaye/color_coded'
-" Plug 'python-rope/ropevim'
-" Plug 'klen/python-mode'
 
 " Interactive scripting
 Plug 'metakirby5/codi.vim'
 
-" UNSORTED
 
 " Auto closing of ({[ ... {{{
 " Plug 'jiangmiao/auto-pairs'
@@ -45,7 +61,6 @@ Plug 'Raimondi/delimitMate' " Auto closing
 " }}}
 
 Plug 'tpope/vim-dispatch'
-Plug 'michaeljsmith/vim-indent-object'
 Plug 'ryanss/vim-hackernews'
 
 Plug 'Ron89/thesaurus_query.vim'
@@ -53,30 +68,21 @@ Plug 'krisajenkins/vim-pipe'
 Plug 'KabbAmine/zeavim.vim'
 " Or simply: nnoremap gz :!zeal "<cword>"&<CR><CR>
 
-Plug 'vimux' " tmux integration
 " Plug 'julienr/vimux-pyutils'
-
-" Plug 'AnsiEsc.vim' " ansi colors
-" Plug 'DrawIt' " ascii drawing
-Plug 'csv.vim'
-" Plug 'dbext.vim'
-" let g:dbext_default_usermaps = 0
-
-" Plug 'tpope/vim-cucumber'
-" Plug 'mcepl/vim-behave'
-
-Plug 'christoomey/vim-sort-motion'
-Plug 'nelstrom/vim-visual-star-search'
-
 "Plug 'joonty/vdebug'
+"
+" TMUX {{{
+Plug 'vimux' " tmux integration
 Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'christoomey/vim-tmux-navigator'
+" "}}}
 
 Plug 'barlik/terminus'
 " Plug 'wincent/terminus'
-" Use different bracketed paste (this doesn't cause Esc delay in tmux)
 let g:TerminusCursorShape=1
 let g:TerminusBracketedPaste=0
-Plug 'ConradIrwin/vim-bracketed-paste'
+
+" Plug 'ConradIrwin/vim-bracketed-paste'
 
 " Editing {{{
 Plug 'FooSoft/vim-argwrap'
@@ -86,25 +92,39 @@ Plug 'SirVer/ultisnips'   " Snippets engine
 Plug 'honza/vim-snippets' " Snippets
 " }}}
 " }}}
-"
 " Languages {{{
 " Python {{{
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'davidhalter/jedi-vim' " Python auto-completion
 Plug 'nvie/vim-flake8'      " Python pep8 checker
-Plug 'hynek/vim-python-pep8-indent' " auto indent
+Plug 'Vimjas/vim-python-pep8-indent' " auto indent
 Plug 'alfredodeza/coveragepy.vim'
 Plug 'fisadev/vim-isort'
 " Plug 'tmhedberg/SimpylFold' " improved Python folding
 " Plug 'ivanov/vim-ipython'
 Plug 'wilywampa/vim-ipython'
-" }}}
-Plug 'Glench/Vim-Jinja2-Syntax' " Jinja2
-Plug 'rust-lang/rust.vim' " Rust
-Plug 'fatih/vim-go' " Go
-" }}}
-
+" Plug 'python-rope/ropevim'
+" Plug 'klen/python-mode'
 "Plug 'amigrave/vim-pudb'
+" }}}
+" Rust {{{
+Plug 'racer-rust/vim-racer'
+Plug 'rust-lang/rust.vim'
+let g:racer_experimental_completer = 1
+" }}}
+" Java {{{
+Plug 'artur-shaik/vim-javacomplete2'
+" }}}
+" Go {{{
+Plug 'fatih/vim-go'
+" }}}
+" Markups {{{
+Plug 'mattn/emmet-vim' " fancy automatic HTML tags
+Plug 'plasticboy/vim-markdown'
+" Plug 'Glench/Vim-Jinja2-Syntax' " Jinja2
+Plug 'barlik/Vim-Jinja2-Syntax' " ^ forked
+" }}}
+" }}}
 
 " Directory diff
 Plug 'will133/vim-dirdiff'
@@ -114,10 +134,9 @@ Plug 'morhetz/gruvbox'
 "Plug 'godlygeek/csapprox' " Colorscheme fixer
 " Plug 'Yggdroot/indentLine'
 
-" Start screen
-Plug 'mhinz/vim-startify'
-
 " Navigation {{{
+Plug 'mhinz/vim-startify' " Start screen
+Plug 'Lokaltog/vim-easymotion'
 " Tree navigation {{{
 Plug 'scrooloose/nerdtree' " NERDTree
 Plug 'Xuyuanp/nerdtree-git-plugin' " GIT integration
@@ -132,6 +151,16 @@ nmap <Esc>- <Plug>VinegarUp
 " another one for  gvim
 nmap <A--> <Plug>VinegarUp
 
+Plug 'rking/ag.vim'
+""
+" TODO: You know that you do not need ag.vim to use ag with Vim. Setting:
+"
+" set grepprg=ag\ --vimgrep
+"
+" Will do (and then you should use :grep instead of :Ag).
+
+""
+
 " }}}
 " Buffers {{{
 "Plug 'bling/vim-bufferline'
@@ -139,30 +168,28 @@ Plug 'fholgado/minibufexpl.vim'
 Plug 'jlanzarotta/bufexplorer'
 
 " }}}
-Plug 'Lokaltog/vim-easymotion'
-
+" Fuzzy finders {{{
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-
 " }}}
 
+" }}}
 " Status bar {{{
 " Plug 'bling/vim-airline'
 " Plug 'itchyny/lightline.vim'
 " }}}
-
 " Tags {{{
 Plug 'vim-scripts/taglist.vim'
 Plug 'majutsushi/tagbar'
 Plug 'ludovicchabant/vim-gutentags'
+" Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-easytags'
 " }}}
-
 " Undo {{{
 " Plug 'sjl/gundo.vim'     " Super Undo
 Plug 'mbbill/undotree'    " alternative Undotree
 " }}}
-
 Plug 'vim-scripts/a.vim'  " Toggle c/h files
 "Plug 'tpope/vim-sleuth' " auto set shiftwidth and tab expansion
 
@@ -176,40 +203,46 @@ Plug 'Shougo/denite.nvim'
 " Plug 'YankRing.vim'
 " Plug 'justinmk/vim-dirvish'
 " Plug 'Shougo/vimfiler.vim'
-Plug 'metakirby5/codi.vim'
+"Plug 'jamessan/vim-gnupg'
+" {{{ Check
+"Plug 'tpope/vim-commentary'
+"Plug 'paster.vim'
+"Plug 'AutoComplPop'
+"Plug 'drmingdrmer/xptemplate'
+"Plug 'file:///$HOME/development/xptemplate-snippets'
+"Plug 'nblock/vim-dokuwiki'
+"Plug 'altercation/vim-colors-solarized'
+"}}}
+
+
+" Plug 'AnsiEsc.vim' " ansi colors
+" Plug 'DrawIt' " ascii drawing
+Plug 'csv.vim'
+" Plug 'dbext.vim'
+" let g:dbext_default_usermaps = 0
+
+" Plug 'tpope/vim-cucumber'
+" Plug 'mcepl/vim-behave'
 Plug 'skywind3000/asyncrun.vim'
 
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'diepm/vim-rest-console' " REST console
 let g:vrc_show_command = 1
 " Plug 'rickhowe/diffchar.vim' " TEST THIS
 " Plug 'ternjs/tern_for_vim' " JavaScript
 
-Plug 'janko-m/vim-test'
 Plug 'embear/vim-localvimrc'
 let g:localvimrc_persistence_file=$HOME . "/.vim/.lvimrc_cache"
 let g:localvimrc_persistent=1
 " autocmd BufNewFile,BufRead /tmp/* nmap ,q :smile<CR>
 
-Plug 'rking/ag.vim'
-""
-" You know that you do not need ag.vim to use ag with Vim. Setting:
-"
-" set grepprg=ag\ --vimgrep
-"
-" Will do (and then you should use :grep instead of :Ag).
-
-""
-" Comments
+" Comments {{{
 "Plug 'scrooloose/nerdcommenter'
 Plug 'tomtom/tcomment_vim'
-
-"Plug 'jamessan/vim-gnupg'
-Plug 'tpope/vim-surround'
-Plug 'vimoutliner/vimoutliner'
-
-" Note taking
+" }}}
+" Note taking {{{
 Plug 'vimwiki/vimwiki'
+Plug 'vimoutliner/vimoutliner'
+" }}}
 
 Plug 'mattn/calendar-vim'
 
@@ -224,13 +257,6 @@ Plug 'junegunn/gv.vim'        " alternative
 " Styling
 Plug 'ap/vim-css-color' " Highlight css colors
 " TODO: CSS is slow on json with foldings
-"Plug 'kien/rainbow_parentheses.vim' " Highligh parenthesis
-
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-
-" HTML
-Plug 'mattn/emmet-vim' " fancy automatic HTML tags
 
 " Marks
 " Plug 'kshenoy/vim-signature' " showing marks
@@ -238,26 +264,11 @@ Plug 'mattn/emmet-vim' " fancy automatic HTML tags
 " Grammar
 Plug 'LanguageTool'
 
-" {{{ Check
-Plug 'tpope/vim-repeat'
-"Plug 'tpope/vim-commentary'
-"Plug 'paster.vim'
-"Plug 'AutoComplPop'
-"Plug 'drmingdrmer/xptemplate'
-"Plug 'file:///$HOME/development/xptemplate-snippets'
-"Plug 'nblock/vim-dokuwiki'
-"Plug 'altercation/vim-colors-solarized'
-"}}}
-
-" Vim integrated plugins {{{
-packadd! matchit
-
-"}}}
-
-" All of your Plugins must be added before the following line
-"call vundle#end() " required
 call plug#end()
-
+"}}}
+" Integrated plugins {{{
+packadd! matchit
+runtime ftplugin/man.vim
 "}}}
 " {{{ EXPERIMENTAL
 " Highlight all instances of word under cursor, when idle.
@@ -283,8 +294,7 @@ function! AutoHighlightToggle()
 	endif
 endfunction
 " }}}
-" DANGEROUS
-" Source a local configuration file if available {{{
+" DANGEROUS: Source a local configuration file if available {{{
 " set exrc " Load vimrc from current working directory
 " set secure " Make above command more secure
 "}}}
@@ -355,6 +365,8 @@ augroup vimStartup
 
 augroup END
 " }}}
+" Rearrange windows on resize
+au vimResized * :wincmd =
 " }}}
 " Settings {{{
 " Colorscheme {{{
@@ -382,7 +394,6 @@ function! SetColorscheme()
 endfunction
 call SetColorscheme()
 "}}}
-
 setlocal spelllang=en_us
 " setlocal spell
 
@@ -442,17 +453,16 @@ set nojoinspaces	" do not insert two spaces in join
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set cmdheight=2 
-set fillchars=fold:\    " do not fill folded text header
 "set gdefault		" in replace s/// g is always on, another g to turn off
 set incsearch		" enable incremental search
 set hlsearch		" highlight search patterns
-"set nohlsearch		" disable highlight search
 set smartcase		" ignore case when the pattern contains lowercase letters only
 set ignorecase		" ignore case
 
 set autoindent
 set smartindent
 
+set fillchars=fold:\    " do not fill folded text header
 set linebreak           " wrap at WORD splits
 set breakindent         " keep wrapped lines indented
 set showbreak=……
@@ -478,9 +488,6 @@ set shiftwidth=8
 " Save when losing focus
 " silent will stop complaining about untitled buffers
 "au FocusLost * silent! update " (or wall)
-
-" Rearrange windows on resize
-au vimResized * :wincmd =
 
 set ttimeout		" time out for key codes
 " set ttimeoutlen=100	" wait up to 100ms after Esc for special key
@@ -510,8 +517,8 @@ if has('persistent_undo')
 endif
 " set autosave " NOT IMPLEMENTED YET
 " autocmd TextChanged,TextChangedI <buffer> silent write " should work with vim7
-"set splitbelow
-"set splitright			" Put vertical splits to the right of the current window
+set splitbelow
+set splitright			" Put vertical splits to the right of the current window
 set vb t_vb=			" disable visual bell
 set mouse=a			" enable mouse
 " autoselect - use primary buffer for middle-mouse pasting
@@ -538,7 +545,11 @@ let c_space_errors = 1 " Highlight space error in C/C++
 " The Silver Searcher {{{
 if executable('ag')
   " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
+  " set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --vimgrep\ $*
+  set grepformat=%f:%l:%c:%m
+  " set grepprg=rg\ --vimgrep\ $*
+  " set grepformat=%f:%l:%c:%m
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
@@ -547,7 +558,6 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 "}}} 
-
 " SimpylFold {{{
 let g:SimpylFold_docstring_preview = 1
 "let g:SimpylFold_fold_docstring = 0
@@ -645,7 +655,7 @@ let g:syntastic_python_pylint_args ="-E"
 
 "highligh Error ctermbg=bg
 "}}}
-" Vim Jedi {{{
+" Jedi {{{
 let g:jedi#show_call_signatures = "2" " Show signatures in status bar
 let g:jedi#completions_command = "<C-N>"
 let g:jedi#goto_assignments_command = "<Leader>ga" " FIXME
@@ -653,39 +663,15 @@ let g:jedi#rename_command = "<Leader>gr" " FIXME
 let g:jedi#usages_command = "<Leader>gu" " FIXME
 
 " }}}
-" Rainbow Parentheses {{{
-" Always on
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
-" {{{ Colorpairs
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-" }}}
-" }}}
 " CtrlP {{{
 "let g:ctrlp_map = '<C-_>' " map CtrlP to Ctrl-/
 let g:ctrlp_map = '<Leader><C-p>'
+nnoremap <Leader><C-O> :CtrlPMRUFiles<CR>
+
 "let g:ctrlp_extensions = ['tag', 'buffertag', 'dir', 'undo', 'line', 'changes', 'mixed', 'bookmarkdir']
 "let g:loaded_ctrlp = 1
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:ctrlp_custom_ignore = 'node_modules\|pycache\|classes\|target'
 "}}}
 " {{{ Buffers
 " FIXME: TOTO PREROBIT
@@ -826,6 +812,13 @@ nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gw :Gwrite<CR>
 nnoremap <Leader>go :Gpull<CR>
 nnoremap <Leader>gp :Gpush<CR>
+" }}}
+" EditorConfig {{{
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+" }}}
+" {{{ Semantic highlight
+nnoremap <Leader>ts :SemanticHighlightToggle<CR>
+" let s:semanticGUIColors = [ '#72d572', '#c5e1a5', '#e6ee9c', '#fff59d', '#ffe082', '#ffcc80', '#ffab91', '#bcaaa4', '#b0bec5', '#ffa726', '#ff8a65', '#f9bdbb', '#f9bdbb', '#f8bbd0', '#e1bee7', '#d1c4e9', '#ffe0b2', '#c5cae9', '#d0d9ff', '#b3e5fc', '#b2ebf2', '#b2dfdb', '#a3e9a4', '#dcedc8' , '#f0f4c3', '#ffb74d' ]
 " }}}
 
 nnoremap <Leader>ag :Ag <C-R><C-W>
@@ -1244,7 +1237,6 @@ set pythondll=
 
 " au FocusLost * unsilent echo("lost")
 " au FocusGained * unsilent echo("gained")
-runtime ftplugin/man.vim
 
 " " set cursor shapes by mode
 "  let &t_SI = "\<Esc>[6 q"
@@ -1265,6 +1257,15 @@ if has('termguicolors')
     endif
 endif
 
+" TMUX settings {{{
+" Bracketed paste for tmux
+if &term =~ "^tmux"
+	let &t_BE = "\e[?2004h"
+	let &t_BD = "\e[?2004l"
+	let &t_PS = "\e[200~"
+	let &t_PE = "\e[201~"
+endif
+
 let g:tmux_navigator_no_mappings = 1
 
 if &term =~ '^tmux'
@@ -1280,7 +1281,7 @@ nnoremap <silent> <C-Down>  :TmuxNavigateDown<CR>
 nnoremap <silent> <C-Up>    :TmuxNavigateUp<CR>
 nnoremap <silent> <C-Right> :TmuxNavigateRight<CR>
 nnoremap <silent> <C-\>     :TmuxNavigatePrevious<CR>
-
+" }}}
 
 " Look for current word everywhere
 nnoremap <Leader>* :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
@@ -1332,6 +1333,8 @@ function! s:compile_and_run()
        exec "AsyncRun! time bash %"
     elseif &filetype == 'python'
        exec "AsyncRun! time python %"
+    elseif &filetype == 'rust'
+       exec "AsyncRun! cargo run %"
     endif
 endfunction
 " IDEA:

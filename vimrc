@@ -244,7 +244,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'vimoutliner/vimoutliner'
 " }}}
 
-Plug 'mattn/calendar-vim'
+" Plug 'mattn/calendar-vim'
 
 " Git {{{
 Plug 'airblade/vim-gitgutter' " git highlighter
@@ -381,6 +381,8 @@ function! SetColorscheme()
 		" hi NonText guibg=bg
 		hi Search ctermbg=black ctermfg=red cterm=bold,italic guibg=bg guifg=LightRed
 		hi IncSearch ctermbg=black ctermfg=red cterm=bold,italic,underline guibg=bg guifg=LightRed
+		hi Visual guibg=#2a2a2a
+	" Tabs
         hi TabLine NONE
         hi TabLineFill NONE
         hi TabLineSel term=bold cterm=bold ctermfg=16 ctermbg=254 gui=bold,italic guifg=#000000 guibg=#f0f0f0
@@ -806,7 +808,7 @@ xmap ah <Plug>GitGutterTextObjectOuterVisual
 " Fugitive {{{
 nnoremap <Leader>gb :Gblame<CR>
 nnoremap <Leader>gc :Gcommit -v<CR>
-nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gd :Gvdiff<CR>
 nnoremap <Leader>ge :Gedit<CR>
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gw :Gwrite<CR>
@@ -943,6 +945,8 @@ set pastetoggle=<F11>
 nnoremap <leader>u :UndotreeToggle<CR>
 " This causes a delay on entering w when searching
 " cmap w!! w !sudo tee % >/dev/null
+command! SudoWrite w !sudo tee % > /dev/null
+
 nnoremap <Leader>ma :make<CR>
 nnoremap <Leader>nu :setlocal number! number?<CR>
 nnoremap <Leader>nr :setlocal relativenumber! relativenumber?<CR>
@@ -981,7 +985,7 @@ nnoremap K K<CR>
 " Silent won't display Press Enter to continue command
 command! -nargs=+ Silent execute 'silent <args>' | redraw!
 "FIXME: diff between those?
-":command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
+"command! -nargs=1 Silent execute ':silent !'.<q-args> | execute ':redraw!'
 " nmap <Leader>r :!clear; python %:p<CR>
 " nmap <Leader>R :Silent !ipython -i %:p<CR>
 " au FileType python nnoremap <buffer> <F9> :wa<CR>:!clear; nosetests %<CR>
@@ -1286,8 +1290,9 @@ nnoremap <silent> <C-\>     :TmuxNavigatePrevious<CR>
 " Look for current word everywhere
 nnoremap <Leader>* :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
+" Move selected block up/down
+vnoremap <C-M-Down> :m '>+1<CR>gv=gv
+vnoremap <C-M-Up> :m '<-2<CR>gv=gv
 
 "delete current selection into 'black hole register'
 nmap <leader>d "_d
@@ -1357,4 +1362,12 @@ endfunction
 nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left> "FIXME: change
 " For global replace
 nnoremap gR gD:%s/<C-R>///gc<left><left><left>
+
+
+nmap <Leader>ls :ls<CR>:buffer<Space>
+
+nmap <silent> <Leader>x "*yy:call system("xsendp")<CR>
+vmap <silent> <Leader>x y<bar> :call system("xsendp")<CR>
+" imap <silent> <Leader>x <C-\><C-o>"*yy<C-o>:call system("xsendp")<CR>
+
 " vim:foldmethod=marker

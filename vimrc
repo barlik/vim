@@ -38,7 +38,7 @@ Plug 'w0rp/ale'
 " let g:ale_python_flake8_args = '-m flake8'
 " let g:ale_python_pylint_executable = 'python'
 " let g:ale_python_pylint_args = '-m pylint'
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
 "}}}
 " Autocompletion {{{
 " Plug 'Valloric/YouCompleteMe'
@@ -72,7 +72,7 @@ Plug 'KabbAmine/zeavim.vim'
 "Plug 'joonty/vdebug'
 "
 " TMUX {{{
-Plug 'vimux' " tmux integration
+Plug 'vim-scripts/vimux' " tmux integration
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'christoomey/vim-tmux-navigator'
 " "}}}
@@ -217,7 +217,7 @@ Plug 'Shougo/denite.nvim'
 
 " Plug 'AnsiEsc.vim' " ansi colors
 " Plug 'DrawIt' " ascii drawing
-Plug 'csv.vim'
+Plug 'vim-scripts/csv.vim'
 " Plug 'dbext.vim'
 " let g:dbext_default_usermaps = 0
 
@@ -262,7 +262,7 @@ Plug 'ap/vim-css-color' " Highlight css colors
 " Plug 'kshenoy/vim-signature' " showing marks
 
 " Grammar
-Plug 'LanguageTool'
+Plug 'vim-scripts/LanguageTool'
 
 call plug#end()
 "}}}

@@ -1,3 +1,4 @@
+" vim:foldmethod=marker
 " Plugins {{{
 " {{{ Bootstrap vim-plug
 " vim-plug (https://github.com/junegunn/vim-plug) settings
@@ -16,7 +17,9 @@ Plug 'airblade/vim-rooter'
 Plug 'barlik/semantic-highlight.vim'
 "Plug 'spolu/dwm.vim'
 "Plug 'jeaye/color_coded'
+"Plug 'octol/vim-cpp-enhanced-highlight' " Better C++ highlighting
 
+Plug 'janko-m/vim-test'
 Plug 'vmchale/howdoi-vim'
 
 " Editing {{{
@@ -27,7 +30,7 @@ Plug 'tpope/vim-repeat'
 Plug 'godlygeek/tabular'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'christoomey/vim-sort-motion'
-Plug 'nelstrom/vim-visual-star-search'
+Plug 'bronson/vim-visual-star-search'
 " }}}
 "Plug 'tpope/vim-abolish' " TRY THIS
 
@@ -42,17 +45,19 @@ Plug 'w0rp/ale'
 "}}}
 " Autocompletion {{{
 " Plug 'Valloric/YouCompleteMe'
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable'}
 " vim-autocomplpop
 
 " Plug 'vim-scripts/OmniCppComplete'
 " Plug 'justmao945/vim-clang'
+" Plug 'Rip-Rip/clang_complete'
 " Plug 'Shougo/neocomplcache'
 " Plug 'othree/vim-autocomplpop'
 " Plug 'lifepillar/vim-mucomplete'
 " }}}
 
 " Interactive scripting
-Plug 'metakirby5/codi.vim'
+" Plug 'metakirby5/codi.vim'
 
 
 " Auto closing of ({[ ... {{{
@@ -94,13 +99,13 @@ Plug 'honza/vim-snippets' " Snippets
 " }}}
 " Languages {{{
 " Python {{{
-Plug 'jmcantrell/vim-virtualenv'
+" Plug 'jmcantrell/vim-virtualenv'
 Plug 'davidhalter/jedi-vim' " Python auto-completion
 Plug 'nvie/vim-flake8'      " Python pep8 checker
 Plug 'Vimjas/vim-python-pep8-indent' " auto indent
-Plug 'alfredodeza/coveragepy.vim'
+Plug 'alfredodeza/coveragepy.vim' " coverage
 Plug 'fisadev/vim-isort'
-" Plug 'tmhedberg/SimpylFold' " improved Python folding
+Plug 'tmhedberg/SimpylFold' " improved Python folding
 " Plug 'ivanov/vim-ipython'
 Plug 'wilywampa/vim-ipython'
 " Plug 'python-rope/ropevim'
@@ -218,7 +223,7 @@ Plug 'Shougo/denite.nvim'
 " Plug 'AnsiEsc.vim' " ansi colors
 " Plug 'DrawIt' " ascii drawing
 Plug 'vim-scripts/csv.vim'
-" Plug 'dbext.vim'
+Plug 'vim-scripts/dbext.vim'
 " let g:dbext_default_usermaps = 0
 
 " Plug 'tpope/vim-cucumber'
@@ -631,7 +636,6 @@ let g:ycm_complete_in_strings = 1 " Completion in string
 let g:ycm_filetype_blacklist = {
 			\ 'python' : 1,
 			\}
- 
 
 " FIXME: TEST THIS
 " let g:ycm_autoclose_preview_window_after_completion=1
@@ -898,8 +902,8 @@ vnoremap . :norm.<CR>
 inoremap <C-U> <C-G>u<C-U>
 inoremap <C-W> <C-G>u<C-W>
 
-nmap <leader>sv :so $MYVIMRC<CR>
-nmap <leader>ev :vsplit $MYVIMRC<CR>
+" nmap <Leader>sv :so $MYVIMRC<CR>
+" nmap <Leader>ev :vsplit $MYVIMRC<CR>
 
 " join line downwards
 nnoremap gK :m+1<bar>-1<bar>j<CR>
@@ -994,6 +998,17 @@ nnoremap <Leader>q :qall<CR>
 "Save file
 nnoremap <Leader>w :update<CR>
 nnoremap <Leader>s :smile<CR>
+
+
+nnoremap <Leader>fb :Buffers<CR>
+nnoremap <Leader>fc :Colors<CR>
+nnoremap <Leader>ff :Files<CR>
+nnoremap <Leader>fgc :Commit<CR>
+nnoremap <Leader>fgf :GitFiles<CR>
+nnoremap <Leader>fh :History<CR>
+nnoremap <Leader>fl :Lines<CR>
+nnoremap <Leader>ft :Tags<CR>
+" nnoremap <Leader>ft  :Filetypes<CR>
 
 " TODO
 " noautocmd - do not trigger any autocmd while loading files - much quicker
@@ -1237,7 +1252,7 @@ nnoremap <Esc>9 9gt
 nnoremap <Esc>0 10gt
 
 " Disable python2 support
-set pythondll=
+" set pythondll=
 
 " au FocusLost * unsilent echo("lost")
 " au FocusGained * unsilent echo("gained")
@@ -1369,5 +1384,3 @@ nmap <Leader>ls :ls<CR>:buffer<Space>
 nmap <silent> <Leader>x "*yy:call system("xsendp")<CR>
 vmap <silent> <Leader>x y<bar> :call system("xsendp")<CR>
 " imap <silent> <Leader>x <C-\><C-o>"*yy<C-o>:call system("xsendp")<CR>
-
-" vim:foldmethod=marker

@@ -33,14 +33,16 @@ Plug 'christoomey/vim-sort-motion'
 Plug 'bronson/vim-visual-star-search'
 " }}}
 "Plug 'tpope/vim-abolish' " TRY THIS
+Plug 'vim-utils/vim-troll-stopper' " Highlight unicode chars
 
 " Linters {{{
 " Plug 'scrooloose/syntastic'
 Plug 'w0rp/ale'
-" let g:ale_python_flake8_executable = 'python'
-" let g:ale_python_flake8_args = '-m flake8'
-" let g:ale_python_pylint_executable = 'python'
-" let g:ale_python_pylint_args = '-m pylint'
+let g:ale_python_flake8_executable = 'python'
+let g:ale_python_flake8_args = '$(which flake8)'
+let g:ale_python_pylint_executable = 'python'
+let g:ale_python_pylint_options = '$(which pylint) -E'
+" let g:ale_python_mypy_options = '--strict'
 " Plug 'neomake/neomake'
 "}}}
 " Autocompletion {{{
@@ -118,7 +120,8 @@ Plug 'rust-lang/rust.vim'
 let g:racer_experimental_completer = 1
 " }}}
 " Java {{{
-Plug 'artur-shaik/vim-javacomplete2'
+Plug 'artur-shaik/vim-javacomplete2', { 'for': ['java'] }
+Plug 'vim-scripts/JavaDecompiler.vim' " eclim conflict
 " }}}
 " Go {{{
 Plug 'fatih/vim-go'
@@ -129,6 +132,9 @@ Plug 'plasticboy/vim-markdown'
 " Plug 'Glench/Vim-Jinja2-Syntax' " Jinja2
 Plug 'barlik/Vim-Jinja2-Syntax' " ^ forked
 " }}}
+" CSS {{{
+" Plug 'JulesWang/css.vim' { 'for': ['css'] } " cutting edge css
+" }}}
 " }}}
 
 " Directory diff
@@ -137,7 +143,12 @@ Plug 'will133/vim-dirdiff'
 " Colors
 Plug 'morhetz/gruvbox'
 "Plug 'godlygeek/csapprox' " Colorscheme fixer
-" Plug 'Yggdroot/indentLine'
+"Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Yggdroot/indentLine'
+" let g:indentLine_enabled = 0 " Disable by default
+let g:indentLine_char = '▌' "¦|┆│∙⋮
+let g:indentLine_fileType = ['yaml']
+let g:indentLine_color_gui = '#202020'
 
 " Navigation {{{
 Plug 'mhinz/vim-startify' " Start screen
@@ -208,7 +219,7 @@ Plug 'Shougo/denite.nvim'
 " Plug 'YankRing.vim'
 " Plug 'justinmk/vim-dirvish'
 " Plug 'Shougo/vimfiler.vim'
-"Plug 'jamessan/vim-gnupg'
+Plug 'jamessan/vim-gnupg'
 " {{{ Check
 "Plug 'tpope/vim-commentary'
 "Plug 'paster.vim'
@@ -226,7 +237,7 @@ Plug 'vim-scripts/csv.vim'
 Plug 'vim-scripts/dbext.vim'
 " let g:dbext_default_usermaps = 0
 
-" Plug 'tpope/vim-cucumber'
+Plug 'tpope/vim-cucumber'
 " Plug 'mcepl/vim-behave'
 Plug 'skywind3000/asyncrun.vim'
 
@@ -425,7 +436,7 @@ function! SetupDiffMappings()
 	call SetColorscheme()
 endfunction
 
-"set completeopt+=menuone,noselect " Dont automatically select completion
+set completeopt+=menuone,noselect " Dont automatically select completion
 
 call SetupDiffMappings()
 " Entering diff mode from within vim - diffsplit, etc.
@@ -580,6 +591,7 @@ let g:startify_change_to_dir = 0
 let g:vimwiki_map_prefix = '<Leader>v'
 
 let g:vimwiki_list = [{'path': '/home/data/vimwiki/', 'auto_tags': 1}]
+
 let g:vimwiki_folding = 'expr'
   function! VimwikiLinkHandler(link)
     " Use Vim to open external files with the 'vfile:' scheme.  E.g.:

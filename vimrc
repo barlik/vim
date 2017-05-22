@@ -388,10 +388,14 @@ au vimResized * :wincmd =
 " Colorscheme {{{
 function! SetColorscheme()
 	"colorscheme seti,jellybeans,distinguished, molokai, jellybeans
-	colorscheme seti
+	" colorscheme seti
+	colorscheme jellybeans
 		hi link pythonOperator Statement
 		" let background = system("xrdb -query | awk '/*background/ {print $2}'")
 		" execute "hi Normal guibg=" . background
+		hi Normal guibg=NONE
+		hi LineNr guibg=NONE
+		hi link EndOfBuffer Normal
 	" colorscheme seti
 	" 	hi Visual cterm=reverse ctermbg=bg ctermfg=fg
 		" hi NonText guibg=bg
